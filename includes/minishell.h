@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 18:41:31 by yes               #+#    #+#             */
-/*   Updated: 2025/02/05 19:27:27 by yes              ###   ########.fr       */
+/*   Created: 2025/02/10 15:04:31 by frbranda          #+#    #+#             */
+/*   Updated: 2025/02/10 17:25:40 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL
-# define MINNISHELL
 
+#ifndef MINISHELL
+# define MINISHELL
+
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 
 /*=============================================================================#

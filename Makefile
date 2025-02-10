@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
+#    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/05 17:37:55 by yes               #+#    #+#              #
-#    Updated: 2025/02/05 19:29:39 by yes              ###   ########.fr        #
+#    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
+#    Updated: 2025/02/10 15:35:41 by frbranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #==============================================================================#
 #                                    NAMES                                     #
@@ -21,7 +22,9 @@ RM = rm -rf
 
 GENERAL = main.c
 
-NAME = so_long
+VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
+
+NAME = minishell
 
 #==============================================================================#
 #                                    EXTRA                                     #
@@ -68,8 +71,12 @@ $(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
 	$(CC) $(FLAGS) -c $< -o $@ $(INC)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@$(ECHO) "$(GREEN)----------------- minishell created$(RESET)"
+
+# Executable minishell with valgrind
+valgrind: re
+	$(VAL) ./minishell
 
 clean:
 	$(RM) $(OBJS)
