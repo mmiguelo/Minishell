@@ -6,7 +6,7 @@
 #    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/10 15:35:41 by frbranda         ###   ########.fr        #
+#    Updated: 2025/02/11 11:44:43 by frbranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ $(NAME): $(OBJS) $(LIBFT)
 	@$(ECHO) "$(GREEN)----------------- minishell created$(RESET)"
 
 # Executable minishell with valgrind
-valgrind: re
+v: re
 	$(VAL) ./minishell
 
 clean:
