@@ -6,7 +6,7 @@
 #    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/11 11:44:43 by frbranda         ###   ########.fr        #
+#    Updated: 2025/02/11 17:25:03 by frbranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INC = -I./includes
 RM = rm -rf
 
 GENERAL = main.c
+TOKEN = tokenizer.c free_tokens.c
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
@@ -40,12 +41,14 @@ RESET = \033[0m
 #==============================================================================#
 
 VPATH += src
+VPATH += src/tokens
 
 #==============================================================================#
 #                                    FILES                                     #
 #==============================================================================#
 
 SRC +=	$(GENERAL)
+SRC +=	$(TOKEN)
 
 # Library Paths
 LIBFT_DIR = libft

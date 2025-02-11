@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/11 11:54:18 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:18:29 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ int main(void)
 	
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
+	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
-		input = readline("minishell> ");
-		if (!input || ft_strncmp(input, "exit", 10) == 0) // Ctrl+D EOF (cannot be only exit)
+		input = readline("prompt> ");
+		if (!input || ft_strncmp(input, "exit", 10) == 0) // Ctrl+D EOF
 		{
-			ft_printf("exit\n");
+			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
-		add_history(input);
-		ft_printf("Command executed: %s\n", input);
+		tokenizer(input);
+		add_history(input); // Deletes history after closing
 		free(input);
 	}
 	return 0;
