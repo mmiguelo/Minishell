@@ -6,7 +6,7 @@
 #    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/11 17:25:03 by frbranda         ###   ########.fr        #
+#    Updated: 2025/02/12 13:39:56 by frbranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,14 @@ $(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 	@$(ECHO) "$(GREEN)----------------- minishell created$(RESET)"
+
+# Make and run
+r: all
+	./minishell
+
+# Make and run with valgrind
+rv: all
+	$(VAL) ./minishell
 
 # Executable minishell with valgrind
 v: re

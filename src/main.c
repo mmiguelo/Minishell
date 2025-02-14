@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/11 17:18:29 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:20:05 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(void)
 			break ;
 		}
 		tokenizer(input);
-		add_history(input); // Deletes history after closing
+		add_history(input); // Deletes history after closing (our own)
 		free(input);
 	}
 	return 0;

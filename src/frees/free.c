@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 17:23:28 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/12 14:46:39 by frbranda         ###   ########.fr       */
+/*   Created: 2025/02/12 14:43:05 by frbranda          #+#    #+#             */
+/*   Updated: 2025/02/12 14:44:12 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,4 @@ void	free_char_pp(char **s)
 		i++;
 	}
 	free(s);
-}
-
-void	free_tokens(t_token **token)
-{
-	t_token	*temp;
-	while (*token != NULL)
-	{
-		free((*token)->token);
-		free((*token)->type);
-		temp = (*token)->next;
-		free(*token);
-		*token = temp;
-	}
 }
