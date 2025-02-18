@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
+#    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/12 13:39:56 by frbranda         ###   ########.fr        #
+#    Updated: 2025/02/18 19:18:38 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ INC = -I./includes
 RM = rm -rf
 
 GENERAL = main.c
-TOKEN = tokenizer.c free_tokens.c
+TOKEN = tokenizer.c token_tools.c
+FREE = free.c free_tokens.c
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
@@ -42,6 +43,7 @@ RESET = \033[0m
 
 VPATH += src
 VPATH += src/tokens
+VPATH += src/frees
 
 #==============================================================================#
 #                                    FILES                                     #
@@ -49,6 +51,7 @@ VPATH += src/tokens
 
 SRC +=	$(GENERAL)
 SRC +=	$(TOKEN)
+SRC +=	$(FREE)
 
 # Library Paths
 LIBFT_DIR = libft

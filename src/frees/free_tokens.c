@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:23:28 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/12 14:46:39 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:17:39 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_char_pp(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != NULL)
-	{
-		free(s[i]);
-		s[i] = NULL;
-		i++;
-	}
-	free(s);
-}
 
 void	free_tokens(t_token **token)
 {
@@ -32,7 +18,6 @@ void	free_tokens(t_token **token)
 	while (*token != NULL)
 	{
 		free((*token)->token);
-		free((*token)->type);
 		temp = (*token)->next;
 		free(*token);
 		*token = temp;
