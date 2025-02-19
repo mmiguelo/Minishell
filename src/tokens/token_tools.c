@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:41:47 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/18 19:21:07 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/19 17:41:44 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,22 @@ void	print_token_list(t_token *token)
 		temp = temp->next;
 	}
 	ft_printf("NULL\n");
+	ft_printf("-----------------\n");
+}
+
+void	print_tokens(t_token *token)
+{
+	t_token	*temp;
+
+	temp = token;
+	ft_printf("Tokens: [\"%s\"", temp->token);
+	temp = temp->next;
+	while (temp)
+	{
+		ft_printf(", \"%s\"", temp->token);
+		temp = temp->next;
+	}
+	ft_printf("]\n");
 }
 
 /* ft_printf("-----------------\nSplitted[%i]: %s\n", i, splitted[i]); */

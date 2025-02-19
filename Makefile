@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/18 19:18:38 by yes              ###   ########.fr        #
+#    Updated: 2025/02/19 17:45:14 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ RM = rm -rf
 
 GENERAL = main.c
 TOKEN = tokenizer.c token_tools.c
+PARSING = quote_handler.c
 FREE = free.c free_tokens.c
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
@@ -43,6 +44,7 @@ RESET = \033[0m
 
 VPATH += src
 VPATH += src/tokens
+VPATH += src/parsing
 VPATH += src/frees
 
 #==============================================================================#
@@ -51,6 +53,7 @@ VPATH += src/frees
 
 SRC +=	$(GENERAL)
 SRC +=	$(TOKEN)
+SRC +=	$(PARSING)
 SRC +=	$(FREE)
 
 # Library Paths

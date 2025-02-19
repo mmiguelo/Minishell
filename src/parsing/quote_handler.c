@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   quote_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 16:31:13 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/19 18:03:58 by yes              ###   ########.fr       */
+/*   Created: 2025/02/19 17:44:06 by yes               #+#    #+#             */
+/*   Updated: 2025/02/19 18:16:54 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	token_split(t_token **token,char *input)
+//"echo"   "   ola   "   <--- 2 tokens
+
+t_token	*quote_handler(t_token **token, char *s)
+{
+	bool	s_quote;
+	int		i;
+
+	i = 0;
+	s_quote = false;
+	while (s[i] == ' ')
+			i++;
+	while(s[i])
+	{
+		
+		i++;
+	}
+}
+
+t_token	*minishell_split(t_token **token, char *input)
 {
 	t_token	*new_token;
 	char	**splitted;
@@ -27,16 +45,4 @@ void	token_split(t_token **token,char *input)
 		i++;
 	}
 	free_char_pp(splitted);
-}
-
-void	tokenizer(char *input)
-{
-	t_token	*token;
-
-	token = NULL;
-	//token = quote_handler(input);
-	token_split(&token, input);
-	print_token_list(token);
-	//print_tokens(token);
-	free_tokens(&token);
 }
