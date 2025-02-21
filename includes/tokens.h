@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:29:20 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/19 18:28:31 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/21 19:59:49 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ typedef struct s_token
 {
 	char			*token;
 	t_token_type	type;
-	struct s_token	*next;
 	struct s_token	*prev;
+	struct s_token	*next;
 } t_token;
+
 
 /*=============================================================================#
 #                               GENERAL                                        #
