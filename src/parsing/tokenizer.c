@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:31:13 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/20 20:26:47 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/24 17:50:52 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// single quote handler
-// double quote handler
-
-// " echo "   "   ola   "   <--- 2 tokens / 6 tokens (if no quote handler)
-
-
-char *string_found(char *input, int *i)
+/* char *string_found(char *input, int *i)
 {
 	char	*new_s;
 	int		word_count;
@@ -43,18 +37,40 @@ char *string_found(char *input, int *i)
 	new_s[j] = '\0';
 	*i = *i - 1;
 	return (new_s);
+} */
+
+char *string_found(char *input, int *i)
+{
+	char	*new_s;
+	int		len;
+	int		j;
+
+	j = 0;
+	len = 0;
+	while(input[*i] && input[*i] != '|')
+	{
+		*i = *i + 1;
+		len++;
+	}
+	new_s = (char *)malloc((len + 1) * sizeof(char));
+	if (!new_s)
+		return (NULL);
+	while (len != 0)
+	{
+		new_s[j] = input[*i - len];
+		len--;
+		j++;
+	}
+	new_s[j] = '\0';
+	*i = *i - 1;
+	return (new_s);
 }
 
-void	*quote_handler(t_token **token, char **input, int *i)
+void	node_split(t_token_tree **token_list, char *input)
 {
-	if (input[*i] == '\'')
-}
-
-void	token_split(t_token **token, char *input)
-{
-	t_token	*new_token;
-	char	*s;
-	int		i;
+	t_token_tree	*new_node;
+	char			*s;
+	int				i;
 	
 	i = 0;
 	while(input[i])
@@ -63,46 +79,50 @@ void	token_split(t_token **token, char *input)
 			i++;
 		if (!input[i])
 			break ;
-		if (input[i] == '\'' || input[i] == '\"')
-			quote_handler(token, input, &i);
 		else
 		{
-			s = string_found(input, &i);
-			if(!s)
-				break ;
-			new_token = initialize_token(s);
-			list_add_last_token(token, new_token);
-			free(s);
+			if (input[i] == '|')
+			{
+				new_node = initialize_token_list("|", PIPE);
+				add_pipe_to_node(token_list, new_node);
+			}
+			else
+			{
+				s = string_found(input, &i);
+				if(!s)
+					break ;
+				new_node = initialize_token_list(s, EXEC);
+				add_last_node(token_list, new_node);
+				free(s);
+			}
 		}
 		i++;
 	}
-	//token = quote_handler(input);
 }
 
 void	tokenizer(char *input)
 {
-	t_token	*token;
+	t_token_tree	*token_list;
 
-	token = NULL;
-	token_split(&token, input);
-	print_token_list(token);
-	print_tokens(token);
-	free_tokens(&token);
+	token_list = NULL;
+	node_split(&token_list, input);
+	print_token_list(token_list);
+	//print_token_list_simple(token_list);//not fuctional for token_list!
+	free_token_list(&token_list);
 }
 
-/* void	token_split(t_token **token, char *input)
+/* void	token_split(t_token_tree **token_list, char *input)
 {
-	t_token	*new_token;
+	t_token_tree	*new_token;
 	char	**splitted;
 	int		i;
 
-	//splitted = ft_split(input, ' ');
-	//token = quote_handler(input);
+	splitted = ft_split(input, ' ');
 	i = 0;
 	while (splitted[i] != NULL)
 	{
 		new_token = initialize_token(splitted[i]);
-		list_add_last_token(token, new_token);
+		list_add_last_token(token_list, new_token);
 		i++;
 	}
 	free_char_pp(splitted);

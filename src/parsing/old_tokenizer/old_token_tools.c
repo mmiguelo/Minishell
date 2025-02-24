@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:41:47 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/20 19:51:48 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/24 12:03:46 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*initialize_token(char *input)
 	if (!new)
 		return (NULL);
 	new->token = ft_strdup(input);
-	new->type = ARG;
+	new->type = CMD;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -54,51 +54,6 @@ t_token	*list_add_last_token(t_token **token, t_token *new)
 		new->prev = last;
 	}
 	return (*token);
-}
-
-void	print_token_list(t_token *token)
-{
-	t_token	*temp;
-
-	if (!token)
-		return ;
-	temp = token;
-	ft_printf("-----------------\n");
-	while (temp)
-	{
-		ft_printf("Token: {%s}\n", temp->token);
-		if (temp->type == ARG)
-			ft_printf("Type : ARG\n");
-		if (temp->next == NULL)
-			ft_printf("Next : %s\n", temp->next);
-		else
-			ft_printf("Next : {%s}\n", temp->next->token);
-		if (temp->prev == NULL)
-			ft_printf("Prev : %s\n", temp->prev);
-		else
-			ft_printf("Prev : {%s}\n", temp->prev->token);
-		ft_printf("-----------------\n");
-		temp = temp->next;
-	}
-	ft_printf("NULL\n");
-	ft_printf("-----------------\n");
-}
-
-void	print_tokens(t_token *token)
-{
-	t_token	*temp;
-
-	if (!token)
-		return ;
-	temp = token;
-	ft_printf("Tokens: [\"%s\"", temp->token);
-	temp = temp->next;
-	while (temp)
-	{
-		ft_printf(", \"%s\"", temp->token);
-		temp = temp->next;
-	}
-	ft_printf("]\n");
 }
 
 /* ft_printf("-----------------\nSplitted[%i]: %s\n", i, splitted[i]); */

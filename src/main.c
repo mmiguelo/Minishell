@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/18 19:02:28 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/24 10:42:01 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int main(void)
 			break ;
 		}
 		tokenizer(input);
-		add_history(input); // Deletes history after closing (our own??????? maybe not)
+		add_history(input);
 		free(input);
 	}
 	return 0;
 }
 
-// Do different "whiles(1)" for main/cat/here_doc also signals are different (ctrl + /)
+// Do different "whiles(1)" for main/cat/here_doc also signals are different (ctrl + /) ???

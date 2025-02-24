@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:23:28 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/18 19:17:39 by yes              ###   ########.fr       */
+/*   Updated: 2025/02/24 17:41:08 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// FREE of the token list (binary tree)
+void	free_token_list(t_token_tree **token)
+{
+	t_token_tree	*temp;
+	while (*token != NULL)
+	{
+		if ((*token)->left)
+			free_token_list(&(*token)->left);
+		free((*token)->token_list);
+		temp = (*token)->right;
+		free(*token);
+		*token = temp;
+	}
+}
 
 void	free_tokens(t_token **token)
 {
