@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 16:50:36 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:19:23 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-int main(void)
+int	main(void)
 {
 	t_shell	*shell;
 	char	*input;
-	
+
 	shell = initialize_shell();
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN); //ignore on prompt but leave with leak when using cat
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		input = readline("prompt> ");
-		if (!input || ft_strncmp(input, "exit", 6) == 0) // Ctrl+D EOF
+		if (!input || ft_strncmp(input, "exit", 6) == 0)
 		{
 			ft_putstr_fd("exit\n", 2);
 			break ;
@@ -45,7 +45,11 @@ int main(void)
 		free(input);
 	}
 	free_shell(&shell);
-	return 0;
+	return (0);
 }
 
-// Do different "whiles(1)" for main/cat/here_doc also signals are different (ctrl + /) ???
+/*	line: 31 -> // ignore on prompt but leave with leak when using cat
+	line: 37 -> // Ctrl+D EOF
+
+// Do different "whiles(1)" for main/cat/here_doc also 
+// signals are different(ctrl + /) ??? */

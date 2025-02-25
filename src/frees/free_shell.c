@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 17:18:15 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:58:04 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	free_tokens(t_token **token)
 {
 	t_token	*temp;
-	
+
 	while (*token != NULL)
 	{
 		free((*token)->token);
@@ -30,8 +30,8 @@ void	free_tokens(t_token **token)
 void	free_token_list(t_token_tree **token)
 {
 	t_token_tree	*temp;
-	
-	if((*token))
+
+	if ((*token))
 	{
 		while (*token != NULL)
 		{
@@ -49,7 +49,7 @@ void	free_token_list(t_token_tree **token)
 void	free_shell(t_shell	**shell)
 {
 	free_token_list(&(*shell)->token_tree);
-	if((*shell)->env_var)
+	if ((*shell)->env_var)
 		free((*shell)->env_var);
 	free((*shell));
 }

@@ -6,19 +6,19 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 15:09:01 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/24 17:49:29 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:12:08 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // PRINTS token_list (binary tree)
+/*  if (!token)
+		return ; */
 void	print_token_list(t_token_tree *token)
 {
 	t_token_tree	*temp;
 
-	if (!token)
-		return ;
 	temp = token;
 	ft_printf("-----------------\n");
 	while (temp)

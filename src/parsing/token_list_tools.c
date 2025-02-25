@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:48:27 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 16:47:21 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:02:37 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ t_token_tree	*find_last_node(t_token_tree *token)
 	{
 		temp = temp->right;
 	}
-	return(temp);
+	return (temp);
 }
 
 // adds new node to the last of node_list
 t_token_tree	*add_last_node(t_token_tree **token, t_token_tree *new)
 {
-	t_token_tree *last;
-	
+	t_token_tree	*last;
+
 	if (!new)
 		return (NULL);
 	if (!*token)
@@ -62,15 +62,16 @@ t_token_tree	*find_last_pipe(t_token_tree *token)
 		}
 		temp = temp->right;
 	}
-	return(last_pipe);
+	return (last_pipe);
 }
 
-// add pipe to the binary tree, if no pipes found then put new pipe has head(parent?) of list
+// add pipe to the binary tree, if no pipes found then put new pipe as
+//  head(parent?) of list
 t_token_tree	*add_pipe_to_node(t_token_tree **token, t_token_tree *new)
 {
-	t_token_tree *last_pipe;
-	t_token_tree *last_node;
-	
+	t_token_tree	*last_pipe;
+	t_token_tree	*last_node;
+
 	last_pipe = NULL;
 	if (!new)
 		return (NULL);
@@ -93,4 +94,3 @@ t_token_tree	*add_pipe_to_node(t_token_tree **token, t_token_tree *new)
 	}
 	return (new);
 }
-

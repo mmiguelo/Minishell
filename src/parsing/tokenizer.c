@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:31:13 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 17:18:45 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:00:13 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // found a string (input) that its not a '|'
 //  inserts into input into new string until finds '|' or NULL
-char	*string_found(char *input, int *i)
+char	*new_string(char *input, int *i)
 {
 	char	*new_s;
 	int		len;
@@ -22,12 +22,12 @@ char	*string_found(char *input, int *i)
 
 	j = 0;
 	len = 0;
-	while(input[*i] && input[*i] != '|')
+	while (input[*i] && input[*i] != '|')
 	{
 		*i = *i + 1;
 		len++;
 	}
-	new_s = (char *)ft_calloc((len + 1) , sizeof(char));
+	new_s = (char *)ft_calloc((len + 1), sizeof(char));
 	if (!new_s)
 		return (NULL);
 	while (len != 0)
@@ -41,15 +41,28 @@ char	*string_found(char *input, int *i)
 	return (new_s);
 }
 
-// splits the input with pipes and adds to token_tree/list 
-void	node_split(t_token_tree **token_list, char *input)
+// handles when it finds a string that is not a '|'
+void	handle_string_to_node(t_token_tree **token_list, char *input, int *i)
 {
 	t_token_tree	*new_node;
 	char			*s;
+
+	s = new_string(input, i);
+	if (!s)
+		return ;
+	new_node = initialize_token_list(s, EXEC);
+	add_last_node(token_list, new_node);
+	free(s);
+}
+
+// splits the input with pipes and adds to token_tree/list
+void	node_split(t_token_tree **token_list, char *input)
+{
+	t_token_tree	*new_node;
 	int				i;
-	
+
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
 		while (input[i] && input[i] == ' ')
 			i++;
@@ -63,14 +76,7 @@ void	node_split(t_token_tree **token_list, char *input)
 				add_pipe_to_node(token_list, new_node);
 			}
 			else
-			{
-				s = string_found(input, &i);
-				if(!s)
-					break ;
-				new_node = initialize_token_list(s, EXEC);
-				add_last_node(token_list, new_node);
-				free(s);
-			}
+				handle_string_to_node(token_list, input, &i);
 		}
 		i++;
 	}
