@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/24 17:25:25 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:20:42 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@
 # define ARG 0
 # define BUILTIN 1
 # define ENV 2
-# define TK_PIPE 3
-# define REDIR_RIGHT 4// >
+# define TK_PIPE 3 // | change to ND_PIPE?
+# define REDIR_RIGHT 4// > redir onto a file and chage its contente
 # define REDIR_LEFT 5// <
-# define APPEND 6// >>
+# define APPEND 6// >> redir onto a file and add content
 # define HEREDOC 7// <<
 
 # define FALSE 0
 # define TRUE 1
 
 // Quote handle
-# define GENERAL 0
+# define GENERAL 0	//change to NORMAL?
 # define SINGLE_QUO 1
 # define DOUBLE_QUO 2
 
@@ -72,26 +72,19 @@ typedef struct s_env
 typedef struct s_token
 {
 	char			*token;
-	int				type;// EXEC/CMD/PIPE/REDIR
-	int				state;// GENERAL / SINGLE_QUO / DOUBLE_QUO
+	int				type;	// EXEC/CMD/PIPE/REDIR
+	int				state;	// GENERAL / SINGLE_QUO / DOUBLE_QUO
+	struct s_token	*prev; // Delete
 	struct s_token	*next;
 } t_token;
 
 typedef struct s_token_tree
 {
-	char				*token_list; // change to token_list
+	char				*token_list; // change to  t_token				*token_list;
 	int					type;
 	struct s_token_tree *left;
 	struct s_token_tree *right;
 } t_token_tree;
-
-/* typedef struct s_token_tree
-{
-	t_token				*token_list;
-	int					type;
-	struct s_token_tree	*left;
-	struct s_token_tree	*right;
-} t_token_tree; */
 
 typedef struct s_shell
 {
@@ -99,7 +92,6 @@ typedef struct s_shell
 	t_env			*env_var;
 	int				exit_status;
 } t_shell;
-
 
 /*=============================================================================#
 #                               GENERAL                                        #
@@ -110,37 +102,51 @@ typedef struct s_shell
 ///////////////////////////////
 
 // tokenizer.c
-void	token_split(t_token **token,char *input);
-void	tokenizer(char *input);
+char	*string_found(char *input, int *i);
+void	node_split(t_token_tree **token_list, char *input);
+void	tokenizer(t_shell **shell, char *input);
 
 // token_list_tools.c
-t_token_tree	*initialize_token_list(char *s, int type);
 t_token_tree	*find_last_node(t_token_tree *token);
 t_token_tree	*add_last_node(t_token_tree **token, t_token_tree *new);
 t_token_tree	*find_last_pipe(t_token_tree *token);
 t_token_tree	*add_pipe_to_node(t_token_tree **token, t_token_tree *new);
 
-// print_token.c
-void	print_token_list(t_token_tree *token);
-void	print_token_list_simple(t_token_tree *token);
-
+// initialize_structs.c
+t_token			*initialize_tokenS(char *s);
+t_token_tree	*initialize_token_list(char *s, int type);
+t_shell			*initialize_shell(void);
 
 ///////////////////////////////
 //           FREE            //
 ///////////////////////////////
 
-// free_tokens.c
-void	free_token_list(t_token_tree **token);
+// free_shell.c
 void	free_tokens(t_token **token);
+void	free_token_list(t_token_tree **token);
+void	free_shell(t_shell	**shell);
 
 // free.c
 void	free_char_pp(char **s);
 
+///////////////////////////////
+//           PRINT           //
+///////////////////////////////
+
+// print_shell.c?
+
+// print_token_list.c
+void	print_token_list(t_token_tree *token);
+void	print_token_list_simple(t_token_tree *token);
+
+// print_token.c
+void	print_tokens(t_token *token);
+void	print_tokens_simple(t_token *token);
 
 ///////////////////////////////
 //            OLD            //
 ///////////////////////////////
-
+    
 /* // OLD TOKENIZER
 // tokenizer.c
 void	token_split(t_token **token,char *input);

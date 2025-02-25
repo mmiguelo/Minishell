@@ -6,25 +6,11 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:48:27 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/24 17:50:11 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:47:21 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_token_tree	*initialize_token_list(char *s, int type)
-{
-	t_token_tree *new;
-
-	new = (t_token_tree *)ft_calloc(1, sizeof(t_token_tree));
-	if (!new)
-		return (NULL);
-	new->token_list = ft_strdup(s);
-	new->type = type;
-	new->left = NULL;
-	new->right = NULL;
-	return (new);
-}
 
 // find the last node and return it
 t_token_tree	*find_last_node(t_token_tree *token)
@@ -58,7 +44,7 @@ t_token_tree	*add_last_node(t_token_tree **token, t_token_tree *new)
 	return (*token);
 }
 
-// finds pipe and returns it's postion if it doesn't find return NULL
+// finds pipe and returns it's position if it doesn't find return NULL
 t_token_tree	*find_last_pipe(t_token_tree *token)
 {
 	t_token_tree	*temp;
@@ -79,7 +65,7 @@ t_token_tree	*find_last_pipe(t_token_tree *token)
 	return(last_pipe);
 }
 
-// add pipe to the binary tree, no pipes found put pipe has head(parent?) of binary tree
+// add pipe to the binary tree, if no pipes found then put new pipe has head(parent?) of list
 t_token_tree	*add_pipe_to_node(t_token_tree **token, t_token_tree *new)
 {
 	t_token_tree *last_pipe;

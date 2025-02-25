@@ -6,7 +6,7 @@
 #    By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/02/24 15:06:26 by frbranda         ###   ########.fr        #
+#    Updated: 2025/02/25 14:15:49 by frbranda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ FLAGS = -g -Wall -Wextra -Werror
 INC = -I./includes
 RM = rm -rf
 
-GENERAL = main.c
-PARSING = quote_handler.c tokenizer.c token_list_tools.c print_token_list.c
-FREE = free.c free_tokens.c
-
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
+
+GENERAL = main.c
+PARSING = quote_handler.c tokenizer.c token_list_tools.c initialize_structs.c
+FREE = free.c free_shell.c
+PRINT = print_token.c print_token_list.c
 
 NAME = minishell
 
@@ -44,6 +45,7 @@ RESET = \033[0m
 VPATH += src
 VPATH += src/parsing
 VPATH += src/frees
+VPATH += src/prints
 
 #==============================================================================#
 #                                    FILES                                     #
@@ -52,6 +54,7 @@ VPATH += src/frees
 SRC +=	$(GENERAL)
 SRC +=	$(PARSING)
 SRC +=	$(FREE)
+SRC +=	$(PRINT)
 
 # Library Paths
 LIBFT_DIR = libft

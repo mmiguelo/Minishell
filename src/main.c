@@ -6,12 +6,13 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/24 10:42:01 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:50:36 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// ctr + c handler (make new .c file)
 void	sigint_handler(int sig)
 {
 	(void) sig;
@@ -23,8 +24,10 @@ void	sigint_handler(int sig)
 
 int main(void)
 {
-	char *input;
+	t_shell	*shell;
+	char	*input;
 	
+	shell = initialize_shell();
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN); //ignore on prompt but leave with leak when using cat
 	signal(SIGTSTP, SIG_IGN);
@@ -36,10 +39,12 @@ int main(void)
 			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
-		tokenizer(input);
+		tokenizer(&shell, input);
 		add_history(input);
+		free_token_list(&shell->token_tree);
 		free(input);
 	}
+	free_shell(&shell);
 	return 0;
 }
 

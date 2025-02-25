@@ -6,40 +6,15 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:31:13 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/24 17:50:52 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:18:45 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* char *string_found(char *input, int *i)
-{
-	char	*new_s;
-	int		word_count;
-	int		j;
-
-	j = 0;
-	word_count = 0;
-	while(input[*i] && input[*i] != ' ')
-	{
-		*i = *i + 1;
-		word_count++;
-	}
-	new_s = (char *)malloc((word_count + 1) * sizeof(char));
-	if (!new_s)
-		return (NULL);
-	while (word_count != 0)
-	{
-		new_s[j] = input[*i - word_count];
-		word_count--;
-		j++;
-	}
-	new_s[j] = '\0';
-	*i = *i - 1;
-	return (new_s);
-} */
-
-char *string_found(char *input, int *i)
+// found a string (input) that its not a '|'
+//  inserts into input into new string until finds '|' or NULL
+char	*string_found(char *input, int *i)
 {
 	char	*new_s;
 	int		len;
@@ -52,7 +27,7 @@ char *string_found(char *input, int *i)
 		*i = *i + 1;
 		len++;
 	}
-	new_s = (char *)malloc((len + 1) * sizeof(char));
+	new_s = (char *)ft_calloc((len + 1) , sizeof(char));
 	if (!new_s)
 		return (NULL);
 	while (len != 0)
@@ -66,6 +41,7 @@ char *string_found(char *input, int *i)
 	return (new_s);
 }
 
+// splits the input with pipes and adds to token_tree/list 
 void	node_split(t_token_tree **token_list, char *input)
 {
 	t_token_tree	*new_node;
@@ -100,30 +76,12 @@ void	node_split(t_token_tree **token_list, char *input)
 	}
 }
 
-void	tokenizer(char *input)
+void	tokenizer(t_shell **shell, char *input)
 {
 	t_token_tree	*token_list;
 
 	token_list = NULL;
 	node_split(&token_list, input);
 	print_token_list(token_list);
-	//print_token_list_simple(token_list);//not fuctional for token_list!
-	free_token_list(&token_list);
+	(*shell)->token_tree = token_list;
 }
-
-/* void	token_split(t_token_tree **token_list, char *input)
-{
-	t_token_tree	*new_token;
-	char	**splitted;
-	int		i;
-
-	splitted = ft_split(input, ' ');
-	i = 0;
-	while (splitted[i] != NULL)
-	{
-		new_token = initialize_token(splitted[i]);
-		list_add_last_token(token_list, new_token);
-		i++;
-	}
-	free_char_pp(splitted);
-} */
