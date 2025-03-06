@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_structs.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:48:28 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 18:19:53 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:47:29 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,14 @@ t_shell	*initialize_shell(void)
 	new->env_var = NULL;
 	new->exit_status = 0;
 	return (new);
+}
+
+// inicialize heredoc
+void	init_heredoc(t_heredoc *heredoc)
+{
+	heredoc->eof = NULL;
+	heredoc->heredoc_path = NULL;
+	heredoc->i = 0;
+	heredoc->next = NULL;
+	heredoc->count_hd = 0;
 }
