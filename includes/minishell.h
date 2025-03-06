@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/03/06 18:53:09 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:20:35 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_shell
 	int				exit_status;
 }	t_shell;
 
+//heredoc struct
 typedef struct s_heredoc
 {
 	char				*eof;
