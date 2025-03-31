@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 18:19:23 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:36:50 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(void)
 	char	*input;
 
 	shell = initialize_shell();
+	shell->env = initialize_env();
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
@@ -39,9 +40,9 @@ int	main(void)
 			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
-		tokenizer(&shell, input);
 		add_history(input);
-		free_token_list(&shell->token_tree);
+		tokenizer(&shell, ft_strdup(input));
+		free_tokens(&shell->token_list);
 		free(input);
 	}
 	free_shell(&shell);
@@ -53,3 +54,29 @@ int	main(void)
 
 // Do different "whiles(1)" for main/cat/here_doc also 
 // signals are different(ctrl + /) ??? */
+
+/* // Fuction that helps construct the binary tree based on tokenizer input
+t_node	*return_node(tokenptr)
+{
+	t_node	*node = (t_node *)cmd(&tokenptr);
+	if *tokenptr == pipe	
+		return ((t_node *)pipe(node, return_node(tokenptr++)));
+	return (node);
+}
+
+// exec commands after binary tree is created
+exec(node)
+{
+	if node.type = pipe
+	{
+		t_pipe	*pipe = (t_pipe *)node;
+		exec(pipe->left);
+		exec(pipe->right);
+		return;
+	}
+	else if (node->tyoe == cmd)
+	{
+		t_cmd	*cmd = (t_cmd*)node;
+		executeCMD(cmd);
+	}
+} */

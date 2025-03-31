@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 17:58:04 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:07:30 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,45 +24,30 @@ void	free_tokens(t_token **token)
 		free(*token);
 		*token = temp;
 	}
+	(*token) = NULL;
 }
 
-// FREE of the token list (binary tree)
-void	free_token_list(t_token_tree **token)
+void	free_env(t_env **env)
 {
-	t_token_tree	*temp;
+	t_env	*temp;
 
-	if ((*token))
+	while (*env != NULL)
 	{
-		while (*token != NULL)
-		{
-			if ((*token)->left)
-				free_token_list(&(*token)->left);
-			free((*token)->token_list);
-			temp = (*token)->right;
-			free(*token);
-			*token = temp;
-		}
+		temp = (*env)->next;
+		free(*env);
+		*env = temp;
 	}
+	(*env) = NULL;
 }
 
 // free main struct (shell)
 void	free_shell(t_shell	**shell)
 {
-	free_token_list(&(*shell)->token_tree);
-	if ((*shell)->env_var)
-		free((*shell)->env_var);
+	if ((*shell)->token_list)
+		free_tokens(&(*shell)->token_list);
+	if ((*shell)->env)
+		free_env(&(*shell)->env);
+	if ((*shell)->s_pid)
+		free((*shell)->s_pid);
 	free((*shell));
 }
-
-/* // free binary tree IF ONLY we expand to the left and to the right
-void free_token_list(t_token_tree **token)
-{
-	if (*token == NULL)
-		return;
-
-	free_token_list(&(*token)->left);// Free left first
-	free_token_list(&(*token)->right);// Free right next
-	free((*token)->token_list);
-	free(*token);
-	*token = NULL;
-} */

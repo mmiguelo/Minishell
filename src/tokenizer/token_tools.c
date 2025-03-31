@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_list_tools.c                                 :+:      :+:    :+:   */
+/*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 14:48:27 by frbranda          #+#    #+#             */
-/*   Updated: 2025/02/25 18:02:37 by frbranda         ###   ########.fr       */
+/*   Created: 2025/02/26 14:10:37 by frbranda          #+#    #+#             */
+/*   Updated: 2025/03/25 18:24:53 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// find the last node and return it
-t_token_tree	*find_last_node(t_token_tree *token)
+t_token	*find_last_token(t_token *token)
 {
-	t_token_tree	*temp;
+	t_token	*temp;
 
 	if (!token)
 		return (NULL);
 	temp = token;
-	while (temp->right != NULL)
+	while (temp->next != NULL)
 	{
-		temp = temp->right;
+		temp = temp->next;
 	}
 	return (temp);
 }
 
-// adds new node to the last of node_list
-t_token_tree	*add_last_node(t_token_tree **token, t_token_tree *new)
+t_token	*add_last_token(t_token **token, t_token *new)
 {
-	t_token_tree	*last;
+	t_token	*last;
 
 	if (!new)
 		return (NULL);
@@ -38,13 +36,13 @@ t_token_tree	*add_last_node(t_token_tree **token, t_token_tree *new)
 		*token = new;
 	else
 	{
-		last = find_last_node(*token);
-		last->right = new;
+		last = find_last_token(*token);
+		last->next = new;
 	}
 	return (*token);
 }
 
-// finds pipe and returns it's position if it doesn't find return NULL
+/* // finds pipe and returns it's position if it doesn't find return NULL
 t_token_tree	*find_last_pipe(t_token_tree *token)
 {
 	t_token_tree	*temp;
@@ -93,4 +91,4 @@ t_token_tree	*add_pipe_to_node(t_token_tree **token, t_token_tree *new)
 		}
 	}
 	return (new);
-}
+} */

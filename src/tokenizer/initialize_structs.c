@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_structs.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:48:28 by frbranda          #+#    #+#             */
-/*   Updated: 2025/03/06 19:47:29 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:23:13 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*initialize_tokens(char *s)
+t_token	*initialize_token(char *s, int type)
 {
 	t_token	*new;
 
@@ -20,24 +20,26 @@ t_token	*initialize_tokens(char *s)
 	if (!new)
 		return (NULL);
 	new->token = ft_strdup(s);
-	new->type = EXEC;
-	new->state = GENERAL;
+	new->type = type;
 	new->next = NULL;
 	return (new);
 }
 
-// inicialize token_list (binary_tree)
-t_token_tree	*initialize_token_list(char *s, int type)
+// TODO DELETE LATER WHEN ENV IS INITIALIZE
+t_env	*initialize_env(void)
 {
-	t_token_tree	*new;
+	t_env	*new;
+	t_env	*new2;
 
-	new = (t_token_tree *)ft_calloc(1, sizeof(t_token_tree));
-	if (!new)
-		return (NULL);
-	new->token_list = ft_strdup(s);
-	new->type = type;
-	new->left = NULL;
-	new->right = NULL;
+	new = ft_calloc(1, sizeof(t_env));
+	new->name = "VAR";
+	new->value = "$VAR1";
+	new->next = NULL;
+	new2 = ft_calloc(1, sizeof(t_env));
+	new2->name = "VAR1";
+	new2->value = "s -";
+	new2->next = NULL;
+	new->next = new2;
 	return (new);
 }
 
@@ -49,18 +51,11 @@ t_shell	*initialize_shell(void)
 	new = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	if (!new)
 		return (NULL);
-	new->token_tree = NULL;
-	new->env_var = NULL;
+	new->token_list = NULL;
+	new->head = NULL;
+	new->env = NULL;
+	new->pid = getpid();
+	new->s_pid = ft_itoa(getpid());
 	new->exit_status = 0;
 	return (new);
-}
-
-// inicialize heredoc
-void	init_heredoc(t_heredoc *heredoc)
-{
-	heredoc->eof = NULL;
-	heredoc->heredoc_path = NULL;
-	heredoc->i = 0;
-	heredoc->next = NULL;
-	heredoc->count_hd = 0;
 }
