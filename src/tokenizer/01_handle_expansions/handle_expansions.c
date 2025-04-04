@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:19:21 by yes               #+#    #+#             */
-/*   Updated: 2025/03/31 12:52:58 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/04 13:20:53 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,24 @@ char	*expand_variable(t_shell *shell, char **s_ptr, int *i, t_info *info)
 	char	*var_name;
 	char	*var_value;
 	char	*new_s;
-	char	*s;
+	int		before_after;
 
-	s = *s_ptr;
-	var_name = take_var_name(s, i);
+	var_name = take_var_name(*s_ptr, i);
 	info->env_end = (*i);
 	var_value = get_env_value(var_name, shell->env);
-	new_s = expand_var_in_str(s, var_value, *i, info);
+	before_after = check_if_var_is_alone(*s_ptr, *i, info);
+	if (info->mode == GENERAL
+		&& (info->type >= REDIR_IN && info->type <= HEREDOC)
+		&& (ft_has_white_spaces(var_value)
+			|| ((!var_value || var_value[0] == '\0') && !before_after)))
+	{
+		shell->exit_status = 1;
+		info->error_flag = TRUE;
+		ft_printf("minishell: $%s: ambiguous redirect\n", var_name);
+		free(var_name);
+		return (NULL);
+	}
+	new_s = expand_var_in_str(*s_ptr, var_value, *i, info);
 	free(var_name);
 	*i = info->env_start + ft_strlen(var_value);
 	return (new_s);
@@ -48,7 +59,11 @@ int	expand_env(t_shell *shell, char **s_ptr, int *i, t_info *info)
 	else if (s[*i] == '?')
 		new_s = handle_question_mark(shell, s, i, info);
 	else
+	{
 		new_s = expand_variable(shell, &s, i, info);
+		if (!new_s)
+			return (TRUE);
+	}
 	*s_ptr = new_s;
 	return (TRUE);
 }
@@ -66,11 +81,11 @@ int	handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info)
 			quote_changer(s, i, info);
 		else if (s[*i] == '$' && info->mode != SINGLE_QUO)
 		{
-			if (expand_env(shell, s_ptr, i, info) == FALSE)
-				continue ;
-			else
+			if (expand_env(shell, s_ptr, i, info) == TRUE)
 			{
-				free(s);
+				free (s);
+				if (info->error_flag == TRUE)
+					return (FALSE);
 				*i = info->start;
 				return (TRUE);
 			}
@@ -80,20 +95,3 @@ int	handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info)
 	}
 	return (FALSE);
 }
-// TODO DELETE v
-
-/* printf("HERE: {%s}\n", *s_ptr);
-			printf("i: %i\n", i);
-			printf("ptr_s[i]: %c\n", (*s_ptr)[i]);
-			printf("start: %i\n", info->start);
-			printf ("ptr_s[start]: %c\n", (*s_ptr)[info->start]);
-			printf("end: %i\n", info->end);
-			printf ("ptr_s[end]: %c\n", (*s_ptr)[info->end]);
-			expand_env(shell, &s, &i, info);
-			printf ("HERE: {%s}\n", *s_ptr);
-			printf ("i: %i\n", i);
-			printf ("ptr_s[i]: %c\n", (*s_ptr)[i]);
-			printf("start: %i\n", info->start);
-			printf ("ptr_s[start]: %c\n", (*s_ptr)[info->start]);
-			printf("end: %i\n", info->end);
-			printf ("ptr_s[end]: %c\n", (*s_ptr)[info->end]); */
