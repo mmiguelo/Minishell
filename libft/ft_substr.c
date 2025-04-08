@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:44:15 by mmiguelo          #+#    #+#             */
-/*   Updated: 2024/10/30 17:24:00 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:21:21 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 /* int	main(void)
 {
 	char	*str = "test in this string";
-	int		start = 8;
-	size_t	lenght = 14;
+	int		start = 0;
+	size_t	lenght = ft_strlen(str);
 
 	printf("Original string: %s\n", str);
 	printf("The substring: %s", ft_substr(str, start, lenght));

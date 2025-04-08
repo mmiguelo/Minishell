@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:24:40 by yes               #+#    #+#             */
-/*   Updated: 2025/04/04 13:28:39 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/07 19:05:43 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*take_var_name(char *s, int *i)
 	return (ft_strndup(&s[start], len));
 }
 
-char	*get_env_value(char *var_name, t_env *env_list)
+char	*get_env_value_expansion(char *var_name, t_env *env_list)
 {
 	t_env	*temp;
 

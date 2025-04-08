@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/03/30 19:41:45 by yes              ###   ########.fr        #
+#    Updated: 2025/04/08 12:42:19 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,17 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c
+GENERAL = main.c init.c
 PARSING = 
-TOKENIZER = tokenizer.c initialize_structs.c token_tools.c \
+TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
 			expansion_helper.c handle_dollar_cases.c handle_expansions.c \
 			handle_quote.c quote_helper.c \
 			add_new_token.c
+BUILTIN = builtin_utils.c cd.c cd1.c echo.c env.c exit.c \
+			export.c export1.c export2.c export3.c pwd.c unset.c
 FREE = free.c free_shell.c
+ERRORS = print_error.c
 PRINT = print_tokens.c
 
 NAME = minishell
@@ -56,6 +59,10 @@ VPATH += src/tokenizer/00_handle_spaces
 VPATH += src/tokenizer/01_handle_expansions
 VPATH += src/tokenizer/02_handle_quote
 VPATH += src/tokenizer/03_add_new_token
+# builtin
+VPATH += src/builtin
+# errors
+VPATH += src/errors
 # free
 VPATH += src/frees
 # print
@@ -66,11 +73,10 @@ VPATH += src/prints
 #==============================================================================#
 
 SRC +=	$(GENERAL)
-# parsing
 SRC +=	$(PARSING)
-# tokenizer
 SRC +=	$(TOKENIZER)
-# free
+SRC +=	$(BUILTIN)
+SRC +=	$(ERRORS)
 SRC +=	$(FREE)
 # print
 SRC +=	$(PRINT)
