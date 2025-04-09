@@ -6,40 +6,11 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/08 18:07:07 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/09 16:47:34 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**token_list_to_array(t_token *tokens)
-{
-	t_token	*temp;
-	char	**array;
-	int		count;
-	int		i;
-
-	temp = tokens;
-	count = 0;
-	i = 0;
-	while (temp)
-	{
-		count++;
-		temp = temp->next;
-	}
-	array = ft_calloc((count + 1), sizeof(char*));
-	if (!array)
-		return (NULL);
-	temp = tokens;
-	while (temp)
-	{
-		array[i] = ft_strdup(temp->token);
-		temp = temp->next;
-		i++;
-	}
-	array[i] = NULL;
-	return (array);
-}
 
 // ctr + c handler (make new .c file)
 void	sigint_handler(int sig)
@@ -60,38 +31,34 @@ void	ft_signals(void)
 
 void	ft_minishell(t_shell *shell, char **envp)
 {
-	t_builtin	func;
-	char		**args;
-	
+	t_bt	func;
+
 	ft_init(shell, envp);
 	while (1)
 	{
 		shell->input = readline("minishell> ");
-		if (!shell->input || ft_strncmp(shell->input, "exit", 6) == 0)
+		if (!shell->input)
 		{
 			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
 		add_history(shell->input);
 		tokenizer(&shell, ft_strdup(shell->input));
-		args = token_list_to_array(shell->token_list);
-		int i = -1;
-		while (args[++i])
-			printf("arg[%i]: %s\n", i, args[i]);
-		if (args && args[0])
+		shell->args = token_list_to_array(shell->token_list);
+		if (shell->args && shell->args[0])
 		{
-			func = ft_isbuiltin(args[0], shell);
+			func = ft_isbuiltin(shell->args[0], shell);
 			if (func)
 			{
-				if (func(args, shell) != 0)
-					printf("Error executing %s\n", args[0]);
+				if (func(shell->args, shell) != 0)
+					printf("Error executing %s\n", shell->args[0]);
 			}
 			else
 				printf("Command not found\n");
 		}
-		free_char_pp(args);
+		free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);
-		free(shell->input);
+		free_ref(&shell->input);
 	}
 	ft_kill(&shell, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:17:54 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:59 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/09 14:35:18 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**realloc_env(char **envp)
 	}
 	new_envp[i] = NULL;
 	new_envp[i + 1] = NULL;
-	free(envp);
+	free_char_pp_ref(&envp);
 	return (new_envp);
 }
 

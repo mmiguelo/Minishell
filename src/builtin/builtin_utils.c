@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:18:53 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:24 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/09 16:46:44 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
  * 
  * @param cmd The command string to check.
  * @param shell A pointer to the shell structure (unused in this function).
- * @return t_builtin A function pointer to the matching built-in command.
+ * @return t_bt A function pointer to the matching built-in command.
  * 		   `NULL` if the command is not a built-in.
  */
-t_builtin	ft_isbuiltin(char *cmd, t_shell *shell)
+t_bt	ft_isbuiltin(char *cmd, t_shell *shell)
 {
 	static char	*builtins[8] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};

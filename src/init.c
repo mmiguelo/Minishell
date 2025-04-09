@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/08 17:35:01 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/09 16:48:05 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,12 @@ t_token	*initialize_token(char *s, int type)
 void	ft_init(t_shell	*shell, char **envp)
 {
 	shell->input = NULL;
+	shell->args = NULL;
 	shell->token_list = NULL;
 	shell->head = NULL;
 	shell->env = NULL;
 	shell->pid = getpid();
 	shell->s_pid = NULL;
-	//shell->s_pid = ft_itoa(getpid());
 	shell->exit_status = 0;
 	shell->envp = init_env(envp);
 	shell->cmd = NULL;

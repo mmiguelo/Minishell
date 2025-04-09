@@ -6,12 +6,38 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:43:05 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/08 17:08:58 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/09 16:59:33 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Frees a dynamically allocated string and sets the original pointer to
+ * NULL in the caller.
+ *
+ * This function safely releases a `char *` and avoids dangling pointers by
+ * nullifying it via reference.
+ *
+ * @param s A pointer to the string to be freed.
+ */
+void	free_ref(char **s)
+{
+	if (!s || !*s)
+		return ;
+	free(*s);
+	*s = NULL;
+}
+
+/**
+ * @brief Frees a NULL-terminated array of strings (char **), without altering
+ * the caller's pointer.
+ *
+ * Use this when you want to release the memory of each string and the array
+ * itself, but you do not need to set the original pointer to NULL in the caller.
+ *
+ * @param s The array of strings to free.
+ */
 void	free_char_pp(char **s)
 {
 	int	i;
@@ -28,13 +54,38 @@ void	free_char_pp(char **s)
 }
 
 /**
+ * @brief Frees a NULL-terminated array of strings and sets the original pointer
+ * to NULL in the caller.
+ *
+ * This function receives a reference to the array pointer, allowing it to 
+ * safely nullify the original pointer after freeing, preventing potential
+ * dangling pointers.
+ *
+ * @param s A pointer to the array of strings to free.
+ */
+void	free_char_pp_ref(char ***s)
+{
+	int	i;
+
+	i = 0;
+	while ((*s)[i])
+	{
+		free((*s)[i]);
+		(*s)[i] = NULL;
+		i++;
+	}
+	free (*s);
+	*s = NULL;
+}
+
+/**
  * @brief Frees the memory allocated for the environment variables array in
  * the shell structure.
  * 
  * @param shell The shell structure containing the array of environment
  * variables (`envp`).
- * @param i The number of environment variables in the `envp` array that should
- * be freed.
+ * @param i The number of environment variables in the `envp` array that
+ * should be freed.
  * @return int Returns 0 upon successful completion.
  */
 int	free_matriz(char **shell, int i)
@@ -68,6 +119,10 @@ int	free_matriz(char **shell, int i)
 void	ft_kill(t_shell **shell, int status)
 {
 	errno = status;
+	if ((*shell)->input)
+		free((*shell)->input);
+	if ((*shell)->args)
+		free_char_pp_ref(&(*shell)->args);
 	if ((*shell)->token_list)
 		free_tokens(&(*shell)->token_list);
 	if ((*shell)->env)
