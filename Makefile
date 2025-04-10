@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/09 16:23:04 by yes              ###   ########.fr        #
+#    Updated: 2025/04/09 18:11:58 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ RM = rm -rf
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
 GENERAL = main.c init.c shell_helper.c
-PARSING = 
+PARSING = parsing.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
 			expansion_helper.c handle_dollar_cases.c handle_expansions.c \
