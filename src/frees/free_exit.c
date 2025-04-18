@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_free.c                                   :+:      :+:    :+:   */
+/*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:06:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:25:08 by yes              ###   ########.fr       */
+/*   Created: 2025/04/17 17:36:31 by yes               #+#    #+#             */
+/*   Updated: 2025/04/17 17:47:00 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * @brief Duplicates a string and frees the original strings.
- * 
- * @param s1 
- * @param s2 
- * @return char* 
- */
-char	*ft_strdup_free(char *s1, char *s2)
+void	exit_init(t_shell *shell, char *reason)
 {
-	char	*dest;
-
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (dest);
+	perror(reason);
+	if (shell->envp)
+		ft_matrix_free((void ***)&shell->envp);
+	exit (errno);
 }

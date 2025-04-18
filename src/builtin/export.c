@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:49 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/18 16:59:32 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	append_var_to_envp(char **arg, t_shell *shell)
 			return (give_value(arg, new_var, shell, i));
 	}
 	new_value = ft_strdup(ft_strnstr(*arg, "+=", ft_strlen(*arg)) + 1);
+	free_ref(arg);
 	*arg = ft_strjoin(new_var, new_value);
 	add_var_to_envp(*arg, shell);
 	free(new_value);

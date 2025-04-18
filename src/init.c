@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/09 16:48:05 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/17 19:35:37 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,20 @@ t_token	*initialize_token(char *s, int type)
 	return (new);
 } */
 
+/* static int	create_env(t_shell *shell)
+{
+	// TODO create
+	if (shlvl() == FALSE)
+		return (FALSE);
+	if (lastcmd() == FALSE)
+		return (FALSE);
+	if (pwd() == FALSE)
+		return (FALSE);
+	if (!shell)
+		return (FALSE);
+	return (TRUE);
+} */
+
 /**
  * @brief Initializes the shell structure with environment variables and
  * command array.
@@ -121,7 +135,12 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->env = NULL;
 	shell->pid = getpid();
 	shell->s_pid = NULL;
-	shell->exit_status = 0;
 	shell->envp = init_env(envp);
+	/* if (!shell->envp)
+		exit_init(shell, "malloc"); */
+/* 	if (create_env(shell) == FALSE)
+		exit_init(shell, "getcwd"); */
 	shell->cmd = NULL;
+	shell->old_pwd = NULL;
+	shell->exit_status = 0;
 }

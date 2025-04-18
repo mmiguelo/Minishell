@@ -6,36 +6,24 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/10 12:27:23 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/18 17:08:33 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ctr + c handler (make new .c file)
-void	sigint_handler(int sig)
+/* static void	readline_loop(t_shell *shell)
 {
-	(void) sig;
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	
+} */
 
-void	ft_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-}
-
-void	ft_minishell(t_shell *shell, char **envp)
+void	ft_minishell(t_shell *shell)
 {
 	t_bt	func;
 
-	ft_init(shell, envp);
 	while (1)
 	{
+		//readline_loop(shell);
 		shell->input = readline("minishell> ");
 		if (!shell->input)
 		{
@@ -52,11 +40,14 @@ void	ft_minishell(t_shell *shell, char **envp)
 			{
 				if (func(shell->args, shell) != 0)
 					printf("Error executing %s\n", shell->args[0]);
+				// TODO if func export e mudou update env
+				//TODO envp arg to env list (FREE OLD ENV)
 			}
 			else
 				printf("Command not found\n");
 		}
-		free_char_pp_ref(&shell->args);
+		if (shell->args)
+			free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);
 		free_ref(&shell->input);
 	}
@@ -67,12 +58,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
-	(void)argc;
+	if (argc != 1)
+		return (ft_printf_fd(STDERR_FILENO, ERROR_LAUCH), 0);
 	(void)argv;
-	(void)envp;
-	ft_signals();
-	ft_memset(&shell, 0, sizeof(t_shell));
-	ft_minishell(&shell, envp);
+	ft_init(&shell, envp);
+	set_signal_default();
+	ft_minishell(&shell);
 	return (0);
 }
 

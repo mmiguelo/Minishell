@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/09 18:11:58 by yes              ###   ########.fr        #
+#    Updated: 2025/04/17 17:38:48 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c init.c shell_helper.c
+GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_strldup.c
 PARSING = parsing.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
@@ -31,7 +31,8 @@ TOKENIZER = tokenizer.c token_tools.c \
 			add_new_token.c
 BUILTIN = builtin_utils.c cd.c cd1.c echo.c env.c exit.c \
 			export.c export1.c export2.c export3.c pwd.c unset.c
-FREE = free.c free_shell.c
+SIGNAL = signal.c signal_handler.c setget_signo.c
+FREE = free.c free_shell.c free_exit.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
 
@@ -61,6 +62,8 @@ VPATH += src/tokenizer/02_handle_quote
 VPATH += src/tokenizer/03_add_new_token
 # builtin
 VPATH += src/builtin
+# signals
+VPATH += src/signals
 # errors
 VPATH += src/errors
 # free
@@ -76,9 +79,9 @@ SRC +=	$(GENERAL)
 SRC +=	$(PARSING)
 SRC +=	$(TOKENIZER)
 SRC +=	$(BUILTIN)
+SRC +=	$(SIGNAL)
 SRC +=	$(ERRORS)
 SRC +=	$(FREE)
-# print
 SRC +=	$(PRINT)
 
 # Library Paths
