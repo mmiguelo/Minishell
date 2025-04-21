@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/17 19:35:37 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/21 18:41:55 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,21 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->env = NULL;
 	shell->pid = getpid();
 	shell->s_pid = NULL;
-	shell->envp = init_env(envp);
-	/* if (!shell->envp)
-		exit_init(shell, "malloc"); */
-/* 	if (create_env(shell) == FALSE)
+	if (!envp || !envp[0])
+	{
+		ft_printf("Creating default env to shell->envp\n");
+		/* 	if (create_env(shell) == FALSE)
 		exit_init(shell, "getcwd"); */
+	}
+	else
+	{
+		shell->envp = init_env(envp);
+		if (!shell->envp)
+		exit_init(shell, "malloc");
+	}
+	shell->env = NULL;
 	shell->cmd = NULL;
 	shell->old_pwd = NULL;
 	shell->exit_status = 0;
+	shell->prev_exit_status = 0;
 }

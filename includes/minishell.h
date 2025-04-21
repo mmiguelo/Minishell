@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/17 18:41:37 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/21 20:19:55 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@
 # define QUOTES "\"\'"
 
 // signal helper
+# define CTRL_C 2
 # define SET 0
-# define GET 0
+# define GET 1
 
 // error handler
 # define INVALID -1
@@ -312,6 +313,7 @@ int		get_signo(void);
 #=============================================================================*/
 
 // free_exit.c
+void	free_exit(t_shell *shell, int exit_status);
 void	exit_init(t_shell *shell, char *reason);
 
 // free_shell.c

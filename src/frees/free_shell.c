@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/09 16:58:40 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/21 18:47:10 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_tokens(t_token **token)
 {
 	t_token	*temp;
 
+	if (!token || !(*token))
+		return ;
 	while (*token != NULL)
 	{
 		free((*token)->token);
@@ -31,6 +33,8 @@ void	free_env(t_env **env)
 {
 	t_env	*temp;
 
+	if (!env || !(*env))
+		return;
 	while (*env != NULL)
 	{
 		free((*env)->name);

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:25 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/08 17:06:25 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/21 19:59:38 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void	tokenizer(t_shell **shell, char *s)
 	}
 	free(s);
 	(*shell)->token_list = token_list;
-	(*shell)->exit_status = 0;
 	print_tokens(token_list);
 }

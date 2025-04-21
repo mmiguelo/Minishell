@@ -6,16 +6,25 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/18 17:08:33 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/21 20:32:53 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* static void	readline_loop(t_shell *shell)
+int	only_spaces(char	*input)
 {
-	
-} */
+	int	i;
+
+	i = 0;
+	while(input[i])
+	{
+		if (!ft_strchr(WHITE_SPACES, input[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
 void	ft_minishell(t_shell *shell)
 {
@@ -23,14 +32,20 @@ void	ft_minishell(t_shell *shell)
 
 	while (1)
 	{
-		//readline_loop(shell);
+		shell->prev_exit_status = shell->exit_status; // for signal exit_status
+		shell->exit_status = 0;
+		set_signo(0); // reset signo
+		errno = 0; // reset errno
 		shell->input = readline("minishell> ");
+		if (get_signo() == CTRL_C)
+			shell->prev_exit_status = CTRL_C + 128;
 		if (!shell->input)
 		{
 			ft_putstr_fd("exit\n", 2);
-			break ;
+			free_exit (shell, shell->prev_exit_status);
 		}
-		add_history(shell->input);
+		if (only_spaces(shell->input) == FALSE)
+			add_history(shell->input);
 		tokenizer(&shell, ft_strdup(shell->input));
 		shell->args = token_list_to_array(shell->token_list);
 		if (shell->args && shell->args[0])
@@ -46,8 +61,7 @@ void	ft_minishell(t_shell *shell)
 			else
 				printf("Command not found\n");
 		}
-		if (shell->args)
-			free_char_pp_ref(&shell->args);
+		free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);
 		free_ref(&shell->input);
 	}
