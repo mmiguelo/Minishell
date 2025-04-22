@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/21 20:19:55 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/22 16:29:18 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,8 @@ char	**token_list_to_array(t_token *tokens);
 void	ft_signals(void);
 void	sigint_handler(int sig);
 // TODO put in libft
-void	**ft_matrix_dup(void **matrix);
+char	**ft_matrix_dup(char **matrix);
+int 	**ft_matrix_dup_int(int **matrix);
 void	ft_matrix_free(void ***matrix);
 char	*ft_strldup(const char *s, int length);
 

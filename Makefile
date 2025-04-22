@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/17 17:38:48 by yes              ###   ########.fr        #
+#    Updated: 2025/04/22 16:30:08 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_strldup.c
+GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_matrix_dup_int.c ft_strldup.c
 PARSING = parsing.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \

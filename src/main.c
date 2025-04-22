@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/21 20:32:53 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/22 17:06:41 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	ft_minishell(t_shell *shell)
 		}
 		if (only_spaces(shell->input) == FALSE)
 			add_history(shell->input);
+		if (ft_parsing(shell, shell->input) != SUCCESS)
+		{
+			free_ref(&shell->input);
+			continue ;
+		}
 		tokenizer(&shell, ft_strdup(shell->input));
 		shell->args = token_list_to_array(shell->token_list);
 		if (shell->args && shell->args[0])
