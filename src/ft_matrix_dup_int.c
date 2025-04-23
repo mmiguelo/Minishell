@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:14:44 by yes               #+#    #+#             */
-/*   Updated: 2025/04/22 16:38:21 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/23 17:57:08 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
  * @param matrix An array of int pointers (int **).
  * @return A newly allocated deep-copied matrix, or NULL on allocation failure.
  */
-int **ft_matrix_dup_int(int **matrix)
+int	**ft_matrix_dup_int(int **matrix)
 {
 	int	**dup;
 	int	len;
 	int	i;
-	
+
 	i = 0;
 	len = 0;
 	while (matrix[len])

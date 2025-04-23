@@ -6,10 +6,9 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/22 16:30:08 by yes              ###   ########.fr        #
+#    Updated: 2025/04/23 17:52:57 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 #==============================================================================#
 #                                    NAMES                                     #
@@ -23,7 +22,7 @@ RM = rm -rf
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
 GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_matrix_dup_int.c ft_strldup.c
-PARSING = parsing.c
+PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c syntax_redir.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
 			expansion_helper.c handle_dollar_cases.c handle_expansions.c \
@@ -51,6 +50,7 @@ RESET = \033[0m
 #                                    PATHS                                     #
 #==============================================================================#
 
+# src
 VPATH += src
 # parsing
 VPATH += src/parsing

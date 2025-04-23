@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/22 17:06:41 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/23 18:05:26 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	only_spaces(char	*input)
 	int	i;
 
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
 		if (!ft_strchr(WHITE_SPACES, input[i]))
 			return (FALSE);
@@ -64,7 +64,10 @@ void	ft_minishell(t_shell *shell)
 				//TODO envp arg to env list (FREE OLD ENV)
 			}
 			else
-				printf("Command not found\n");
+			{
+				shell->exit_status = 1;
+				ft_printf_fd(2, "Command not found\n");
+			}
 		}
 		free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);

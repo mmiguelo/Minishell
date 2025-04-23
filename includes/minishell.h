@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/22 16:29:18 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/23 17:55:39 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,15 +156,21 @@ typedef struct s_shell
 //function pointer type for builtins
 typedef int	(*t_bt)(char **, t_shell *);
 
-
 /*=============================================================================#
 #                                     MAIN                                     #
 #=============================================================================*/
+
 void	ft_minishell(t_shell *shell);
 
 /*=============================================================================#
 #                                   PARSING                                    #
 #=============================================================================*/
+
+int		ft_parsing(t_shell *shell, char *s);
+void	handle_syntax_error(char *s, int i);
+int		check_syntax_pipes(t_shell *shell, char *s, int *i);
+int		check_syntax_quotes(t_shell *shell, char *s, int *i);
+int		check_syntax_redir(t_shell *shell, char *s, int *i);
 
 /*=============================================================================#
 #                                  TOKENIZER                                   #
@@ -289,7 +295,7 @@ void	ft_signals(void);
 void	sigint_handler(int sig);
 // TODO put in libft
 char	**ft_matrix_dup(char **matrix);
-int 	**ft_matrix_dup_int(int **matrix);
+int		**ft_matrix_dup_int(int **matrix);
 void	ft_matrix_free(void ***matrix);
 char	*ft_strldup(const char *s, int length);
 

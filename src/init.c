@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/22 17:01:50 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/23 17:57:45 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	ft_init(t_shell	*shell, char **envp)
 	{
 		shell->envp = init_env(envp);
 		if (!shell->envp)
-		exit_init(shell, "malloc");
+			exit_init(shell, "malloc");
 	}
 	shell->env = NULL;
 	shell->cmd = NULL;
