@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/09 16:41:56 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/24 18:14:42 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define REDIR_OUT 5// >
 # define APPEND 6// >> redir onto a file and add content
 # define HEREDOC 7// <<
+# define REDIR 8 // for node control
 
 # define FALSE 0
 # define TRUE 1
@@ -100,14 +101,16 @@ typedef struct s_pipe
 
 typedef struct s_redir
 {
-	char			*redir;
+	int				type;
+	char			*redir_file;
+	int				redir_type;
 	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_cmd
 {
 	int		type;
-	char	**args;
+	t_list	*argv;
 	t_redir	*redirs;
 }	t_cmd;
 
@@ -133,6 +136,7 @@ typedef struct s_shell
 	t_token	*head;
 	t_env	*env;
 	t_info	info;
+	t_node	*tree;
 	int		pid;
 	char	*s_pid;
 	int		exit_status;
@@ -302,5 +306,19 @@ int		print_invalid_var(char *var);
 void	print_type(t_info *info);
 void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
+
+/*=============================================================================#
+#                      	           TREE                                        #
+#=============================================================================*/
+
+// node.c
+t_pipe	*create_pipe_node(t_node *left, t_node *right);
+t_redir	*create_redir_node(char *filename, int type);
+t_cmd	*create_cmd_node(void);
+
+// tree.c
+int		make_tree(t_shell *root);
+t_node	*parse_pipe(t_token **current);
+t_node	*parse_redir(t_token **current);
 
 #endif

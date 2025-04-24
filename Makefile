@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
+#    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/09 16:23:04 by yes              ###   ########.fr        #
+#    Updated: 2025/04/24 14:00:20 by mmiguelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ BUILTIN = builtin_utils.c cd.c cd1.c echo.c env.c exit.c \
 FREE = free.c free_shell.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
+BINARY_TREE = tree.c node.c
 
 NAME = minishell
 
@@ -67,6 +68,8 @@ VPATH += src/errors
 VPATH += src/frees
 # print
 VPATH += src/prints
+#binary_tree
+VPATH += src/binary_tree
 
 #==============================================================================#
 #                                    FILES                                     #
@@ -80,6 +83,8 @@ SRC +=	$(ERRORS)
 SRC +=	$(FREE)
 # print
 SRC +=	$(PRINT)
+# binary_tree
+SRC +=	$(BINARY_TREE)
 
 # Library Paths
 LIBFT_DIR = libft
