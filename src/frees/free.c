@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:43:05 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/18 17:04:10 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/24 17:36:46 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ void	ft_kill(t_shell **shell, int status)
 		free_char_pp_ref(&(*shell)->args);
 	if ((*shell)->token_list)
 		free_tokens(&(*shell)->token_list);
-	if ((*shell)->env)
-		free_env(&(*shell)->env);
 	if ((*shell)->s_pid)
 		free((*shell)->s_pid);
 	if ((*shell)->envp)

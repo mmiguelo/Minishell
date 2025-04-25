@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:19:21 by yes               #+#    #+#             */
-/*   Updated: 2025/04/07 19:05:57 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/24 17:25:58 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expand_variable(t_shell *shell, char **s_ptr, int *i, t_info *info)
 
 	var_name = take_var_name(*s_ptr, i);
 	info->env_end = (*i);
-	var_value = get_env_value_expansion(var_name, shell->env);
+	var_value = get_env_value_expansion(var_name, shell->envp);
 	before_after = check_if_var_is_alone(*s_ptr, *i, info);
 	if (info->mode == GENERAL
 		&& (info->type >= REDIR_IN && info->type <= HEREDOC)

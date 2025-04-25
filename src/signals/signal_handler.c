@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:03:40 by yes               #+#    #+#             */
-/*   Updated: 2025/04/10 14:06:34 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/25 14:50:45 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	signal_default_handler(int signo)
 	}
 }
 
-void	signal_handler_pipeline(int signo)
+void	signal_pipe_handler(int signo)
 {
 	if (signo == SIGINT)
 	{

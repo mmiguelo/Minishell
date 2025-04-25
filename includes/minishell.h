@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/23 17:55:39 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/25 18:38:06 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@
 # define SET 0
 # define GET 1
 
+// signal changer
+# define SIGMODE_DEFAULT 0 // main/default
+# define SIGMODE_PIPELINE 1 // pipeline
+# define SIGMODE_CHILD 2 // pipe child
+# define SIGMODE_HEREDOC 3 // heredoc
+
 // error handler
 # define INVALID -1
 # define SUCCESS 0
@@ -64,6 +70,7 @@
 # define REDIR_OUT 5// >
 # define APPEND 6// >> redir onto a file and add content
 # define HEREDOC 7// <<
+# define REDIR 8 // tree contruct
 
 # define FALSE 0
 # define TRUE 1
@@ -76,13 +83,6 @@
 /*=============================================================================#
 #                                   STRUCTS                                    #
 #=============================================================================*/
-
-typedef struct s_env
-{
-	char			*name;	// $USER
-	char			*value;	// frbranda
-	struct s_env	*next;
-}	t_env;
 
 typedef struct s_token
 {
@@ -141,7 +141,6 @@ typedef struct s_shell
 	char	**args;
 	t_token	*token_list;
 	t_token	*head;
-	t_env	*env;
 	t_info	info;
 	int		pid;
 	char	*s_pid;
@@ -202,7 +201,7 @@ char	*handle_question_mark(t_shell *shell, char *s, int *i, t_info *info);
 
 //  expansion_helper.c
 char	*take_var_name(char *s, int *i);
-char	*get_env_value_expansion(char *var_name, t_env *env_list);
+char	*get_env_value_expansion(char *var_name, char **envp);
 int		check_if_var_is_alone(char *s, int i, t_info *info);
 char	*expand_var_in_str(char *s, char *var_value, int i, t_info *info);
 
@@ -291,8 +290,6 @@ void	ft_erase_var(char *var, t_shell *shell);
 void	ft_init(t_shell	*shell, char **envp);
 char	**init_env(char **envp);
 char	**token_list_to_array(t_token *tokens);
-void	ft_signals(void);
-void	sigint_handler(int sig);
 // TODO put in libft
 char	**ft_matrix_dup(char **matrix);
 int		**ft_matrix_dup_int(int **matrix);
@@ -304,12 +301,11 @@ char	*ft_strldup(const char *s, int length);
 #=============================================================================*/
 
 // signal.c
-void	set_signal_default(void);
-void	set_signal_heredoc(void);
+void	set_signal_mode(int mode);
 
 // signal_handler.c
 void	signal_default_handler(int signo);
-void	signal_handler_pipeline(int signo);
+void	signal_pipe_handler(int signo);
 
 // setget_signo.c
 void	set_signo(int new_value);
@@ -325,7 +321,6 @@ void	exit_init(t_shell *shell, char *reason);
 
 // free_shell.c
 void	free_tokens(t_token **token);
-void	free_env(t_env **env);
 void	free_shell(t_shell	**shell);
 
 // free.c
