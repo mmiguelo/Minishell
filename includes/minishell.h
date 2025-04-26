@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/24 18:14:42 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:58:38 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,16 @@ typedef struct s_redir
 {
 	int				type;
 	char			*redir_file;
-	int				redir_type;
+	int				type_of_redirection;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_cmd
+typedef struct s_exec
 {
 	int		type;
 	t_list	*argv;
 	t_redir	*redirs;
-}	t_cmd;
+}	t_exec;
 
 // struct helper
 typedef struct s_info
@@ -314,11 +314,16 @@ void	print_tokens_simple(t_token *token);
 // node.c
 t_pipe	*create_pipe_node(t_node *left, t_node *right);
 t_redir	*create_redir_node(char *filename, int type);
-t_cmd	*create_cmd_node(void);
+t_exec	*create_cmd_node(void);
 
 // tree.c
 int		make_tree(t_shell *root);
 t_node	*parse_pipe(t_token **current);
-t_node	*parse_redir(t_token **current);
+t_node	*parse_exec(t_token **current);
+
+// tree_helper.c
+int		redirection_type(t_token *token);
+int		insert_argv_node(t_exec *node, char *content);
+int		insert_redir_node(t_exec *node, char *filename, int type);
 
 #endif

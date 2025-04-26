@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:08:49 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/04 12:57:11 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/26 18:23:14 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ void	print_tokens(t_token *token)
 		ft_printf("-----------------\n");
 	}
 }
+
 // TODO DELETE WHEN NOT NEEDED
-/* void	print_tokens_simple(t_token *token)
+void	print_tokens_simple(t_token *token)
 {
 	t_token	*temp;
 
@@ -92,4 +93,4 @@ void	print_tokens(t_token *token)
 		temp = temp->next;
 	}
 	ft_printf("]\n");
-} */
+}

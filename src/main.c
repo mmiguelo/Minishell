@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/09 16:47:34 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/26 18:21:13 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_minishell(t_shell *shell, char **envp)
 			}
 			else
 				printf("Command not found\n");
+			make_tree(shell);
 		}
 		free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);

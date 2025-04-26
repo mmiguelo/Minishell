@@ -21,16 +21,16 @@ t_redir	*create_redir_node(char *filename, int type)
 		return (NULL);
 	redir_node->type = REDIR;
 	redir_node->redir_file = filename;
-	redir_node->redir_type = type;
+	redir_node->type_of_redirection = type;
 	redir_node->next = NULL;
 	return (redir_node);
 }
 
-t_cmd	*create_cmd_node(void)
+t_exec	*create_cmd_node(void)
 {
-	t_cmd	*cmd_node;
+	t_exec	*cmd_node;
 
-	cmd_node = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	cmd_node = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	if (!cmd_node)
 		return (NULL);
 	cmd_node->type = CMD;
