@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 15:41:55 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/29 18:48:48 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	builtin_and_cmd(t_shell *shell)
 			shell->exit_status = 127;
 			ft_printf_fd(2, "Command not found\n");
 		}
+		make_tree(shell);
+		free_tree_node(&shell->tree);
 	}
 }
 

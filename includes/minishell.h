@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/25 18:38:06 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/29 19:51:28 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,15 @@ typedef struct s_node
 	int	type;
 }	t_node;
 
-typedef struct s_pipe
+typedef struct s_tree
 {
-	int		type;
-	t_node	*left;
-	t_node	*right;
-}	t_pipe;
+	int				type;
+	char			*name;
+	int				redir_type;
+	struct s_tree	*left;
+	struct s_tree	*right;
+	struct s_tree	*next;
+}	t_tree;
 
 typedef struct s_redir
 {
@@ -369,5 +372,8 @@ int		insert_redir_node(t_exec *node, char *filename, int type);
 
 // exec_tree.c
 void	parse_exec_or_pipe(t_shell *shell, t_node *node);
+
+//free_tree.c
+void	free_tree_node(t_node **node);
 
 #endif

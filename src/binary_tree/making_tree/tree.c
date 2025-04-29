@@ -40,16 +40,20 @@ t_node	*parse_exec(t_token **current)
 t_node	*parse_pipe(t_token **current)
 {
 	t_node	*node;
+	t_token  *temp;
 
 	node = parse_exec(current);
 	if (node == NULL)
 		return (NULL);
+	temp = (*current);
 	if (*current && (*current)->type == PIPE)
 	{
 		node = (t_node *)create_pipe_node(node, parse_pipe(&(*current)->next));
 		if (node == NULL)
 			return (NULL);
 	}
+	(*current) = temp;
+	//printf("ARGV: %s\n", (t_list *)((t_exec *)(*current)->token)->argv->content);
 	return (node);
 }
 
@@ -57,10 +61,13 @@ int	make_tree(t_shell *root)
 {
 	t_token	*current;
 
+	//printf ("TOKEN LIST: %s -----> %p\n", root->token_list->next->next->token , root->token_list->next->next->token);
 	current = root->token_list;
 	root->tree = parse_pipe(&current);
-	if (root->tree == NULL)
-		free_tokens(&root->token_list);
+	//printf ("CURRENT: %s -----> %p\n", current->token , current->token);
+	//printf ("TOKEN LIST: %s -----> %p\n", root->token_list->token , root->token_list->token);
+	/* if (root->tree == NULL)
+		free_tokens(&root->token_list); */
 	/* ft_printf("root value is %d\n", root->tree->type);
 	if (((t_pipe *)root->tree)->left)
 		ft_printf("level 1: descendatnt is %d\n", ((t_pipe *)root->tree)->left->type);

@@ -6,7 +6,7 @@
 #    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/23 17:52:57 by yes              ###   ########.fr        #
+#    Updated: 2025/04/29 17:04:20 by mmiguelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SIGNAL = signal.c signal_handler.c setget_signo.c
 FREE = free.c free_shell.c free_exit.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
-BINARY_TREE = tree.c node.c tree_helper.c exec_tree.c
+BINARY_TREE = tree.c node.c tree_helper.c exec_tree.c free_tree.c
 
 NAME = minishell
 
@@ -74,6 +74,7 @@ VPATH += src/prints
 #binary_tree
 VPATH += src/binary_tree/making_tree
 VPATH += src/binary_tree/executing_tree
+VPATH += src/binary_tree/free_tree
 
 #==============================================================================#
 #                                    FILES                                     #
