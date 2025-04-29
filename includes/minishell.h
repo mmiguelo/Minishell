@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
 /*   Updated: 2025/04/25 18:38:06 by yes              ###   ########.fr       */
@@ -110,16 +110,18 @@ typedef struct s_pipe
 
 typedef struct s_redir
 {
-	char			*redir;
+	int				type;
+	char			*redir_file;
+	int				type_of_redirection;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_cmd
+typedef struct s_exec
 {
 	int		type;
-	char	**args;
+	t_list	*argv;
 	t_redir	*redirs;
-}	t_cmd;
+}	t_exec;
 
 // struct helper
 typedef struct s_info
@@ -142,6 +144,7 @@ typedef struct s_shell
 	t_token	*token_list;
 	t_token	*head;
 	t_info	info;
+	t_node	*tree;
 	int		pid;
 	char	*s_pid;
 	char	**envp;
@@ -344,5 +347,27 @@ int		print_invalid_var(char *var);
 void	print_type(t_info *info);
 void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
+
+/*=============================================================================#
+#                      	           TREE                                        #
+#=============================================================================*/
+
+// node.c
+t_pipe	*create_pipe_node(t_node *left, t_node *right);
+t_redir	*create_redir_node(char *filename, int type);
+t_exec	*create_cmd_node(void);
+
+// tree.c
+int		make_tree(t_shell *root);
+t_node	*parse_pipe(t_token **current);
+t_node	*parse_exec(t_token **current);
+
+// tree_helper.c
+int		redirection_type(t_token *token);
+int		insert_argv_node(t_exec *node, char *content);
+int		insert_redir_node(t_exec *node, char *filename, int type);
+
+// exec_tree.c
+void	parse_exec_or_pipe(t_shell *shell, t_node *node);
 
 #endif
