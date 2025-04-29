@@ -6,7 +6,7 @@
 #    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/26 18:58:46 by mmiguelo         ###   ########.fr        #
+#    Updated: 2025/04/29 12:25:03 by mmiguelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ BUILTIN = builtin_utils.c cd.c cd1.c echo.c env.c exit.c \
 FREE = free.c free_shell.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
-BINARY_TREE = tree.c node.c tree_helper.c
+BINARY_TREE = tree.c node.c tree_helper.c exec_tree.c
 
 NAME = minishell
 
@@ -69,7 +69,8 @@ VPATH += src/frees
 # print
 VPATH += src/prints
 #binary_tree
-VPATH += src/binary_tree
+VPATH += src/binary_tree/making_tree
+VPATH += src/binary_tree/executing_tree
 
 #==============================================================================#
 #                                    FILES                                     #

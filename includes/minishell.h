@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/26 18:58:38 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:37:33 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,5 +325,8 @@ t_node	*parse_exec(t_token **current);
 int		redirection_type(t_token *token);
 int		insert_argv_node(t_exec *node, char *content);
 int		insert_redir_node(t_exec *node, char *filename, int type);
+
+// exec_tree.c
+void	parse_exec_or_pipe(t_shell *shell, t_node *node);
 
 #endif

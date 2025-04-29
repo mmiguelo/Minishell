@@ -28,7 +28,8 @@ t_node	*parse_exec(t_token **current)
 		}
 		else if (redirection_type(*current) == 0)
 		{
-			if (insert_redir_node(node, (*current)->token, (*current)->type) != 0)
+			if (insert_redir_node(node, (*current)->token,
+					(*current)->type) != 0)
 				return (ft_lstclear(&node->argv, free), free(node), NULL);
 		}
 		*current = (*current)->next;
@@ -60,7 +61,7 @@ int	make_tree(t_shell *root)
 	root->tree = parse_pipe(&current);
 	if (root->tree == NULL)
 		free_tokens(&root->token_list);
-	ft_printf("root value is %d\n", root->tree->type);
+	/* ft_printf("root value is %d\n", root->tree->type);
 	if (((t_pipe *)root->tree)->left)
 		ft_printf("level 1: descendatnt is %d\n", ((t_pipe *)root->tree)->left->type);
 	if (((t_pipe *)root->tree)->right)
@@ -72,8 +73,8 @@ int	make_tree(t_shell *root)
 	if (((t_pipe *)((t_pipe *)root->tree)->right)->left)
 		ft_printf("Level 2: right Left descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->left->type);
 	if (((t_pipe *)((t_pipe *)root->tree)->right)->left)
-	ft_printf("Level 3: right Left descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->left->type);
+		ft_printf("Level 3: right Left descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->left->type);
 	if (((t_pipe *)((t_pipe *)root->tree)->right)->right)
-		ft_printf("Level 3: righjt Right descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->right->type);
+		ft_printf("Level 3: righjt Right descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->right->type); */
 	return (0);
 }
