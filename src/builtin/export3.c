@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:17:54 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/09 14:35:18 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/18 16:59:48 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,12 @@ void	concatenate_value(char **var, char *new_var, t_shell *shell, int i)
 
 	old_value = get_value(shell->envp[i]);
 	new_value = ft_strdup(ft_strnstr(*var, "+=", ft_strlen(*var)) + 2);
+	if (*var)
+		free_ref(var);
 	*var = ft_strdup_free(ft_strjoin(new_var, "="),
 			ft_strdup_free(old_value, new_value));
 	free(shell->envp[i]);
-	shell->envp[i] = *var;
+	shell->envp[i] = ft_strdup(*var);
+	free_ref(&new_var);
+	free_ref(var);
 }

@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   syntax_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/24 17:36:37 by yes              ###   ########.fr       */
+/*   Created: 2025/04/23 17:35:32 by yes               #+#    #+#             */
+/*   Updated: 2025/04/23 18:03:42 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// free tokens
-void	free_tokens(t_token **token)
+int	check_syntax_pipes(t_shell *shell, char *s, int *i)
 {
-	t_token	*temp;
-
-	if (!token || !(*token))
-		return ;
-	while (*token != NULL)
+	(*i)++;
+	while (s[*i] && ft_strchr(WHITE_SPACES, s[*i]))
+		(*i)++;
+	if (!s[*i])
 	{
-		free((*token)->token);
-		temp = (*token)->next;
-		free(*token);
-		*token = temp;
+		shell->exit_status = SYNTAX_ERROR;
+		return (ft_printf_fd(2, ERROR_UNCLOSED_PIPE), SYNTAX_ERROR);
 	}
-	(*token) = NULL;
-}
-
-// TODO might delete V
-// free main struct (shell)
-void	free_shell(t_shell	**shell)
-{
-	if ((*shell)->token_list)
-		free_tokens(&(*shell)->token_list);
-	if ((*shell)->s_pid)
-		free((*shell)->s_pid);
+	else if (ft_strchr(T_PIPE, s[*i]))
+	{
+		shell->exit_status = SYNTAX_ERROR;
+		return (handle_syntax_error(s, *i), SYNTAX_ERROR);
+	}
+	return (SUCCESS);
 }

@@ -78,6 +78,15 @@ SRCS +=	ft_printf/ft_putnbr.c
 SRCS +=	ft_printf/ft_putptr.c
 SRCS +=	ft_printf/ft_putstr.c
 SRCS +=	ft_printf/ft_pututoa.c
+
+SRCS +=	ft_printf_fd/ft_printf_fd.c
+SRCS +=	ft_printf_fd/ft_putchar_fd_pf.c
+SRCS +=	ft_printf_fd/ft_puthex_fd.c
+SRCS +=	ft_printf_fd/ft_putnbr_fd_pf.c
+SRCS +=	ft_printf_fd/ft_putptr_fd.c
+SRCS +=	ft_printf_fd/ft_putstr_fd_pf.c
+SRCS +=	ft_printf_fd/ft_pututoa_fd.c
+
 SRCS +=	get_next_line/get_next_line.c
 SRCS +=	get_next_line/get_next_line_utils.c
 SRCS +=	ft_lstnew.c

@@ -6,30 +6,35 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 12:37:33 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:38:06 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <errno.h>
-# include <signal.h>
+# include <errno.h> // error codes
+# include <signal.h> // signals
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h> // wait for child process
+# include <fcntl.h> // file manipulation
+# include <dirent.h> // folder manipulation
 # include "../libft/libft.h"
 
 /*=============================================================================#
-#                               DEFINES                                        #
+#                                   DEFINES                                    #
 #=============================================================================*/
 
 # define NO_NUMERIC "minishell: exit: %s: numeric argument required\n"
 
-# define ERROR_SYNTAX "syntax error near unexpected token %s\n"
-# define ERROR_SYNTAX_NL "syntax error near unexpected token 'newline'\n"
+# define ERROR_LAUCH "Error: minishell must be lauched without arguments\n"
+# define ERROR_SYNTAX "syntax error near unexpected token `%s'\n"
+# define ERROR_SYNTAX_END "syntax error near unexpected token `newline'\n"
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
+# define CORE_DUMP_MSG "Quit (core dumped)\n"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -38,6 +43,17 @@
 # define T_REDIR "<>"
 # define T_PIPE "|"
 # define QUOTES "\"\'"
+
+// signal helper
+# define CTRL_C 2
+# define SET 0
+# define GET 1
+
+// signal changer
+# define SIGMODE_DEFAULT 0 // main/default
+# define SIGMODE_PIPELINE 1 // pipeline
+# define SIGMODE_CHILD 2 // pipe child
+# define SIGMODE_HEREDOC 3 // heredoc
 
 // error handler
 # define INVALID -1
@@ -54,7 +70,7 @@
 # define REDIR_OUT 5// >
 # define APPEND 6// >> redir onto a file and add content
 # define HEREDOC 7// <<
-# define REDIR 8 // for node control
+# define REDIR 8 // tree contruct
 
 # define FALSE 0
 # define TRUE 1
@@ -65,15 +81,8 @@
 # define DOUBLE_QUO 2
 
 /*=============================================================================#
-#                               STRUCTS                                        #
+#                                   STRUCTS                                    #
 #=============================================================================*/
-
-typedef struct s_env
-{
-	char			*name;	// $USER
-	char			*value;	// frbranda
-	struct s_env	*next;
-}	t_env;
 
 typedef struct s_token
 {
@@ -134,27 +143,39 @@ typedef struct s_shell
 	char	**args;
 	t_token	*token_list;
 	t_token	*head;
-	t_env	*env;
 	t_info	info;
 	t_node	*tree;
 	int		pid;
 	char	*s_pid;
-	int		exit_status;
 	char	**envp;
 	char	**cmd;
 	char	pwd[1024];
 	char	*old_pwd;
+	int		exit_status;
+	int		prev_exit_status;
 }	t_shell;
 
 //function pointer type for builtins
 typedef int	(*t_bt)(char **, t_shell *);
 
 /*=============================================================================#
-#                               PARSING                                        #
+#                                     MAIN                                     #
 #=============================================================================*/
 
+void	ft_minishell(t_shell *shell);
+
 /*=============================================================================#
-#                              TOKENIZER                                       #
+#                                   PARSING                                    #
+#=============================================================================*/
+
+int		ft_parsing(t_shell *shell, char *s);
+void	handle_syntax_error(char *s, int i);
+int		check_syntax_pipes(t_shell *shell, char *s, int *i);
+int		check_syntax_quotes(t_shell *shell, char *s, int *i);
+int		check_syntax_redir(t_shell *shell, char *s, int *i);
+
+/*=============================================================================#
+#                                  TOKENIZER                                   #
 #=============================================================================*/
 
 // tokenizer.c
@@ -183,7 +204,7 @@ char	*handle_question_mark(t_shell *shell, char *s, int *i, t_info *info);
 
 //  expansion_helper.c
 char	*take_var_name(char *s, int *i);
-char	*get_env_value_expansion(char *var_name, t_env *env_list);
+char	*get_env_value_expansion(char *var_name, char **envp);
 int		check_if_var_is_alone(char *s, int i, t_info *info);
 char	*expand_var_in_str(char *s, char *var_value, int i, t_info *info);
 
@@ -211,7 +232,7 @@ t_token	*initialize_token(char *s, int type);
 t_shell	*initialize_shell(void);
 
 /*=============================================================================#
-#                                BUILTIN                                       #
+#                                   BUILTIN                                    #
 #=============================================================================*/
 
 //builtin functions
@@ -266,23 +287,43 @@ int		ft_unset(char **args, t_shell *shell);
 void	ft_erase_var(char *var, t_shell *shell);
 
 /*=============================================================================#
-#                                 UTILS                                        #
+#                                    UTILS                                     #
 #=============================================================================*/
 
 void	ft_init(t_shell	*shell, char **envp);
 char	**init_env(char **envp);
 char	**token_list_to_array(t_token *tokens);
-void	ft_signals(void);
-void	ft_minishell(t_shell *shell, char **envp);
-void	sigint_handler(int sig);
+// TODO put in libft
+char	**ft_matrix_dup(char **matrix);
+int		**ft_matrix_dup_int(int **matrix);
+void	ft_matrix_free(void ***matrix);
+char	*ft_strldup(const char *s, int length);
 
 /*=============================================================================#
-#                      	           FREE                                        #
+#                                   SIGNALS                                    #
 #=============================================================================*/
+
+// signal.c
+void	set_signal_mode(int mode);
+
+// signal_handler.c
+void	signal_default_handler(int signo);
+void	signal_pipe_handler(int signo);
+
+// setget_signo.c
+void	set_signo(int new_value);
+int		get_signo(void);
+
+/*=============================================================================#
+#                      	              FREE                                     #
+#=============================================================================*/
+
+// free_exit.c
+void	free_exit(t_shell *shell, int exit_status);
+void	exit_init(t_shell *shell, char *reason);
 
 // free_shell.c
 void	free_tokens(t_token **token);
-void	free_env(t_env **env);
 void	free_shell(t_shell	**shell);
 
 // free.c
@@ -293,7 +334,7 @@ int		free_matriz(char **shell, int i);
 void	ft_kill(t_shell **shell, int status);
 
 /*=============================================================================#
-#                      	           PRINT                                       #
+#                      	             PRINT                                     #
 #=============================================================================*/
 
 // print_shell.c?

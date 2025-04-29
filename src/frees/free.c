@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:43:05 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/09 16:59:33 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/29 15:42:22 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	free_char_pp(char **s)
 	int	i;
 
 	i = 0;
+	if (!(*s))
+		return ;
 	while (s[i] != NULL)
 	{
 		free(s[i]);
@@ -68,6 +70,8 @@ void	free_char_pp_ref(char ***s)
 	int	i;
 
 	i = 0;
+	if (!(*s))
+		return ;
 	while ((*s)[i])
 	{
 		free((*s)[i]);
@@ -125,8 +129,6 @@ void	ft_kill(t_shell **shell, int status)
 		free_char_pp_ref(&(*shell)->args);
 	if ((*shell)->token_list)
 		free_tokens(&(*shell)->token_list);
-	if ((*shell)->env)
-		free_env(&(*shell)->env);
 	if ((*shell)->s_pid)
 		free((*shell)->s_pid);
 	if ((*shell)->envp)

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/09 16:48:05 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/25 18:12:19 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,60 @@ t_token	*initialize_token(char *s, int type)
 	return (new);
 }
 
-// TODO DELETE LATER WHEN ENV IS INITIALIZE
-/* t_env	*initialize_env(void)
+int	update_envp_int(t_shell *shell, char *var, char *path)
 {
-	t_env	*new;
-	t_env	*new2;
-	t_env	*new3;
+	char	*new_line;
+	char	*temp;
+	int		i;
 
-	new = ft_calloc(1, sizeof(t_env));
-	new->name = ft_strdup("VAR");
-	new->value = ft_strdup("s -");
-	new->next = NULL;
-	new2 = ft_calloc(1, sizeof(t_env));
-	new2->name = ft_strdup("VAR1");
-	new2->value = ft_strdup("echo");
-	new2->next = NULL;
-	new->next = new2;
-	new3 = ft_calloc(1, sizeof(t_env));
-	new3->name = ft_strdup("REDIR");
-	new3->value = ft_strdup(">>");
-	new3->next = NULL;
-	new2->next = new3;
-	return (new);
-} */
+	i = get_env_line(var, shell);
+	new_line = ft_strjoin(var, "=");
+	if (!new_line)
+		return (INVALID);
+	temp = new_line;
+	new_line = ft_strjoin(new_line, path);
+	free(temp);
+	if (!new_line)
+		return (INVALID);
+	if (i == -1)
+	{
+		if (add_var_to_envp(new_line, shell) != 0)
+			return (free_ref(&new_line), INVALID);
+	}
+	else
+	{
+		free(shell->envp[i]);
+		shell->envp[i] = new_line;
+		return (SUCCESS);
+	}
+	return (free_ref(&new_line), SUCCESS);
+}
+
+int	update_shlvl(t_shell *shell)
+{
+	char	*old;
+	char	*new;
+	int		shlvl;
+
+	old = get_env_value_expansion("SHLVL", shell->envp);
+	if (!old)
+	{
+		//TODO maybe change this ? because its showing with env -i
+		if (add_var_to_envp("SHLVL=1", shell) != 0)
+			return (INVALID);
+	}
+	else
+	{
+		shlvl = ft_atoi(old) + 1;
+		new = ft_itoa(shlvl);
+		if(!new)
+			return (INVALID);
+		if (update_envp_int(shell, "SHLVL", new) != 0)
+			return (free_ref(&new), INVALID);
+		free_ref(&new);
+	}
+	return (SUCCESS);
+}
 
 /**
  * @brief Initializes the shell structure with environment variables and
@@ -118,10 +149,15 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->args = NULL;
 	shell->token_list = NULL;
 	shell->head = NULL;
-	shell->env = NULL;
 	shell->pid = getpid();
 	shell->s_pid = NULL;
-	shell->exit_status = 0;
 	shell->envp = init_env(envp);
+	if (!shell->envp)
+		exit_init(shell, "malloc");
+	if (update_shlvl(shell) != SUCCESS)
+		exit_init(shell, "shlvl");
 	shell->cmd = NULL;
+	shell->old_pwd = NULL;
+	shell->exit_status = 0;
+	shell->prev_exit_status = 0;
 }

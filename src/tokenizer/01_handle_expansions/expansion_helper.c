@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:24:40 by yes               #+#    #+#             */
-/*   Updated: 2025/04/07 19:05:43 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/24 17:29:18 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ char	*take_var_name(char *s, int *i)
 	return (ft_strndup(&s[start], len));
 }
 
-char	*get_env_value_expansion(char *var_name, t_env *env_list)
+char	*get_env_value_expansion(char *var_name, char **envp)
 {
-	t_env	*temp;
+	int		len;
+	int		i;
 
-	temp = env_list;
-	while (temp)
+	len = ft_strlen(var_name);
+	i = 0;
+	while (envp[i])
 	{
-		if (ft_strcmp(temp->name, var_name) == 0)
-			return (temp->value);
-		temp = temp->next;
+		if (ft_strncmp(envp[i], var_name, len) == 0 && envp[i][len] == '=')
+			return (envp[i] + (len + 1));
+		i++;
 	}
 	return ("");
 }

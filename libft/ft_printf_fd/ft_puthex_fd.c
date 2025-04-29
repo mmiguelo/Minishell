@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_free.c                                   :+:      :+:    :+:   */
+/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:06:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:25:08 by yes              ###   ########.fr       */
+/*   Created: 2025/04/09 18:30:23 by yes               #+#    #+#             */
+/*   Updated: 2025/04/09 18:36:20 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf_fd.h"
 
-/**
- * @brief Duplicates a string and frees the original strings.
- * 
- * @param s1 
- * @param s2 
- * @return char* 
- */
-char	*ft_strdup_free(char *s1, char *s2)
+int	ft_puthex_fd(unsigned int n, char c, int fd)
 {
-	char	*dest;
+	char	*base;
+	int		result;
 
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (dest);
+	result = 0;
+	if (c == 'x')
+		base = "0123456789abcdef";
+	if (c == 'X')
+		base = "0123456789ABCDEF";
+	if (n >= 16)
+	{
+		result += ft_puthex_fd((n / 16), c, fd);
+		result += ft_puthex_fd((n % 16), c, fd);
+	}
+	else
+		result += write (fd, &base[n], 1);
+	return (result);
 }

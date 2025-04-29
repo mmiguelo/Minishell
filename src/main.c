@@ -6,57 +6,113 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/26 18:21:13 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:41:55 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ctr + c handler (make new .c file)
-void	sigint_handler(int sig)
+int	only_spaces(char *input)
 {
-	(void) sig;
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_strchr(WHITE_SPACES, input[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }
 
-void	ft_signals(void)
+void	read_input(t_shell *shell)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
+	shell->prev_exit_status = shell->exit_status; // for signal exit_status
+	shell->exit_status = 0;
+	set_signo(0); // reset signo
+	errno = 0; // reset errno
+	shell->input = readline("minishell> ");
+	if (get_signo() == CTRL_C)
+		shell->prev_exit_status = CTRL_C + 128;
+	if (!shell->input)
+	{
+		ft_putstr_fd("exit\n", 2);
+		free_exit (shell, shell->prev_exit_status);
+	}
+	if (only_spaces(shell->input) == FALSE)
+		add_history(shell->input);
 }
 
-void	ft_minishell(t_shell *shell, char **envp)
+void	execute_external_cmd(t_shell *shell)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(shell->args[0], shell->args, shell->envp);
+		perror("execve failed");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		shell->exit_status = WEXITSTATUS(status);
+	}
+	else
+	{
+		perror("fork failed");
+		shell->exit_status = 1;
+	}
+}
+
+int	execute_command(char *arg)
+{
+	if (arg[0] == '.' && arg[1] == '/')
+	{
+		if (access(arg, F_OK) == 0)
+			return (0);
+	}
+	return (-1);
+}
+
+void	builtin_and_cmd(t_shell *shell)
 {
 	t_bt	func;
 
-	ft_init(shell, envp);
+	if (shell->args && shell->args[0])
+	{
+		func = ft_isbuiltin(shell->args[0], shell);
+		if (func)
+		{
+			if (func(shell->args, shell) != 0)
+				printf("Error executing %s\n", shell->args[0]);
+		}
+		else if (execute_command(shell->args[0]) == 0)
+			execute_external_cmd(shell);
+		else
+		{
+			shell->exit_status = 127;
+			ft_printf_fd(2, "Command not found\n");
+		}
+	}
+}
+
+void	ft_minishell(t_shell *shell)
+{
 	while (1)
 	{
-		shell->input = readline("minishell> ");
-		if (!shell->input)
+		read_input(shell);
+		if (ft_parsing(shell, shell->input) != SUCCESS)
 		{
-			ft_putstr_fd("exit\n", 2);
-			break ;
+			free_ref(&shell->input);
+			continue ;
 		}
-		add_history(shell->input);
 		tokenizer(&shell, ft_strdup(shell->input));
 		shell->args = token_list_to_array(shell->token_list);
-		if (shell->args && shell->args[0])
-		{
-			func = ft_isbuiltin(shell->args[0], shell);
-			if (func)
-			{
-				if (func(shell->args, shell) != 0)
-					printf("Error executing %s\n", shell->args[0]);
-			}
-			else
-				printf("Command not found\n");
-			make_tree(shell);
-		}
+		builtin_and_cmd(shell);
 		free_char_pp_ref(&shell->args);
 		free_tokens(&shell->token_list);
 		free_ref(&shell->input);
@@ -68,16 +124,14 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
-	(void)argc;
+	if (argc != 1)
+		return (ft_printf_fd(STDERR_FILENO, ERROR_LAUCH), 0);
 	(void)argv;
-	ft_signals();
-	ft_memset(&shell, 0, sizeof(t_shell));
-	ft_minishell(&shell, envp);
+	ft_init(&shell, envp);
+	set_signal_mode(SIGMODE_DEFAULT);
+	ft_minishell(&shell);
 	return (0);
 }
-
-/*	line: 31 -> // ignore on prompt but leave with leak when using cat
-	line: 37 -> // Ctrl+D EOF
 
 // Do different "whiles(1)" for main/cat/here_doc also 
 // signals are different(ctrl + /) ??? */

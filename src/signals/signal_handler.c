@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_free.c                                   :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:06:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:25:08 by yes              ###   ########.fr       */
+/*   Created: 2025/04/10 14:03:40 by yes               #+#    #+#             */
+/*   Updated: 2025/04/25 14:50:45 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/**
- * @brief Duplicates a string and frees the original strings.
- * 
- * @param s1 
- * @param s2 
- * @return char* 
- */
-char	*ft_strdup_free(char *s1, char *s2)
+void	signal_default_handler(int signo)
 {
-	char	*dest;
+	if (signo == SIGINT)
+	{
+		ft_printf_fd(1, "\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		set_signo(SIGINT);
+	}
+}
 
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (dest);
+void	signal_pipe_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		set_signo(SIGINT);
+	}
 }

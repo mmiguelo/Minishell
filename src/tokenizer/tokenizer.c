@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:25 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/26 18:23:20 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:59:38 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void	tokenizer(t_shell **shell, char *s)
 	}
 	free(s);
 	(*shell)->token_list = token_list;
-	(*shell)->exit_status = 0;
-	//print_tokens(token_list);
+	print_tokens(token_list);
 }

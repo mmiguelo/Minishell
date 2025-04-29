@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_free.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_fd_pf.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:06:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:25:08 by yes              ###   ########.fr       */
+/*   Created: 2024/11/07 13:54:29 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/04/10 12:07:07 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf_fd.h"
 
-/**
- * @brief Duplicates a string and frees the original strings.
- * 
- * @param s1 
- * @param s2 
- * @return char* 
- */
-char	*ft_strdup_free(char *s1, char *s2)
+int	ft_putnbr_fd_pf(int n, int fd)
 {
-	char	*dest;
+	int		length;
+	char	*num;
 
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (dest);
+	length = 0;
+	num = ft_itoa(n);
+	length = ft_putstr_fd_pf(num, fd);
+	free(num);
+	return (length);
 }

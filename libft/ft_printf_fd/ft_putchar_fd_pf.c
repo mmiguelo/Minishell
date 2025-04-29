@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_free.c                                   :+:      :+:    :+:   */
+/*   ft_putchar_fd_pf.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:06:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:25:08 by yes              ###   ########.fr       */
+/*   Created: 2024/11/06 18:03:32 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/04/10 12:07:27 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf_fd.h"
 
-/**
- * @brief Duplicates a string and frees the original strings.
- * 
- * @param s1 
- * @param s2 
- * @return char* 
- */
-char	*ft_strdup_free(char *s1, char *s2)
+int	ft_putchar_fd_pf(char c, int fd)
 {
-	char	*dest;
-
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (dest);
+	write(fd, &c, 1);
+	return (1);
 }
