@@ -57,6 +57,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
+char	*ft_strldup(const char *s, int length);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
@@ -64,6 +65,8 @@ char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup_free(char *s1, char *s2);
+char	**ft_matrix_dup(char **matrix);
+int		**ft_matrix_dup_int(int **matrix);
 
 /*=============================================================================#
 #                                MEMORIES                                      #
@@ -78,6 +81,7 @@ void	*ft_memset(void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_realloc(void *ptr, size_t original_size, size_t new_size);
 void	**ft_realloc_pp(void **ptr, size_t original_size, size_t new_size);
+void	ft_matrix_free(void ***matrix);
 
 /*=============================================================================#
 #                            FILES DESCRIPTORS                                 #

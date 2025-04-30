@@ -1,48 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_dup_int.c                                :+:      :+:    :+:   */
+/*   ft_matrix_dup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 16:14:44 by yes               #+#    #+#             */
-/*   Updated: 2025/04/23 17:57:08 by yes              ###   ########.fr       */
+/*   Created: 2025/04/22 12:21:59 by yes               #+#    #+#             */
+/*   Updated: 2025/04/30 11:27:40 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 /**
- * @brief Creates a deep copy of a matrix of integer pointers.
+ * @brief Creates a deep copy of a NULL-terminated matrix of strings.
  *
- * This function duplicates each individual int pointer by allocating
- * a new int and copying the value. The matrix is terminated with a NULL pointer.
- *
- * @param matrix An array of int pointers (int **).
- * @return A newly allocated deep-copied matrix, or NULL on allocation failure.
+ * @param matrix A void** pointing to a NULL-terminated array of char*.
+ * @return A deep copied matrix (void**) or NULL on allocation failure.
  */
-int	**ft_matrix_dup_int(int **matrix)
+char	**ft_matrix_dup(char **matrix)
 {
-	int	**dup;
-	int	len;
-	int	i;
+	char	**dup;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = 0;
+	matrix = (char **)matrix;
 	while (matrix[len])
 		len++;
-	dup = ft_calloc((len + 1), sizeof(int *));
-	if (!dup)
-		return (NULL);
+	dup = (char **)ft_calloc(len + 1, sizeof(char *));
 	while (i < len)
 	{
-		dup[i] = ft_calloc(1, sizeof(int *));
+		dup[i] = ft_strldup(matrix[i], ft_strlen(matrix[i]));
 		if (!dup[i])
 		{
 			ft_matrix_free((void ***)(&dup));
 			return (NULL);
 		}
-		*dup[i] = *matrix[i];
 		i++;
 	}
 	dup[i] = NULL;

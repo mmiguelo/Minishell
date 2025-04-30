@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
+#    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/23 17:52:57 by yes              ###   ########.fr        #
+#    Updated: 2025/04/30 12:02:15 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_matrix_dup_int.c ft_strldup.c
+GENERAL = main.c init.c shell_helper.c
 PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c syntax_redir.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
@@ -53,22 +53,22 @@ RESET = \033[0m
 
 # src
 VPATH += src
+# free
+VPATH += src/00_frees
+# errors
+VPATH += src/01_errors
+# signals
+VPATH += src/02_signals
 # parsing
-VPATH += src/parsing
+VPATH += src/03_parsing
 # tokenizer
-VPATH += src/tokenizer
-VPATH += src/tokenizer/00_handle_spaces
-VPATH += src/tokenizer/01_handle_expansions
-VPATH += src/tokenizer/02_handle_quote
-VPATH += src/tokenizer/03_add_new_token
+VPATH += src/04_tokenizer
+VPATH += src/04_tokenizer/00_handle_spaces
+VPATH += src/04_tokenizer/01_handle_expansions
+VPATH += src/04_tokenizer/02_handle_quote
+VPATH += src/04_tokenizer/03_add_new_token
 # builtin
 VPATH += src/builtin
-# signals
-VPATH += src/signals
-# errors
-VPATH += src/errors
-# free
-VPATH += src/frees
 # print
 VPATH += src/prints
 #binary_tree
@@ -80,12 +80,12 @@ VPATH += src/binary_tree/executing_tree
 #==============================================================================#
 
 SRC +=	$(GENERAL)
+SRC +=	$(FREE)
+SRC +=	$(ERRORS)
+SRC +=	$(SIGNAL)
 SRC +=	$(PARSING)
 SRC +=	$(TOKENIZER)
 SRC +=	$(BUILTIN)
-SRC +=	$(SIGNAL)
-SRC +=	$(ERRORS)
-SRC +=	$(FREE)
 SRC +=	$(PRINT)
 # binary_tree
 SRC +=	$(BINARY_TREE)

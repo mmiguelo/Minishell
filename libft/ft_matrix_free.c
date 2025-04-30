@@ -6,11 +6,11 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:50 by yes               #+#    #+#             */
-/*   Updated: 2025/04/18 17:08:04 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/30 11:27:38 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 /**
  * @brief Frees a dynamically allocated NULL-terminated matrix of strings.

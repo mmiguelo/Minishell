@@ -42,6 +42,9 @@ SRCS +=	ft_isprint.c
 SRCS +=	ft_isspace.c
 SRCS += ft_isupper.c
 SRCS +=	ft_itoa.c
+SRCS += ft_matrix_dup_int.c
+SRCS += ft_matrix_dup.c
+SRCS += ft_matrix_free.c
 SRCS +=	ft_memchr.c
 SRCS +=	ft_memcmp.c
 SRCS +=	ft_memcpy.c
@@ -60,6 +63,7 @@ SRCS +=	ft_striteri.c
 SRCS +=	ft_strjoin.c
 SRCS +=	ft_strlcat.c
 SRCS +=	ft_strlcpy.c
+SRCS += ft_strldup.c
 SRCS +=	ft_strlen.c
 SRCS +=	ft_strmapi.c
 SRCS += ft_strcmp.c
@@ -71,6 +75,7 @@ SRCS += ft_strdup_free.c
 SRCS +=	ft_substr.c
 SRCS +=	ft_tolower.c
 SRCS +=	ft_toupper.c
+# printf
 SRCS +=	ft_printf/ft_printf.c
 SRCS +=	ft_printf/ft_putchar.c
 SRCS +=	ft_printf/ft_puthex.c
@@ -78,7 +83,7 @@ SRCS +=	ft_printf/ft_putnbr.c
 SRCS +=	ft_printf/ft_putptr.c
 SRCS +=	ft_printf/ft_putstr.c
 SRCS +=	ft_printf/ft_pututoa.c
-
+# printf_fd
 SRCS +=	ft_printf_fd/ft_printf_fd.c
 SRCS +=	ft_printf_fd/ft_putchar_fd_pf.c
 SRCS +=	ft_printf_fd/ft_puthex_fd.c
@@ -86,7 +91,7 @@ SRCS +=	ft_printf_fd/ft_putnbr_fd_pf.c
 SRCS +=	ft_printf_fd/ft_putptr_fd.c
 SRCS +=	ft_printf_fd/ft_putstr_fd_pf.c
 SRCS +=	ft_printf_fd/ft_pututoa_fd.c
-
+# -
 SRCS +=	get_next_line/get_next_line.c
 SRCS +=	get_next_line/get_next_line_utils.c
 SRCS +=	ft_lstnew.c
