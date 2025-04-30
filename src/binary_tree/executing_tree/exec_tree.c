@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:24:21 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/29 13:56:06 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:02:28 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_pipe(t_shell *shell, t_pipe *node)
+/* void	handle_pipe(t_shell *shell, t_pipe *node)
 {
 	int		pipefd[2];
 	pid_t	pid_node;
@@ -31,4 +31,4 @@ void	parse_exec_or_pipe(t_shell *shell, t_node *node)
 		handle_pipe(shell, (t_pipe *)node);
 	else
 		handle_exec(shell, (t_exec *)node);
-}
+} */

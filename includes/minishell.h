@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/25 18:38:06 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/30 17:32:26 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,11 @@ typedef int	(*t_bt)(char **, t_shell *);
 
 void	ft_minishell(t_shell *shell);
 
+// TODO temp... change when tree is done
+int		execute_command(char *arg);
+void	execute_external_cmd(t_shell *shell);
+void	builtin_and_cmd(t_shell *shell);
+
 /*=============================================================================#
 #                                   PARSING                                    #
 #=============================================================================*/
@@ -293,11 +298,7 @@ void	ft_erase_var(char *var, t_shell *shell);
 void	ft_init(t_shell	*shell, char **envp);
 char	**init_env(char **envp);
 char	**token_list_to_array(t_token *tokens);
-// TODO put in libft
-char	**ft_matrix_dup(char **matrix);
-int		**ft_matrix_dup_int(int **matrix);
-void	ft_matrix_free(void ***matrix);
-char	*ft_strldup(const char *s, int length);
+int		only_spaces(char *input);
 
 /*=============================================================================#
 #                                   SIGNALS                                    #
