@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/25 18:12:19 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/02 15:52:13 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	update_shlvl(t_shell *shell)
 	{
 		shlvl = ft_atoi(old) + 1;
 		new = ft_itoa(shlvl);
-		if(!new)
+		if (!new)
 			return (INVALID);
 		if (update_envp_int(shell, "SHLVL", new) != 0)
 			return (free_ref(&new), INVALID);

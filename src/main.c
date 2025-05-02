@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 18:48:48 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:31:42 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,14 @@ int	execute_command(char *arg)
 
 void	builtin_and_cmd(t_shell *shell)
 {
-	t_bt	func;
+	t_node	*func;
 
 	if (shell->args && shell->args[0])
 	{
-		func = ft_isbuiltin(shell->args[0], shell);
+		func = create_process(shell->token_list);
+		print_nodes(func);
+		free_process(func);
+		/* func = ft_isbuiltin(shell->args[0], shell);
 		if (func)
 		{
 			if (func(shell->args, shell) != 0)
@@ -96,9 +99,7 @@ void	builtin_and_cmd(t_shell *shell)
 		{
 			shell->exit_status = 127;
 			ft_printf_fd(2, "Command not found\n");
-		}
-		make_tree(shell);
-		free_tree_node(&shell->tree);
+		} */
 	}
 }
 
@@ -115,9 +116,7 @@ void	ft_minishell(t_shell *shell)
 		tokenizer(&shell, ft_strdup(shell->input));
 		shell->args = token_list_to_array(shell->token_list);
 		builtin_and_cmd(shell);
-		free_char_pp_ref(&shell->args);
-		free_tokens(&shell->token_list);
-		free_ref(&shell->input);
+		free_all(shell);
 	}
 	ft_kill(&shell, 0);
 }

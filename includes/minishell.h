@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 19:51:28 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:07:23 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@
 # define REDIR_OUT 5// >
 # define APPEND 6// >> redir onto a file and add content
 # define HEREDOC 7// <<
-# define REDIR 8 // tree contruct
 
 # define FALSE 0
 # define TRUE 1
@@ -91,40 +90,20 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-/*typedef enum Redir {
-	INPUT,
-	OUTPUT
-}	Redir_e;*/
-
-typedef struct s_node
-{
-	int	type;
-}	t_node;
-
-typedef struct s_tree
-{
-	int				type;
-	char			*name;
-	int				redir_type;
-	struct s_tree	*left;
-	struct s_tree	*right;
-	struct s_tree	*next;
-}	t_tree;
-
 typedef struct s_redir
 {
+	char			*filename;
 	int				type;
-	char			*redir_file;
-	int				type_of_redirection;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_exec
+typedef struct s_node
 {
-	int		type;
-	t_list	*argv;
-	t_redir	*redirs;
-}	t_exec;
+	char			*cmd;
+	char			**args;
+	t_redir			*redir;
+	struct s_node	*next;
+}	t_node;
 
 // struct helper
 typedef struct s_info
@@ -142,20 +121,20 @@ typedef struct s_info
 
 typedef struct s_shell
 {
-	char	*input;
-	char	**args;
-	t_token	*token_list;
-	t_token	*head;
-	t_info	info;
-	t_node	*tree;
-	int		pid;
-	char	*s_pid;
-	char	**envp;
-	char	**cmd;
-	char	pwd[1024];
-	char	*old_pwd;
-	int		exit_status;
-	int		prev_exit_status;
+	char		*input;
+	char		**args;
+	t_token		*token_list;
+	t_token		*head;
+	t_info		info;
+	t_node		*process;
+	int			pid;
+	char		*s_pid;
+	char		**envp;
+	char		**cmd;
+	char		pwd[1024];
+	char		*old_pwd;
+	int			exit_status;
+	int			prev_exit_status;
 }	t_shell;
 
 //function pointer type for builtins
@@ -328,6 +307,7 @@ void	exit_init(t_shell *shell, char *reason);
 // free_shell.c
 void	free_tokens(t_token **token);
 void	free_shell(t_shell	**shell);
+void	free_all( t_shell *shell);
 
 // free.c
 void	free_ref(char **s);
@@ -352,28 +332,28 @@ void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
 
 /*=============================================================================#
-#                      	           TREE                                        #
+#                      	         PROCESS                                       #
 #=============================================================================*/
 
 // node.c
-t_pipe	*create_pipe_node(t_node *left, t_node *right);
-t_redir	*create_redir_node(char *filename, int type);
-t_exec	*create_cmd_node(void);
+void	create_node(t_node *node);
+void	create_redir(t_redir *redir);
 
-// tree.c
-int		make_tree(t_shell *root);
-t_node	*parse_pipe(t_token **current);
-t_node	*parse_exec(t_token **current);
+// process.c
+void	save_redir(t_token *temp, t_node *node);
+t_token	*divide_process(t_token *temp, t_node *node);
+t_node	*create_process(t_token *token_list);
 
-// tree_helper.c
-int		redirection_type(t_token *token);
-int		insert_argv_node(t_exec *node, char *content);
-int		insert_redir_node(t_exec *node, char *filename, int type);
+// process_helper.c
+int	redirection_type(t_token *token);
+int	count_args(t_token *temp);
 
-// exec_tree.c
-void	parse_exec_or_pipe(t_shell *shell, t_node *node);
+//free_process.c
+void	free_process(t_node *node);
+void	free_redir(t_redir *redir);
 
-//free_tree.c
-void	free_tree_node(t_node **node);
+// DELETE WHEN NOT NEEDED
+// print_process.c
+void	print_nodes(t_node *node);
 
 #endif

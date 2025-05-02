@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 19:05:11 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:30:50 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ void	free_shell(t_shell	**shell)
 		free_tokens(&(*shell)->token_list);
 	if ((*shell)->s_pid)
 		free((*shell)->s_pid);
+}
+
+void	free_all( t_shell *shell)
+{
+	free_char_pp_ref(&shell->args);
+	free_tokens(&shell->token_list);
+	free_ref(&shell->input);
 }

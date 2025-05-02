@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:43:05 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/29 15:42:22 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/02 16:39:56 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_char_pp(char **s)
 	int	i;
 
 	i = 0;
-	if (!(*s))
+	if (!s || !*s)
 		return ;
 	while (s[i] != NULL)
 	{
@@ -94,7 +94,7 @@ void	free_char_pp_ref(char ***s)
  */
 int	free_matriz(char **shell, int i)
 {
-	if (!shell)
+	if (!shell || !*shell)
 		return (0);
 	while (i >= 0)
 	{
