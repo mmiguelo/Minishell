@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/05 16:06:36 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/05 18:08:36 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
+
+//heredoc
+#define HEREDOC_TMP_DIR "/tmp/minishell_heredoc_"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -84,11 +87,18 @@
 #                                   STRUCTS                                    #
 #=============================================================================*/
 
+typedef struct s_heredoc 
+{
+	char	*delimiter;
+	char	*hd_path;
+}	t_heredoc;
+
 typedef struct s_token
 {
 	char			*token;
 	int				type;	//EXEC/CMD/PIPE/REDIR
 	struct s_token	*next;
+	t_heredoc		*heredoc;
 }	t_token;
 
 /*typedef enum Redir {
