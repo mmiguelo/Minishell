@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/30 17:32:26 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:06:36 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ typedef struct s_shell
 	t_info	info;
 	t_node	*tree;
 	int		pid;
-	char	*s_pid;
 	char	**envp;
 	char	**cmd;
 	char	pwd[1024];
@@ -175,6 +174,7 @@ void	builtin_and_cmd(t_shell *shell);
 
 int		ft_parsing(t_shell *shell, char *s);
 void	handle_syntax_error(char *s, int i);
+int		check_syntax_first_pipe(t_shell *shell, char *s, int *i);
 int		check_syntax_pipes(t_shell *shell, char *s, int *i);
 int		check_syntax_quotes(t_shell *shell, char *s, int *i);
 int		check_syntax_redir(t_shell *shell, char *s, int *i);

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/25 18:12:19 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:06:41 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->token_list = NULL;
 	shell->head = NULL;
 	shell->pid = getpid();
-	shell->s_pid = NULL;
 	shell->envp = init_env(envp);
 	if (!shell->envp)
 		exit_init(shell, "malloc");
