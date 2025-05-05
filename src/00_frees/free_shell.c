@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/04/30 17:33:18 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/05 16:07:11 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,4 @@ void	free_shell(t_shell	**shell)
 {
 	if ((*shell)->token_list)
 		free_tokens(&(*shell)->token_list);
-	if ((*shell)->s_pid)
-		free((*shell)->s_pid);
 }
