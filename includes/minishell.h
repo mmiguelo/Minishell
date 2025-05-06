@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/05 18:08:36 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/06 17:55:26 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
 
 //heredoc
-#define HEREDOC_TMP_DIR "/tmp/minishell_heredoc_"
+# define BUFFER_MAX_SIZE 1024
+# define TEMPFILE_DIR "/.tmp/"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -155,6 +156,7 @@ typedef struct s_shell
 	t_token	*head;
 	t_info	info;
 	t_node	*tree;
+	char	tempfile_dir[BUFFER_MAX_SIZE];
 	int		pid;
 	char	**envp;
 	char	**cmd;
@@ -360,7 +362,7 @@ void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
 
 /*=============================================================================#
-#                      	           TREE                                        #
+#                                     TREE                                     #
 #=============================================================================*/
 
 // node.c
@@ -380,5 +382,23 @@ int		insert_redir_node(t_exec *node, char *filename, int type);
 
 // exec_tree.c
 void	parse_exec_or_pipe(t_shell *shell, t_node *node);
+
+/*=============================================================================#
+#                                   HEREDOC                                    #
+#=============================================================================*/
+
+// heredoc.c
+int	create_heredoc(t_token *token, char *dir);
+int	heredoc_handler(t_shell *shell);
+
+// init_heredoc.c
+t_heredoc	*init_heredoc(t_token *token);
+
+// generate_tempfile_path
+char	*generate_tempfile_path(char *dir);
+
+// setget_heredoc_id.c
+int	set_heredoc_id(void);
+int	get_heredoc_id(void);
 
 #endif

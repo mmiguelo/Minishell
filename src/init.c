@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/05 16:06:41 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/06 18:03:05 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ void	ft_init(t_shell	*shell, char **envp)
 		exit_init(shell, "malloc");
 	if (update_shlvl(shell) != SUCCESS)
 		exit_init(shell, "shlvl");
+	ft_bzero(shell->tempfile_dir, BUFFER_MAX_SIZE);
+	ft_strlcat(shell->tempfile_dir, TEMPFILE_DIR, BUFFER_MAX_SIZE);
 	shell->cmd = NULL;
 	shell->old_pwd = NULL;
 	shell->exit_status = 0;
