@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/06 17:55:26 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/07 17:06:19 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@
 # define ERROR_SYNTAX_END "syntax error near unexpected token `newline'\n"
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
+# define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
+# define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
 
 //heredoc
 # define BUFFER_MAX_SIZE 1024
-# define TEMPFILE_DIR "/.tmp/"
+# define TEMPFILE_DIR "/tmp/"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -322,6 +324,7 @@ void	set_signal_mode(int mode);
 // signal_handler.c
 void	signal_default_handler(int signo);
 void	signal_pipe_handler(int signo);
+void	signal_heredoc_handler(int signo);
 
 // setget_signo.c
 void	set_signo(int new_value);
@@ -336,8 +339,9 @@ void	free_exit(t_shell *shell, int exit_status);
 void	exit_init(t_shell *shell, char *reason);
 
 // free_shell.c
+void	clean_heredoc(t_heredoc **hd);
+void	clean_all_heredocs(t_token **token);
 void	free_tokens(t_token **token);
-void	free_shell(t_shell	**shell);
 
 // free.c
 void	free_ref(char **s);

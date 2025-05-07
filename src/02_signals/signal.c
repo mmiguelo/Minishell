@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:46:22 by yes               #+#    #+#             */
-/*   Updated: 2025/04/25 18:38:18 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/07 18:16:27 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_signal_mode(int mode)
 	}
 	else if (mode == SIGMODE_HEREDOC)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, signal_heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
