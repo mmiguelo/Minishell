@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:00:24 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/29 13:56:29 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:37:01 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tree_node(t_node **node)
+/* void	free_tree_node(t_node **node)
 {
 	t_redir	*redir;
 	t_redir	*temp;
@@ -38,4 +38,4 @@ void	free_tree_node(t_node **node)
 		}
 		free(*node);
 	}
-}
+} */

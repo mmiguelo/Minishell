@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:35:32 by yes               #+#    #+#             */
-/*   Updated: 2025/05/05 15:42:59 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 18:25:08 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	check_syntax_first_pipe(t_shell *shell, char *s, int *i)
 	if (s[*i] && s[*i] == '|')
 	{
 		shell->exit_status = SYNTAX_ERROR;
-		return (ft_printf_fd(2, "minishell: "ERROR_UNCLOSED_PIPE), SYNTAX_ERROR);
+		ft_printf_fd(2, "minishell: "ERROR_UNCLOSED_PIPE);
+		return (SYNTAX_ERROR);
 	}
 	return (SUCCESS);
 }

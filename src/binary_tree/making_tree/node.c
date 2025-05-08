@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/* #include "minishell.h"
 
 t_redir	*create_redir_node(char *filename, int type)
 {
@@ -50,4 +50,4 @@ t_pipe	*create_pipe_node(t_node *left, t_node *right)
 	new_node->left = left;
 	new_node->right = right;
 	return (new_node);
-}
+} */

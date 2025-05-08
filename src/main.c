@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/07 18:29:12 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 17:49:54 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	ft_minishell(t_shell *shell)
 		tokenizer(&shell, ft_strdup(shell->input));
 		if (heredoc_handler(shell) != SUCCESS)
 		{
-			if (get_signo() == CTRL_C)
-				shell->prev_exit_status = CTRL_C + 128;
 			free_loop(shell);
 			continue ;
 		}

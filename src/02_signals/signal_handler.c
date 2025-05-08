@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:03:40 by yes               #+#    #+#             */
-/*   Updated: 2025/05/07 18:52:03 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 18:22:46 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,7 @@ void	signal_heredoc_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		/* rl_free_line_state();
-		rl_cleanup_after_signal();
-		rl_getc_function = getc;
-		rl_done = 1;*/
-		ft_printf_fd(2, "\n");
-		ft_printf_fd(2, "signo: %i\n", get_signo());
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		set_signo(SIGINT);
 	}
 }

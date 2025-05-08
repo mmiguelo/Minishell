@@ -6,13 +6,13 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:03:57 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/07 17:03:11 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 18:35:16 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_heredoc(t_heredoc **hd)
+void	clean_heredoc(t_hd **hd)
 {
 	if (!hd || !(*hd))
 		return ;
