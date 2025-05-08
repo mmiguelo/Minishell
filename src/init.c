@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/05 16:06:41 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 18:31:05 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	update_envp_int(t_shell *shell, char *var, char *path)
 	char	*temp;
 	int		i;
 
+	//TODO change fuction place
 	i = get_env_line(var, shell);
 	new_line = ft_strjoin(var, "=");
 	if (!new_line)
@@ -118,7 +119,6 @@ int	update_shlvl(t_shell *shell)
 	old = get_env_value_expansion("SHLVL", shell->envp);
 	if (!old)
 	{
-		//TODO maybe change this ? because its showing with env -i
 		if (add_var_to_envp("SHLVL=1", shell) != 0)
 			return (INVALID);
 	}
@@ -126,7 +126,7 @@ int	update_shlvl(t_shell *shell)
 	{
 		shlvl = ft_atoi(old) + 1;
 		new = ft_itoa(shlvl);
-		if(!new)
+		if (!new)
 			return (INVALID);
 		if (update_envp_int(shell, "SHLVL", new) != 0)
 			return (free_ref(&new), INVALID);
@@ -155,6 +155,8 @@ void	ft_init(t_shell	*shell, char **envp)
 		exit_init(shell, "malloc");
 	if (update_shlvl(shell) != SUCCESS)
 		exit_init(shell, "shlvl");
+	ft_bzero(shell->tempfile_dir, BUFFER_MAX_SIZE);
+	ft_strlcat(shell->tempfile_dir, TEMPFILE_DIR, BUFFER_MAX_SIZE);
 	shell->cmd = NULL;
 	shell->old_pwd = NULL;
 	shell->exit_status = 0;

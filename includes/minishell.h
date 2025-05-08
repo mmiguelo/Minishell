@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/05 16:06:36 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 18:38:13 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h> // wait for child process
 # include <fcntl.h> // file manipulation
 # include <dirent.h> // folder manipulation
+# include <sys/ioctl.h> //system call manipulation of input/output
 # include "../libft/libft.h"
 
 /*=============================================================================#
@@ -34,7 +35,13 @@
 # define ERROR_SYNTAX_END "syntax error near unexpected token `newline'\n"
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
+# define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
+# define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
+
+//heredoc
+# define BUFFER_MAX_SIZE 1024
+# define TEMPFILE_DIR "/tmp/"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -84,44 +91,35 @@
 #                                   STRUCTS                                    #
 #=============================================================================*/
 
+typedef struct s_hd
+{
+	char	*delimiter;
+	char	*hd_path;
+}	t_hd;
+
 typedef struct s_token
 {
 	char			*token;
 	int				type;	//EXEC/CMD/PIPE/REDIR
 	struct s_token	*next;
+	t_hd			*heredoc;
 }	t_token;
-
-/*typedef enum Redir {
-	INPUT,
-	OUTPUT
-}	Redir_e;*/
-
-typedef struct s_node
-{
-	int	type;
-}	t_node;
-
-typedef struct s_pipe
-{
-	int		type;
-	t_node	*left;
-	t_node	*right;
-}	t_pipe;
 
 typedef struct s_redir
 {
+	int				*filename;
 	int				type;
-	char			*redir_file;
-	int				type_of_redirection;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_exec
+typedef struct s_node
 {
-	int		type;
-	t_list	*argv;
-	t_redir	*redirs;
-}	t_exec;
+	char			*cmd;
+	char			**args;
+	t_redir			*redir;
+	t_hd			*heredoc;
+	struct s_node	*next;
+}	t_node;
 
 // struct helper
 typedef struct s_info
@@ -145,6 +143,7 @@ typedef struct s_shell
 	t_token	*head;
 	t_info	info;
 	t_node	*tree;
+	char	tempfile_dir[BUFFER_MAX_SIZE];
 	int		pid;
 	char	**envp;
 	char	**cmd;
@@ -310,6 +309,7 @@ void	set_signal_mode(int mode);
 // signal_handler.c
 void	signal_default_handler(int signo);
 void	signal_pipe_handler(int signo);
+void	signal_heredoc_handler(int signo);
 
 // setget_signo.c
 void	set_signo(int new_value);
@@ -324,8 +324,9 @@ void	free_exit(t_shell *shell, int exit_status);
 void	exit_init(t_shell *shell, char *reason);
 
 // free_shell.c
+void	clean_heredoc(t_hd **hd);
+void	clean_all_heredocs(t_token **token);
 void	free_tokens(t_token **token);
-void	free_shell(t_shell	**shell);
 
 // free.c
 void	free_ref(char **s);
@@ -350,11 +351,11 @@ void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
 
 /*=============================================================================#
-#                      	           TREE                                        #
+#                                     TREE                                     #
 #=============================================================================*/
 
 // node.c
-t_pipe	*create_pipe_node(t_node *left, t_node *right);
+/* t_pipe	*create_pipe_node(t_node *left, t_node *right);
 t_redir	*create_redir_node(char *filename, int type);
 t_exec	*create_cmd_node(void);
 
@@ -370,5 +371,23 @@ int		insert_redir_node(t_exec *node, char *filename, int type);
 
 // exec_tree.c
 void	parse_exec_or_pipe(t_shell *shell, t_node *node);
+ */
+/*=============================================================================#
+#                                   HEREDOC                                    #
+#=============================================================================*/
+
+// heredoc.c
+int		create_heredoc(t_token *token, char *dir);
+int		heredoc_handler(t_shell *shell);
+
+// init_heredoc.c
+t_hd	*init_heredoc(t_token *token);
+
+// generate_tempfile_path
+char	*generate_tempfile_path(char *dir);
+
+// setget_heredoc_id.c
+int		set_heredoc_id(void);
+int		get_heredoc_id(void);
 
 #endif

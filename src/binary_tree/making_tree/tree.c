@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_node	*parse_exec(t_token **current)
+/* t_node	*parse_exec(t_token **current)
 {
 	t_exec	*node;
 
@@ -61,7 +61,7 @@ int	make_tree(t_shell *root)
 	root->tree = parse_pipe(&current);
 	if (root->tree == NULL)
 		free_tokens(&root->token_list);
-	/* ft_printf("root value is %d\n", root->tree->type);
+	ft_printf("root value is %d\n", root->tree->type);
 	if (((t_pipe *)root->tree)->left)
 		ft_printf("level 1: descendatnt is %d\n", ((t_pipe *)root->tree)->left->type);
 	if (((t_pipe *)root->tree)->right)
@@ -75,6 +75,6 @@ int	make_tree(t_shell *root)
 	if (((t_pipe *)((t_pipe *)root->tree)->right)->left)
 		ft_printf("Level 3: right Left descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->left->type);
 	if (((t_pipe *)((t_pipe *)root->tree)->right)->right)
-		ft_printf("Level 3: righjt Right descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->right->type); */
+		ft_printf("Level 3: righjt Right descendant is %d\n", ((t_pipe *)((t_pipe *)root->tree)->right)->right->type); 
 	return (0);
-}
+} */

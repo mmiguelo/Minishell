@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/* #include "minishell.h"
 
 int	redirection_type(t_token *token)
 {
@@ -65,4 +65,4 @@ int	insert_redir_node(t_exec *node, char *filename, int type)
 		tmp->next = new_node;
 	}
 	return (0);
-}
+} */

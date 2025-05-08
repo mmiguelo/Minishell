@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/05 15:59:09 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/08 17:49:54 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ void	read_input(t_shell *shell)
 	if (!shell->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		free_exit (shell, shell->prev_exit_status);
+		ft_kill (&shell, shell->prev_exit_status);
 	}
 	if (only_spaces(shell->input) == FALSE)
 		add_history(shell->input);
+}
+
+void	free_loop(t_shell *shell)
+{
+	free_char_pp_ref(&shell->args);
+	free_tokens(&shell->token_list);
+	free_ref(&shell->input);
 }
 
 void	ft_minishell(t_shell *shell)
@@ -41,11 +48,14 @@ void	ft_minishell(t_shell *shell)
 			continue ;
 		}
 		tokenizer(&shell, ft_strdup(shell->input));
+		if (heredoc_handler(shell) != SUCCESS)
+		{
+			free_loop(shell);
+			continue ;
+		}
 		shell->args = token_list_to_array(shell->token_list);
 		builtin_and_cmd(shell);
-		free_char_pp_ref(&shell->args);
-		free_tokens(&shell->token_list);
-		free_ref(&shell->input);
+		free_loop(shell);
 	}
 	ft_kill(&shell, 0);
 }

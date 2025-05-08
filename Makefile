@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/04/30 17:34:43 by yes              ###   ########.fr        #
+#    Updated: 2025/05/06 17:08:57 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ FREE = free.c free_shell.c free_exit.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
 BINARY_TREE = tree.c node.c tree_helper.c exec_tree.c
+HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell
 
@@ -74,6 +75,8 @@ VPATH += src/prints
 #binary_tree
 VPATH += src/binary_tree/making_tree
 VPATH += src/binary_tree/executing_tree
+#heredoc
+VPATH += src/heredoc
 
 #==============================================================================#
 #                                    FILES                                     #
@@ -89,6 +92,8 @@ SRC +=	$(BUILTIN)
 SRC +=	$(PRINT)
 # binary_tree
 SRC +=	$(BINARY_TREE)
+SRC += $(HEREDOC)
+
 
 # Library Paths
 LIBFT_DIR = libft
