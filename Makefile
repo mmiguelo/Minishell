@@ -6,7 +6,7 @@
 #    By: yes <yes@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/05/06 17:08:57 by yes              ###   ########.fr        #
+#    Updated: 2025/05/09 15:49:56 by yes              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c init.c shell_helper.c builtin_and_cmd.c
+GENERAL = main.c shell_helper.c builtin_and_cmd.c
+INIT = init.c init_helper.c
 PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c syntax_redir.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
@@ -54,20 +55,22 @@ RESET = \033[0m
 
 # src
 VPATH += src
+# init
+VPATH += src/00_init
 # free
-VPATH += src/00_frees
+VPATH += src/01_frees
 # errors
-VPATH += src/01_errors
+VPATH += src/02_errors
 # signals
-VPATH += src/02_signals
+VPATH += src/03_signals
 # parsing
-VPATH += src/03_parsing
+VPATH += src/04_parsing
 # tokenizer
-VPATH += src/04_tokenizer
-VPATH += src/04_tokenizer/00_handle_spaces
-VPATH += src/04_tokenizer/01_handle_expansions
-VPATH += src/04_tokenizer/02_handle_quote
-VPATH += src/04_tokenizer/03_add_new_token
+VPATH += src/05_tokenizer
+VPATH += src/05_tokenizer/00_handle_spaces
+VPATH += src/05_tokenizer/01_handle_expansions
+VPATH += src/05_tokenizer/02_handle_quote
+VPATH += src/05_tokenizer/03_add_new_token
 # builtin
 VPATH += src/builtin
 # print
@@ -83,6 +86,7 @@ VPATH += src/heredoc
 #==============================================================================#
 
 SRC +=	$(GENERAL)
+SRC +=	$(INIT)
 SRC +=	$(FREE)
 SRC +=	$(ERRORS)
 SRC +=	$(SIGNAL)

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/08 18:38:13 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/09 15:45:38 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define CTRL_C 2
 # define SET 0
 # define GET 1
+# define RESET 2
 
 // signal changer
 # define SIGMODE_DEFAULT 0 // main/default
@@ -168,6 +169,19 @@ void	execute_external_cmd(t_shell *shell);
 void	builtin_and_cmd(t_shell *shell);
 
 /*=============================================================================#
+#                                     INIT                                     #
+#=============================================================================*/
+
+// init.c
+char	**init_env(char **envp);
+void	inizialize_info(t_info	*info);
+t_token	*initialize_token(char *s, int type);
+void	ft_init(t_shell	*shell, char **envp);
+
+// init_helper.c
+int		update_shlvl(t_shell *shell);
+
+/*=============================================================================#
 #                                   PARSING                                    #
 #=============================================================================*/
 
@@ -228,13 +242,6 @@ t_token	*add_new_token(t_token **token_list, char *temp, t_info *info);
 t_token	*find_last_token(t_token *token);
 t_token	*add_last_token(t_token **token, t_token *new);
 
-// initialize_structs.c
-// TODO DELETE initialize_env (or change it when exists)
-void	inizialize_info(t_info	*info);
-t_token	*initialize_token(char *s, int type);
-//t_env	*initialize_env(void);
-t_shell	*initialize_shell(void);
-
 /*=============================================================================#
 #                                   BUILTIN                                    #
 #=============================================================================*/
@@ -294,10 +301,10 @@ void	ft_erase_var(char *var, t_shell *shell);
 #                                    UTILS                                     #
 #=============================================================================*/
 
-void	ft_init(t_shell	*shell, char **envp);
-char	**init_env(char **envp);
-char	**token_list_to_array(t_token *tokens);
+// shell_helper.c
 int		only_spaces(char *input);
+int		token_list_size(t_token *token);
+char	**token_list_to_array(t_token *tokens);
 
 /*=============================================================================#
 #                                   SIGNALS                                    #
@@ -322,24 +329,21 @@ int		get_signo(void);
 // free_exit.c
 void	free_exit(t_shell *shell, int exit_status);
 void	exit_init(t_shell *shell, char *reason);
+void	ft_kill(t_shell **shell, int status);
 
 // free_shell.c
+void	free_loop(t_shell *shell);
 void	clean_heredoc(t_hd **hd);
-void	clean_all_heredocs(t_token **token);
 void	free_tokens(t_token **token);
 
 // free.c
 void	free_ref(char **s);
-void	free_char_pp(char **s);
 void	free_char_pp_ref(char ***s);
 int		free_matriz(char **shell, int i);
-void	ft_kill(t_shell **shell, int status);
 
 /*=============================================================================#
 #                      	             PRINT                                     #
 #=============================================================================*/
-
-// print_shell.c?
 
 // print_error.c
 int		print_msg_error(char *error);
@@ -389,5 +393,6 @@ char	*generate_tempfile_path(char *dir);
 // setget_heredoc_id.c
 int		set_heredoc_id(void);
 int		get_heredoc_id(void);
+void	reset_heredoc_id(void);
 
 #endif

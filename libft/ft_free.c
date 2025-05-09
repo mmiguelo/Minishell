@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 17:36:31 by yes               #+#    #+#             */
-/*   Updated: 2025/04/21 18:52:31 by yes              ###   ########.fr       */
+/*   Created: 2025/05/09 15:15:26 by yes               #+#    #+#             */
+/*   Updated: 2025/05/09 15:51:26 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_exit(t_shell *shell, int exit_status)
+/**
+ * @brief Frees a dynamically allocated string and sets the original pointer to
+ * NULL in the caller.
+ *
+ * This function safely releases a `char *` and avoids dangling pointers by
+ * nullifying it via reference.
+ *
+ * @param s A pointer to the string to be freed.
+ */
+void	ft_free(char **s)
 {
-	if (shell->envp)
-		ft_matrix_free((void ***)&shell->envp);
-	rl_clear_history();
-	exit(exit_status);
-}
-
-void	exit_init(t_shell *shell, char *reason)
-{
-	perror(reason);
-	if (shell->envp)
-		ft_matrix_free((void ***)&shell->envp);
-	exit (errno);
+	if (!s || !*s)
+		return ;
+	free(*s);
+	*s = NULL;
 }

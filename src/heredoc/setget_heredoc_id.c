@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 17:00:19 by yes               #+#    #+#             */
-/*   Updated: 2025/05/08 18:23:28 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/09 15:23:05 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ static int	setget_heredoc_id(int action)
 
 	if (action == SET)
 		return (++counter);
-	else
+	else if (action == GET)
 		return (counter);
+	else if (action == RESET)
+		counter = 0;
+	return (counter);
 }
 
 int	set_heredoc_id(void)
@@ -30,4 +33,9 @@ int	set_heredoc_id(void)
 int	get_heredoc_id(void)
 {
 	return (setget_heredoc_id(GET));
+}
+
+void	reset_heredoc_id(void)
+{
+	setget_heredoc_id(RESET);
 }

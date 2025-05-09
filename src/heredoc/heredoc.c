@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/08 18:34:24 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/09 15:24:35 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	heredoc_readline(t_hd *hd, int fd)
 			if (!line)
 				ft_printf_fd(2, "minishell: " ERROR_HD_EOF, hd->delimiter);
 			free_ref(&line);
-			return (SUCCESS);
+			return (ERROR);
 		}
 		if (ft_strcmp(line, hd->delimiter) == 0)
 		{

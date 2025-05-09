@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/08 17:49:54 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/09 15:29:14 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	read_input(t_shell *shell)
 	shell->prev_exit_status = shell->exit_status; // for signal exit_status
 	shell->exit_status = 0;
 	set_signo(0); // reset signo
+	reset_heredoc_id(); // reset heredoc_id
 	errno = 0; // reset errno
 	shell->input = readline("minishell> ");
 	if (get_signo() == CTRL_C)
@@ -28,13 +29,6 @@ void	read_input(t_shell *shell)
 	}
 	if (only_spaces(shell->input) == FALSE)
 		add_history(shell->input);
-}
-
-void	free_loop(t_shell *shell)
-{
-	free_char_pp_ref(&shell->args);
-	free_tokens(&shell->token_list);
-	free_ref(&shell->input);
 }
 
 void	ft_minishell(t_shell *shell)
