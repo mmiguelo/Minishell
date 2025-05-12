@@ -322,11 +322,6 @@ void	ft_kill(t_shell **shell, int status);
 void	free_loop(t_shell *shell);
 void	clean_heredoc(t_hd **hd);
 void	free_tokens(t_token **token);
-<<<<<<< HEAD
-void	free_shell(t_shell	**shell);
-void	free_all( t_shell *shell);
-=======
->>>>>>> 28107013d54db434c64903399b3f8f4102ba84e3
 
 // free.c
 void	free_ref(char **s);
