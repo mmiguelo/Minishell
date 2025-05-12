@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/02 17:07:23 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:21:00 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@
 #                                   STRUCTS                                    #
 #=============================================================================*/
 
+
 typedef struct s_token
 {
 	char			*token;
@@ -128,7 +129,6 @@ typedef struct s_shell
 	t_info		info;
 	t_node		*process;
 	int			pid;
-	char		*s_pid;
 	char		**envp;
 	char		**cmd;
 	char		pwd[1024];
@@ -351,6 +351,10 @@ int	count_args(t_token *temp);
 //free_process.c
 void	free_process(t_node *node);
 void	free_redir(t_redir *redir);
+
+//executer.c
+void	execute_process(t_shell *shell);
+int	apply_redirections(t_node *node);
 
 // DELETE WHEN NOT NEEDED
 // print_process.c

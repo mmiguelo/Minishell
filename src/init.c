@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/02 15:52:13 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:24:34 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->token_list = NULL;
 	shell->head = NULL;
 	shell->pid = getpid();
-	shell->s_pid = NULL;
 	shell->envp = init_env(envp);
 	if (!shell->envp)
 		exit_init(shell, "malloc");

@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:33:35 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/02 17:48:43 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:47:41 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	free_process(t_node *node)
 		{
 			temp = node->next;
 			if (node->args)
-			{
-				free_char_pp(node->args);
-				node->args = NULL;
-			}
+				ft_matrix_free((void ***)(&node->args));
 			if (node->redir)
 				free_redir(node->redir);
 			free(node);

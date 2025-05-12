@@ -6,7 +6,7 @@
 #    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/05/02 17:08:29 by mmiguelo         ###   ########.fr        #
+#    Updated: 2025/05/07 11:40:37 by mmiguelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,8 +73,9 @@ VPATH += src/frees
 # print
 VPATH += src/prints
 #binary_tree
-VPATH += src/binary_tree/process
-VPATH += src/binary_tree/free_process
+VPATH += src/executer/process
+VPATH += src/executer/free_process
+VPATH += src/executer/executer
 
 #==============================================================================#
 #                                    FILES                                     #
