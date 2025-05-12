@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 11:26:03 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/12 11:24:34 by mmiguelo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 /**
@@ -80,61 +68,6 @@ t_token	*initialize_token(char *s, int type)
 	return (new);
 }
 
-int	update_envp_int(t_shell *shell, char *var, char *path)
-{
-	char	*new_line;
-	char	*temp;
-	int		i;
-
-	i = get_env_line(var, shell);
-	new_line = ft_strjoin(var, "=");
-	if (!new_line)
-		return (INVALID);
-	temp = new_line;
-	new_line = ft_strjoin(new_line, path);
-	free(temp);
-	if (!new_line)
-		return (INVALID);
-	if (i == -1)
-	{
-		if (add_var_to_envp(new_line, shell) != 0)
-			return (free_ref(&new_line), INVALID);
-	}
-	else
-	{
-		free(shell->envp[i]);
-		shell->envp[i] = new_line;
-		return (SUCCESS);
-	}
-	return (free_ref(&new_line), SUCCESS);
-}
-
-int	update_shlvl(t_shell *shell)
-{
-	char	*old;
-	char	*new;
-	int		shlvl;
-
-	old = get_env_value_expansion("SHLVL", shell->envp);
-	if (!old)
-	{
-		//TODO maybe change this ? because its showing with env -i
-		if (add_var_to_envp("SHLVL=1", shell) != 0)
-			return (INVALID);
-	}
-	else
-	{
-		shlvl = ft_atoi(old) + 1;
-		new = ft_itoa(shlvl);
-		if (!new)
-			return (INVALID);
-		if (update_envp_int(shell, "SHLVL", new) != 0)
-			return (free_ref(&new), INVALID);
-		free_ref(&new);
-	}
-	return (SUCCESS);
-}
-
 /**
  * @brief Initializes the shell structure with environment variables and
  * command array.
@@ -155,6 +88,8 @@ void	ft_init(t_shell	*shell, char **envp)
 		exit_init(shell, "malloc");
 	if (update_shlvl(shell) != SUCCESS)
 		exit_init(shell, "shlvl");
+	ft_bzero(shell->tempfile_dir, BUFFER_MAX_SIZE);
+	ft_strlcat(shell->tempfile_dir, TEMPFILE_DIR, BUFFER_MAX_SIZE);
 	shell->cmd = NULL;
 	shell->old_pwd = NULL;
 	shell->exit_status = 0;

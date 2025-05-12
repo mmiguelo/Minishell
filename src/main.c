@@ -1,36 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:04:38 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/07 11:27:08 by mmiguelo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
-
-int	only_spaces(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (!ft_strchr(WHITE_SPACES, input[i]))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
 
 void	read_input(t_shell *shell)
 {
 	shell->prev_exit_status = shell->exit_status; // for signal exit_status
 	shell->exit_status = 0;
 	set_signo(0); // reset signo
+	reset_heredoc_id(); // reset heredoc_id
 	errno = 0; // reset errno
 	shell->input = readline("minishell> ");
 	if (get_signo() == CTRL_C)
@@ -38,69 +13,10 @@ void	read_input(t_shell *shell)
 	if (!shell->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		free_exit (shell, shell->prev_exit_status);
+		ft_kill (&shell, shell->prev_exit_status);
 	}
 	if (only_spaces(shell->input) == FALSE)
 		add_history(shell->input);
-}
-
-void	execute_external_cmd(t_shell *shell)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		execve(shell->args[0], shell->args, shell->envp);
-		perror("execve failed");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		shell->exit_status = WEXITSTATUS(status);
-	}
-	else
-	{
-		perror("fork failed");
-		shell->exit_status = 1;
-	}
-}
-
-int	execute_command(char *arg)
-{
-	if (arg[0] == '.' && arg[1] == '/')
-	{
-		if (access(arg, F_OK) == 0)
-			return (0);
-	}
-	return (-1);
-}
-
-void	builtin_and_cmd(t_shell *shell)
-{
-	t_node	*func;
-
-	if (shell->args && shell->args[0])
-	{
-		func = create_process(shell->token_list);
-		print_nodes(func);
-		free_process(func);
-		/* func = ft_isbuiltin(shell->args[0], shell);
-		if (func)
-		{
-			if (func(shell->args, shell) != 0)
-				printf("Error executing %s\n", shell->args[0]);
-		}
-		else if (execute_command(shell->args[0]) == 0)
-			execute_external_cmd(shell);
-		else
-		{
-			shell->exit_status = 127;
-			ft_printf_fd(2, "Command not found\n");
-		} */
-	}
 }
 
 void	ft_minishell(t_shell *shell)
@@ -114,9 +30,14 @@ void	ft_minishell(t_shell *shell)
 			continue ;
 		}
 		tokenizer(&shell, ft_strdup(shell->input));
+		if (heredoc_handler(shell) != SUCCESS)
+		{
+			free_loop(shell);
+			continue ;
+		}
 		shell->args = token_list_to_array(shell->token_list);
 		builtin_and_cmd(shell);
-		free_all(shell);
+		free_loop(shell);
 	}
 	ft_kill(&shell, 0);
 }
@@ -133,32 +54,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_minishell(&shell);
 	return (0);
 }
-
-// Do different "whiles(1)" for main/cat/here_doc also 
-// signals are different(ctrl + /) ??? */
-
-/* // Fuction that helps construct the binary tree based on tokenizer input
-t_node	*return_node(tokenptr)
-{
-	t_node	*node = (t_node *)cmd(&tokenptr);
-	if *tokenptr == pipe	
-		return ((t_node *)pipe(node, return_node(tokenptr++)));
-	return (node);
-}
-
-// exec commands after binary tree is created
-exec(node)
-{
-	if node.type = pipe
-	{
-		t_pipe	*pipe = (t_pipe *)node;
-		exec(pipe->left);
-		exec(pipe->right);
-		return;
-	}
-	else if (node->tyoe == cmd)
-	{
-		t_cmd	*cmd = (t_cmd*)node;
-		executeCMD(cmd);
-	}
-} */

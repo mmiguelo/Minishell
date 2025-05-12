@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 14:03:40 by yes               #+#    #+#             */
-/*   Updated: 2025/04/25 14:50:45 by yes              ###   ########.fr       */
+/*   Created: 2025/05/09 15:10:04 by yes               #+#    #+#             */
+/*   Updated: 2025/05/09 15:51:30 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	signal_default_handler(int signo)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	if (signo == SIGINT)
-	{
-		ft_printf_fd(1, "\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		set_signo(SIGINT);
-	}
-}
+	char	*joined;
 
-void	signal_pipe_handler(int signo)
-{
-	if (signo == SIGINT)
+	if (!s1 || !s2)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		set_signo(SIGINT);
+		ft_free(&s1);
+		ft_free(&s2);
+		return (NULL);
 	}
+	joined = ft_strjoin(s1, s2);
+	ft_free(&s1);
+	ft_free(&s2);
+	return (joined);
 }

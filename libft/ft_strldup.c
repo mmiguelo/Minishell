@@ -6,11 +6,11 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:52:30 by yes               #+#    #+#             */
-/*   Updated: 2025/04/18 17:11:25 by yes              ###   ########.fr       */
+/*   Updated: 2025/04/30 11:27:32 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 /**
  * @brief Duplicates up to 'length' characters from the input string.

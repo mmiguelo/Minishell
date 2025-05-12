@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 17:12:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/12 11:21:00 by mmiguelo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -21,6 +9,7 @@
 # include <sys/wait.h> // wait for child process
 # include <fcntl.h> // file manipulation
 # include <dirent.h> // folder manipulation
+# include <sys/ioctl.h> //system call manipulation of input/output
 # include "../libft/libft.h"
 
 /*=============================================================================#
@@ -34,7 +23,13 @@
 # define ERROR_SYNTAX_END "syntax error near unexpected token `newline'\n"
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
+# define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
+# define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
+
+//heredoc
+# define BUFFER_MAX_SIZE 1024
+# define TEMPFILE_DIR "/tmp/"
 
 // all special cases
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
@@ -48,6 +43,7 @@
 # define CTRL_C 2
 # define SET 0
 # define GET 1
+# define RESET 2
 
 // signal changer
 # define SIGMODE_DEFAULT 0 // main/default
@@ -83,12 +79,18 @@
 #                                   STRUCTS                                    #
 #=============================================================================*/
 
+typedef struct s_hd
+{
+	char	*delimiter;
+	char	*hd_path;
+}	t_hd;
 
 typedef struct s_token
 {
 	char			*token;
 	int				type;	//EXEC/CMD/PIPE/REDIR
 	struct s_token	*next;
+	t_hd			*heredoc;
 }	t_token;
 
 typedef struct s_redir
@@ -103,6 +105,7 @@ typedef struct s_node
 	char			*cmd;
 	char			**args;
 	t_redir			*redir;
+	t_hd			*heredoc;
 	struct s_node	*next;
 }	t_node;
 
@@ -122,19 +125,20 @@ typedef struct s_info
 
 typedef struct s_shell
 {
-	char		*input;
-	char		**args;
-	t_token		*token_list;
-	t_token		*head;
-	t_info		info;
-	t_node		*process;
-	int			pid;
-	char		**envp;
-	char		**cmd;
-	char		pwd[1024];
-	char		*old_pwd;
-	int			exit_status;
-	int			prev_exit_status;
+	char	*input;
+	char	**args;
+	t_token	*token_list;
+	t_token	*head;
+	t_info	info;
+	t_node	*tree;
+	char	tempfile_dir[BUFFER_MAX_SIZE];
+	int		pid;
+	char	**envp;
+	char	**cmd;
+	char	pwd[1024];
+	char	*old_pwd;
+	int		exit_status;
+	int		prev_exit_status;
 }	t_shell;
 
 //function pointer type for builtins
@@ -146,12 +150,31 @@ typedef int	(*t_bt)(char **, t_shell *);
 
 void	ft_minishell(t_shell *shell);
 
+// TODO temp... change when tree is done
+int		execute_command(char *arg);
+void	execute_external_cmd(t_shell *shell);
+void	builtin_and_cmd(t_shell *shell);
+
+/*=============================================================================#
+#                                     INIT                                     #
+#=============================================================================*/
+
+// init.c
+char	**init_env(char **envp);
+void	inizialize_info(t_info	*info);
+t_token	*initialize_token(char *s, int type);
+void	ft_init(t_shell	*shell, char **envp);
+
+// init_helper.c
+int		update_shlvl(t_shell *shell);
+
 /*=============================================================================#
 #                                   PARSING                                    #
 #=============================================================================*/
 
 int		ft_parsing(t_shell *shell, char *s);
 void	handle_syntax_error(char *s, int i);
+int		check_syntax_first_pipe(t_shell *shell, char *s, int *i);
 int		check_syntax_pipes(t_shell *shell, char *s, int *i);
 int		check_syntax_quotes(t_shell *shell, char *s, int *i);
 int		check_syntax_redir(t_shell *shell, char *s, int *i);
@@ -205,13 +228,6 @@ t_token	*add_new_token(t_token **token_list, char *temp, t_info *info);
 // token_tools.c
 t_token	*find_last_token(t_token *token);
 t_token	*add_last_token(t_token **token, t_token *new);
-
-// initialize_structs.c
-// TODO DELETE initialize_env (or change it when exists)
-void	inizialize_info(t_info	*info);
-t_token	*initialize_token(char *s, int type);
-//t_env	*initialize_env(void);
-t_shell	*initialize_shell(void);
 
 /*=============================================================================#
 #                                   BUILTIN                                    #
@@ -272,14 +288,10 @@ void	ft_erase_var(char *var, t_shell *shell);
 #                                    UTILS                                     #
 #=============================================================================*/
 
-void	ft_init(t_shell	*shell, char **envp);
-char	**init_env(char **envp);
+// shell_helper.c
+int		only_spaces(char *input);
+int		token_list_size(t_token *token);
 char	**token_list_to_array(t_token *tokens);
-// TODO put in libft
-char	**ft_matrix_dup(char **matrix);
-int		**ft_matrix_dup_int(int **matrix);
-void	ft_matrix_free(void ***matrix);
-char	*ft_strldup(const char *s, int length);
 
 /*=============================================================================#
 #                                   SIGNALS                                    #
@@ -291,6 +303,7 @@ void	set_signal_mode(int mode);
 // signal_handler.c
 void	signal_default_handler(int signo);
 void	signal_pipe_handler(int signo);
+void	signal_heredoc_handler(int signo);
 
 // setget_signo.c
 void	set_signo(int new_value);
@@ -303,24 +316,26 @@ int		get_signo(void);
 // free_exit.c
 void	free_exit(t_shell *shell, int exit_status);
 void	exit_init(t_shell *shell, char *reason);
+void	ft_kill(t_shell **shell, int status);
 
 // free_shell.c
+void	free_loop(t_shell *shell);
+void	clean_heredoc(t_hd **hd);
 void	free_tokens(t_token **token);
+<<<<<<< HEAD
 void	free_shell(t_shell	**shell);
 void	free_all( t_shell *shell);
+=======
+>>>>>>> 28107013d54db434c64903399b3f8f4102ba84e3
 
 // free.c
 void	free_ref(char **s);
-void	free_char_pp(char **s);
 void	free_char_pp_ref(char ***s);
 int		free_matriz(char **shell, int i);
-void	ft_kill(t_shell **shell, int status);
 
 /*=============================================================================#
 #                      	             PRINT                                     #
 #=============================================================================*/
-
-// print_shell.c?
 
 // print_error.c
 int		print_msg_error(char *error);
@@ -359,5 +374,25 @@ int	apply_redirections(t_node *node);
 // DELETE WHEN NOT NEEDED
 // print_process.c
 void	print_nodes(t_node *node);
+
+/*=============================================================================#
+#                                   HEREDOC                                    #
+#=============================================================================*/
+
+// heredoc.c
+int		create_heredoc(t_token *token, char *dir);
+int		heredoc_handler(t_shell *shell);
+
+// init_heredoc.c
+t_hd	*init_heredoc(t_token *token);
+
+// generate_tempfile_path
+char	*generate_tempfile_path(char *dir);
+
+// setget_heredoc_id.c
+int		set_heredoc_id(void);
+int		get_heredoc_id(void);
+void	reset_heredoc_id(void);
+
 
 #endif

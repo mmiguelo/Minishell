@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/10 15:04:25 by frbranda          #+#    #+#              #
-#    Updated: 2025/05/07 11:40:37 by mmiguelo         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #==============================================================================#
 #                                    NAMES                                     #
 #==============================================================================#
@@ -21,7 +9,8 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c init.c shell_helper.c ft_matrix_free.c ft_matrix_dup.c ft_matrix_dup_int.c ft_strldup.c
+GENERAL = main.c shell_helper.c builtin_and_cmd.c
+INIT = init.c init_helper.c
 PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c syntax_redir.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
@@ -36,6 +25,7 @@ ERRORS = print_error.c
 PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c \
 			free_process.c
+HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell
 
@@ -54,43 +44,49 @@ RESET = \033[0m
 
 # src
 VPATH += src
+# init
+VPATH += src/00_init
+# free
+VPATH += src/01_frees
+# errors
+VPATH += src/02_errors
+# signals
+VPATH += src/03_signals
 # parsing
-VPATH += src/parsing
+VPATH += src/04_parsing
 # tokenizer
-VPATH += src/tokenizer
-VPATH += src/tokenizer/00_handle_spaces
-VPATH += src/tokenizer/01_handle_expansions
-VPATH += src/tokenizer/02_handle_quote
-VPATH += src/tokenizer/03_add_new_token
+VPATH += src/05_tokenizer
+VPATH += src/05_tokenizer/00_handle_spaces
+VPATH += src/05_tokenizer/01_handle_expansions
+VPATH += src/05_tokenizer/02_handle_quote
+VPATH += src/05_tokenizer/03_add_new_token
 # builtin
 VPATH += src/builtin
-# signals
-VPATH += src/signals
-# errors
-VPATH += src/errors
-# free
-VPATH += src/frees
 # print
 VPATH += src/prints
 #binary_tree
 VPATH += src/executer/process
 VPATH += src/executer/free_process
 VPATH += src/executer/executer
+#heredoc
+VPATH += src/heredoc
 
 #==============================================================================#
 #                                    FILES                                     #
 #==============================================================================#
 
 SRC +=	$(GENERAL)
+SRC +=	$(INIT)
+SRC +=	$(FREE)
+SRC +=	$(ERRORS)
+SRC +=	$(SIGNAL)
 SRC +=	$(PARSING)
 SRC +=	$(TOKENIZER)
 SRC +=	$(BUILTIN)
-SRC +=	$(SIGNAL)
-SRC +=	$(ERRORS)
-SRC +=	$(FREE)
 SRC +=	$(PRINT)
 # binary_tree
 SRC +=	$(PROCESS)
+SRC += $(HEREDOC)
 
 # Library Paths
 LIBFT_DIR = libft

@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:38:17 by yes               #+#    #+#             */
-/*   Updated: 2025/04/23 18:03:40 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/05 15:21:13 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	check_syntax_quotes(t_shell *shell, char *s, int *i)
 {
+	if (!s[*i] || !(ft_strchr(QUOTES, s[*i])))
+		return (SUCCESS);
 	quote_changer(s, i, &shell->info);
 	while (s[*i])
 	{

@@ -51,12 +51,14 @@ int		ft_arrlen(char **str);
 size_t	ft_strlcat(char *dst, char *src, size_t size);
 size_t	ft_strlen(const char *str);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-int		ft_strlcpy(char *dst, char *src, size_t size);
+int		ft_strlcpy(char *dst, char *src, size_t size); //added for minishell
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
+char	*ft_strldup(const char *s, int length);
+char	*ft_strjoin_free(char *s1, char *s2); //added for minishell
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
@@ -64,6 +66,8 @@ char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup_free(char *s1, char *s2);
+char	**ft_matrix_dup(char **matrix); //added for minishell
+int		**ft_matrix_dup_int(int **matrix); //added for minishell
 
 /*=============================================================================#
 #                                MEMORIES                                      #
@@ -78,6 +82,8 @@ void	*ft_memset(void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_realloc(void *ptr, size_t original_size, size_t new_size);
 void	**ft_realloc_pp(void **ptr, size_t original_size, size_t new_size);
+void	ft_matrix_free(void ***matrix); //added for minishell
+void	ft_free(char **s); //added for minishell
 
 /*=============================================================================#
 #                            FILES DESCRIPTORS                                 #
