@@ -19,11 +19,13 @@
 # define NO_NUMERIC "minishell: exit: %s: numeric argument required\n"
 
 # define ERROR_LAUCH "Error: minishell must be lauched without arguments\n"
+# define ERROR_SHLVL "warning: shell level %i too high, resetting to 1\n"
 # define ERROR_SYNTAX "syntax error near unexpected token `%s'\n"
 # define ERROR_SYNTAX_END "syntax error near unexpected token `newline'\n"
 # define ERROR_UNCLOSED_QUO "Error: Quotes must be closed\n"
 # define ERROR_UNCLOSED_PIPE "Error: Open pipes not allowed\n"
 # define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
+# define ERROR_HD_GEN_PATH "minishell: failed to generate heredoc path\n"
 # define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
 # define CORE_DUMP_MSG "Quit (core dumped)\n"
 
@@ -153,7 +155,7 @@ typedef int	(*t_bt)(char **, t_shell *);
 
 void	ft_minishell(t_shell *shell);
 
-// TODO temp... change when tree is done
+// TODO temp... change when tree/process is done
 int		execute_command(char *arg);
 void	execute_external_cmd(t_shell *shell);
 void	builtin_and_cmd(t_shell *shell);
@@ -323,8 +325,15 @@ void	ft_kill(t_shell **shell, int status);
 
 // free_shell.c
 void	free_loop(t_shell *shell);
-void	clean_heredoc(t_hd **hd);
 void	free_tokens(t_token **token);
+void	clean_heredoc(t_hd **hd);
+void	free_redir(t_redir **redir);
+void	free_process(t_node **process);
+
+// free_child.c
+void	clean_heredoc_child(t_hd **hd);
+void	free_redir_child(t_redir **redir);
+void	free_process_child(t_node **process);
 
 // free.c
 void	free_ref(char **s);
@@ -361,11 +370,6 @@ t_node	*create_process(t_token *token_list);
 int	redirection_type(t_token *token);
 int	count_args(t_token *temp);
 
-//free_process.c
-void	free_process(t_node *node);
-void	free_redir(t_redir *redir);
-void	free_mid_process(t_shell *shell);
-
 //executer.c
 void	execute_process(t_shell *shell);
 
@@ -386,11 +390,11 @@ void	print_nodes(t_node *node);
 #=============================================================================*/
 
 // heredoc.c
-int		create_heredoc(t_token *token, char *dir);
+int		create_heredoc(t_redir *redir, char *dir);
 int		heredoc_handler(t_shell *shell);
 
 // init_heredoc.c
-t_hd	*init_heredoc(t_token *token);
+t_hd	*init_heredoc(t_redir *redir);
 
 // generate_tempfile_path
 char	*generate_tempfile_path(char *dir);

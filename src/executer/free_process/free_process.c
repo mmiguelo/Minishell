@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-void	free_redir(t_redir *redir)
+// TODO move to free_shell.c
+/* void	free_redir(t_redir *redir)
 {
 	t_redir	*temp;
 
@@ -9,12 +10,14 @@ void	free_redir(t_redir *redir)
 		temp = redir->next;
 		if (redir->filename)
 			free(redir->filename);
+		if (redir->heredoc)
+			clean_heredoc(&redir->heredoc);
 		free(redir);
 		redir = temp;
 	}
-}
-
-void	free_process(t_node *process)
+} */
+// TODO move to free_shell.c
+/* void	free_process(t_node *process)
 {
 	t_node	*temp;
 
@@ -31,9 +34,10 @@ void	free_process(t_node *process)
 			process = temp;
 		}
 	}
-}
+} */
 
-void	free_mid_process(t_shell *shell)
+//TODO not necessary ft_kill
+/* void	free_mid_process(t_shell *shell)
 {
 	if (shell->process)
 	{
@@ -45,5 +49,5 @@ void	free_mid_process(t_shell *shell)
 		free(shell->pid_nbr);
 		shell->pid_nbr = NULL;
 	}
-}
+} */
 

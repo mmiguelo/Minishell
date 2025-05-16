@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/09 15:24:35 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/16 19:28:56 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,45 +59,51 @@ int	read_write_heredoc(t_hd *hd)
 	return (SUCCESS);
 }
 
-int	create_heredoc(t_token *token, char *dir)
+int	create_heredoc(t_redir *redir, char *dir)
 {
 	t_hd	*hd;
 
-	hd = init_heredoc(token);
+	hd = init_heredoc(redir);
 	if (!hd)
-		return (ERROR);
+		return (ft_printf_fd(2, ERROR_HD_CREATE), ERROR);
 	hd->hd_path = generate_tempfile_path(dir);
 	if (!hd->hd_path)
 	{
 		clean_heredoc(&hd);
-		return (ERROR);
+		return (ft_printf_fd(2, ERROR_HD_GEN_PATH), ERROR);
 	}
 	if (read_write_heredoc(hd) != SUCCESS)
 	{
 		clean_heredoc(&hd);
 		return (ERROR);
 	}
-	token->heredoc = hd;
+	redir->heredoc = hd;
 	return (SUCCESS);
 }
 
 int	heredoc_handler(t_shell *shell)
 {
-	t_token	*token;
+	t_node	*node;
+	t_redir *redir;
 
-	token = shell->token_list;
-	while (token)
+	node = shell->process;
+	while (node)
 	{
-		if (token->type == HEREDOC)
+		redir = node->redir;
+		while (redir)
 		{
-			if (create_heredoc(token, shell->tempfile_dir) != SUCCESS)
+			if (redir->type == HEREDOC)
 			{
-				if (get_signo() == CTRL_C)
-					shell->exit_status = CTRL_C + 128;
-				return (ERROR);
+				if (create_heredoc(redir, shell->tempfile_dir) != SUCCESS)
+				{
+					if (get_signo() == CTRL_C)
+						shell->exit_status = CTRL_C + 128;
+					return (ERROR);
+				}
 			}
+			redir = redir->next;
 		}
-		token = token ->next;
+		node = node->next;
 	}
 	return (SUCCESS);
 }

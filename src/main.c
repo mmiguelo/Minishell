@@ -21,8 +21,6 @@ void	read_input(t_shell *shell)
 
 void	ft_minishell(t_shell *shell)
 {
-	t_node *cmd;
-
 	while (1)
 	{
 		read_input(shell);
@@ -32,8 +30,14 @@ void	ft_minishell(t_shell *shell)
 			continue ;
 		}
 		tokenizer(&shell, ft_strdup(shell->input));
-		cmd = create_process(shell->token_list);
-		if (!cmd)
+		//TODO put process and heredoc together
+		/* if (build_process(shell) != SUCCESS)
+		{
+			free_loop(shell);
+			continue;
+		} */
+		shell->process = create_process(shell->token_list); //TODO shell->args is giving leaks!
+		if (!(shell->process))
 		{
 			free_loop(shell);
 			continue;
@@ -43,9 +47,7 @@ void	ft_minishell(t_shell *shell)
 			free_loop(shell);
 			continue ;
 		}
-		execute_process(shell);
-		/* while (node)
-			builtin_and_cmd(node.args); */
+		//execute_process(shell);
 		free_loop(shell);
 	}
 	ft_kill(&shell, 0);

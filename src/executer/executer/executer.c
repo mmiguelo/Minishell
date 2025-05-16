@@ -72,7 +72,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 	t_bt	builtin;
 	char	*path;
 
-	if (handle_redir(shell, node->redir, shell->fd) == ERROR)
+	if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
 		return ;
 	builtin = ft_isbuiltin(node->cmd, shell);
 	if (builtin)

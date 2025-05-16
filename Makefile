@@ -20,7 +20,7 @@ TOKENIZER = tokenizer.c token_tools.c \
 BUILTIN = builtin_utils.c cd.c cd1.c echo.c env.c exit.c \
 			export.c export1.c export2.c export3.c pwd.c unset.c
 SIGNAL = signal.c signal_handler.c setget_signo.c
-FREE = free.c free_shell.c free_exit.c
+FREE = free.c free_shell.c free_exit.c free_child.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c \

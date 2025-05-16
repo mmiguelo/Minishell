@@ -6,7 +6,7 @@
 /*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:33:47 by yes               #+#    #+#             */
-/*   Updated: 2025/05/09 15:34:37 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/16 17:54:28 by yes              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,19 @@ int	update_shlvl(t_shell *shell)
 	{
 		if (add_var_to_envp("SHLVL=1", shell) != 0)
 			return (INVALID);
+		return (SUCCESS);
 	}
-	else
+	shlvl = ft_atoi(old) + 1;
+	if (shlvl >= 1000)
 	{
-		shlvl = ft_atoi(old) + 1;
-		new = ft_itoa(shlvl);
-		if (!new)
-			return (INVALID);
-		if (update_envp_int(shell, "SHLVL", new) != 0)
-			return (free_ref(&new), INVALID);
-		free_ref(&new);
+		ft_printf_fd(2, "minishell: "ERROR_SHLVL, shlvl);
+		shlvl = 1;
 	}
+	new = ft_itoa(shlvl);
+	if (!new)
+		return (INVALID);
+	if (update_envp_int(shell, "SHLVL", new) != 0)
+		return (free_ref(&new), INVALID);
+	free_ref(&new);
 	return (SUCCESS);
 }

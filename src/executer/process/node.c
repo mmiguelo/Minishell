@@ -12,5 +12,6 @@ void	create_redir(t_redir *redir)
 {
 	redir->filename = NULL;
 	redir->type = 0;
+	redir->heredoc = NULL;
 	redir->next = NULL;
 }
