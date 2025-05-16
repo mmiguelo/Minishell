@@ -1,92 +1,89 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 11:41:08 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/12 11:21:12 by mmiguelo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
+
+/* void	execute_process(t_shell *shell)
+{
+	t_node	*process;
+	t_bt	builtin;
+
+	process = shell->process;
+	if (count_pid(shell) == 1)
+	{
+		builtin = ft_isbuiltin(process->cmd, shell);
+		if (builtin)
+		{
+			return (free(shell->pid_nbr), shell->pid_nbr = NULL,
+				builtin(process->args, shell), reset_dups(shell));
+		}
+	}
+	if (handle_pipes(&process, shell))
+		return ;
+	builtin = ft_isbuiltin(process->cmd, shell);
+	if (builtin)
+		builtin(process->args, shell);
+	if (process->cmd && !process->cmd[0])
+	{
+		free_mid_process(shell);
+		exit(0);
+	}
+	exe(shell, process);
+} */
 
 void	execute_process(t_shell *shell)
 {
 	t_node	*node;
 
 	node = shell->process;
-	int		fd[2];
-	int		in_fd = 0;
-	pid_t	pid;
-
-	while (node)
-	{
-		if (node->next && pipe(fd) == -1)
-			return (perror("pipe"));
-		pid = fork();
-		if (pid == -1)
-			return (perror("fork"));
-		if (pid == 0) // child process
-		{
-			if (in_fd != 0)
-			{
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
-			}
-			if (node->next)
-			{
-				close(fd[0]);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-			}
-			if (!apply_redirections(node))
-				exit(1); // erro ao aplicar redirecionamento
-			execve(node->cmd, node->args, shell->envp);
-			perror("execve");
-			exit(1);
-		}
-		if (in_fd != 0)
-			close(in_fd);
-		if (node->next)
-		{
-			close(fd[1]);
-			in_fd = fd[0];
-		}
-		node = node->next;
-	}
-	while (wait(&(shell->exit_status)) > 0)
-		;
-	shell->exit_status = WEXITSTATUS(shell->exit_status);
+	if (count_pid(shell) == 1)
+		exec_single_node(shell, node);
+	else
+		exec_multi_node(shell, node);
 }
 
-int	apply_redirections(t_node *node)
+void	fork_single_node(t_shell *shell, t_node *node, char *path)
 {
-	t_redir	*r = node->redir;
-	int		fd;
+	pid_t	pid;
+	int		status;
 
-	while (r)
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork failed"));
+	if (pid == 0)
 	{
-		if (r->type == REDIR_OUT) // >
-			fd = open(r->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (r->type == APPEND) // >>
-			fd = open(r->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (r->type == REDIR_IN) // <
-			fd = open(r->filename, O_RDONLY);
-		else
+		shell->is_child = TRUE;
+		if (execve(path, node->args, shell->envp) == -1)
 		{
-			r = r->next; // AQUI FICA O HEREDOC DO FRANCISCO
-			continue ;
+			perror(node->cmd);
+			free_ref(&path);
+			if (errno == ENOENT)
+				ft_kill(shell, 127);
+			else if (errno == EACCES || errno == EISDIR)
+				ft_kill(shell, 126);
+			else
+				ft_kill(shell, 1);
 		}
-		if (fd < 0)
-			return (perror(r->filename), 0);
-		if (r->type == REDIR_IN)
-			dup2(fd, STDIN_FILENO);
-		else
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
-		r = r->next;
 	}
-	return (1);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		shell->exit_status = WEXITSTATUS(status);
+}
+
+void	exec_single_node(t_shell *shell, t_node *node)
+{
+	t_bt	builtin;
+	char	*path;
+
+	if (handle_redir(shell, node->redir, shell->fd) == ERROR)
+		return ;
+	builtin = ft_isbuiltin(node->cmd, shell);
+	if (builtin)
+	{
+		return (free(shell->pid_nbr), shell->pid_nbr = NULL,
+			builtin(node->args, shell), reset_dups(shell));
+	}
+	path = search_path(node->cmd, shell->envp);
+	if (!path)
+		return (ft_printf_fd(2, "command or PATH %s not found\n",
+				node->cmd), shell->exit_status = 127);
+	fork_single_node(shell, node, &path);
+	free_ref(&path);
 }

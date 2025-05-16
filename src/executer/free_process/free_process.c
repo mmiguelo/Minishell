@@ -14,21 +14,36 @@ void	free_redir(t_redir *redir)
 	}
 }
 
-void	free_process(t_node *node)
+void	free_process(t_node *process)
 {
 	t_node	*temp;
 
-	if (node)
+	if (process)
 	{
-		while (node)
+		while (process)
 		{
-			temp = node->next;
-			if (node->args)
-				ft_matrix_free((void ***)(&node->args));
-			if (node->redir)
-				free_redir(node->redir);
-			free(node);
-			node = temp;
+			temp = process->next;
+			if (process->args)
+				ft_matrix_free((void ***)(&process->args));
+			if (process->redir)
+				free_redir(process->redir);
+			free(process);
+			process = temp;
 		}
 	}
 }
+
+void	free_mid_process(t_shell *shell)
+{
+	if (shell->process)
+	{
+		free_process(shell->process);
+		shell->process = NULL;
+	}
+	if (shell->pid_nbr)
+	{
+		free(shell->pid_nbr);
+		shell->pid_nbr = NULL;
+	}
+}
+

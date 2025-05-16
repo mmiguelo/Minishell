@@ -97,6 +97,7 @@ typedef struct s_redir
 {
 	char			*filename;
 	int				type;
+	t_hd			*heredoc;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -105,7 +106,6 @@ typedef struct s_node
 	char			*cmd;
 	char			**args;
 	t_redir			*redir;
-	t_hd			*heredoc;
 	struct s_node	*next;
 }	t_node;
 
@@ -125,14 +125,17 @@ typedef struct s_info
 
 typedef struct s_shell
 {
+	int		fd[2];
 	char	*input;
 	char	**args;
 	t_token	*token_list;
 	t_token	*head;
 	t_info	info;
-	t_node	*tree;
+	t_node	*process;
 	char	tempfile_dir[BUFFER_MAX_SIZE];
 	int		pid;
+	int		is_child;
+	int		*pid_nbr;
 	char	**envp;
 	char	**cmd;
 	char	pwd[1024];
@@ -342,7 +345,7 @@ void	print_tokens(t_token *token);
 void	print_tokens_simple(t_token *token);
 
 /*=============================================================================#
-#                      	         PROCESS                                       #
+#                      	         EXECUTER                                       #
 #=============================================================================*/
 
 // node.c
@@ -361,10 +364,18 @@ int	count_args(t_token *temp);
 //free_process.c
 void	free_process(t_node *node);
 void	free_redir(t_redir *redir);
+void	free_mid_process(t_shell *shell);
 
 //executer.c
 void	execute_process(t_shell *shell);
-int	apply_redirections(t_node *node);
+
+//executer_utils.c
+int		count_pid(t_shell *shell);
+void	reset_dups(t_shell *shell);
+
+//executer_pipes.c
+int	handle_child_pipes(t_shell *shell, int *fds, t_node *cmds);
+int	handle_pipes(t_shell *shell, t_node *process);
 
 // DELETE WHEN NOT NEEDED
 // print_process.c
@@ -388,6 +399,5 @@ char	*generate_tempfile_path(char *dir);
 int		set_heredoc_id(void);
 int		get_heredoc_id(void);
 void	reset_heredoc_id(void);
-
 
 #endif

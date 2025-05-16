@@ -21,6 +21,8 @@ void	read_input(t_shell *shell)
 
 void	ft_minishell(t_shell *shell)
 {
+	t_node *cmd;
+
 	while (1)
 	{
 		read_input(shell);
@@ -30,13 +32,20 @@ void	ft_minishell(t_shell *shell)
 			continue ;
 		}
 		tokenizer(&shell, ft_strdup(shell->input));
+		cmd = create_process(shell->token_list);
+		if (!cmd)
+		{
+			free_loop(shell);
+			continue;
+		}
 		if (heredoc_handler(shell) != SUCCESS)
 		{
 			free_loop(shell);
 			continue ;
 		}
-		shell->args = token_list_to_array(shell->token_list);
-		builtin_and_cmd(shell);
+		execute_process(shell);
+		/* while (node)
+			builtin_and_cmd(node.args); */
 		free_loop(shell);
 	}
 	ft_kill(&shell, 0);
