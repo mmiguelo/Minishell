@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:36:31 by yes               #+#    #+#             */
-/*   Updated: 2025/05/16 18:44:26 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/19 15:52:06 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_kill(t_shell **shell, int status)
 		free_matriz((*shell)->envp, ft_arrlen((*shell)->envp));
 	if ((*shell)->cmd)
 		free_matriz((*shell)->cmd, ft_arrlen((*shell)->cmd));
+	if ((*shell)->pid_nbr)
+		free((*shell)->pid_nbr);
 	free_ref(&(*shell)->old_pwd);
 	rl_clear_history();
 	exit(status);

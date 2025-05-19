@@ -1,33 +1,5 @@
 #include "minishell.h"
 
-/* void	execute_process(t_shell *shell)
-{
-	t_node	*process;
-	t_bt	builtin;
-
-	process = shell->process;
-	if (count_pid(shell) == 1)
-	{
-		builtin = ft_isbuiltin(process->cmd, shell);
-		if (builtin)
-		{
-			return (free(shell->pid_nbr), shell->pid_nbr = NULL,
-				builtin(process->args, shell), reset_dups(shell));
-		}
-	}
-	if (handle_pipes(&process, shell))
-		return ;
-	builtin = ft_isbuiltin(process->cmd, shell);
-	if (builtin)
-		builtin(process->args, shell);
-	if (process->cmd && !process->cmd[0])
-	{
-		free_mid_process(shell);
-		exit(0);
-	}
-	exe(shell, process);
-} */
-
 void	execute_process(t_shell *shell)
 {
 	t_node	*node;
@@ -35,8 +7,8 @@ void	execute_process(t_shell *shell)
 	node = shell->process;
 	if (count_pid(shell) == 1)
 		exec_single_node(shell, node);
-	/* else
-		exec_multi_node(shell, node); */
+	else
+		exec_multi_node(shell, node);
 }
 
 void	fork_single_node(t_shell *shell, t_node *node, char *path)
@@ -81,7 +53,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 		builtin(node->args, shell);
 		return ;
 	}
-	path = search_path(node->cmd, shell->envp);
+	path = search_path(node->cmd, shell->envp, 0);
 	if (!path)
 	{
 		ft_printf_fd(2, "command or PATH %s not found\n", node->cmd);

@@ -22,16 +22,22 @@ void	reset_dups(t_shell *shell)
 	dup2(shell->fd[1], STDOUT_FILENO);
 }
 
-char	*search_path(char *cmd, char **envp)
+char	*search_path(char *cmd, char **envp, int i)
 {
 	char	**full_path;
 	char	*partial_path;
 	char	*temp;
-	int		i;
 
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL); // to change
+	}
+	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
+	if (envp[i] == NULL)
+		return (NULL);
 	full_path = ft_split(envp[i] + 5, ':' );
 	if (!full_path)
 		return (ft_putstr_fd("error in splitting search_path\n", 2), NULL);

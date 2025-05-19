@@ -96,4 +96,7 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->old_pwd = NULL;
 	shell->exit_status = 0;
 	shell->prev_exit_status = 0;
+	shell->fd[0] = STDIN_FILENO;
+	shell->fd[1] = STDOUT_FILENO;
+	shell->pid_nbr = NULL;
 }

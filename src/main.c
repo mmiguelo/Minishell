@@ -47,6 +47,7 @@ void	ft_minishell(t_shell *shell)
 			free_loop(shell);
 			continue ;
 		}
+		print_nodes(shell->process);
 		execute_process(shell);
 		free_loop(shell);
 	}

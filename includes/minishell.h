@@ -378,12 +378,11 @@ void	exec_single_node(t_shell *shell, t_node *node);
 //executer_utils.c
 int		count_pid(t_shell *shell);
 void	reset_dups(t_shell *shell);
-char	*search_path(char *cmd, char **envp);
+char	*search_path(char *cmd, char **envp, int i);
 int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
 
 //executer_pipes.c
-int	handle_child_pipes(t_shell *shell, int *fds, t_node *cmds);
-int	handle_pipes(t_shell *shell, t_node *process);
+void	exec_multi_node(t_shell *shell, t_node *node);
 
 // DELETE WHEN NOT NEEDED
 // print_process.c
