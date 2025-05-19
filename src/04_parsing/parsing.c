@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:11:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/05 15:41:00 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/19 18:01:11 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,17 @@ int	ft_parsing(t_shell *shell, char *s)
 {
 	int	i;
 
+	if (only_spaces(shell->input) == TRUE)
+	{
+		free_ref(&shell->input);
+		return (ERROR);
+	}
 	inizialize_info(&shell->info);
 	i = 0;
 	if (check_syntax_first_pipe(shell, s, &i) != SUCCESS)
+	{
+		free_ref(&shell->input);
 		return (SYNTAX_ERROR);
+	}
 	return (parsing_core(shell, s, &i));
 }

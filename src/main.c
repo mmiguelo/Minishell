@@ -6,7 +6,7 @@ void	read_input(t_shell *shell)
 	shell->exit_status = 0;
 	set_signo(0); // reset signo
 	reset_heredoc_id(); // reset heredoc_id
-	reset_dups(shell);
+	reset_dups(shell); // safe reset dups
 	errno = 0; // reset errno
 	shell->input = readline("minishell> ");
 	if (get_signo() == CTRL_C)
@@ -14,7 +14,7 @@ void	read_input(t_shell *shell)
 	if (!shell->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		ft_kill (&shell, shell->prev_exit_status);
+		ft_kill(&shell, shell->prev_exit_status);
 	}
 	if (only_spaces(shell->input) == FALSE)
 		add_history(shell->input);
@@ -26,28 +26,11 @@ void	ft_minishell(t_shell *shell)
 	{
 		read_input(shell);
 		if (ft_parsing(shell, shell->input) != SUCCESS)
-		{
-			free_ref(&shell->input);
 			continue ;
-		}
-		tokenizer(&shell, ft_strdup(shell->input));
-		//TODO put process and heredoc together
-		/* if (build_process(shell) != SUCCESS)
-		{
-			free_loop(shell);
+		if (parse_tokenizer(shell) != SUCCESS)
 			continue;
-		} */
-		shell->process = create_process(shell->token_list);
-		if (!(shell->process))
-		{
-			free_loop(shell);
+		if (build_process(shell) != SUCCESS)
 			continue;
-		}
-		if (heredoc_handler(shell) != SUCCESS)
-		{
-			free_loop(shell);
-			continue ;
-		}
 		execute_process(shell);
 		free_loop(shell);
 	}

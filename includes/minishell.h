@@ -189,6 +189,7 @@ int		check_syntax_redir(t_shell *shell, char *s, int *i);
 
 // tokenizer.c
 void	tokenizer(t_shell **shell, char *s);
+int		parse_tokenizer(t_shell *shell);
 
 // 00_handle_spaces
 //  token_split_space.c
@@ -364,6 +365,7 @@ void	create_redir(t_redir *redir);
 void	save_redir(t_token *temp, t_node *node);
 t_token	*divide_process(t_token *temp, t_node *node);
 t_node	*create_process(t_token *token_list);
+int		build_process(t_shell *shell);
 
 // process_helper.c
 int	redirection_type(t_token *token);

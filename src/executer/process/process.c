@@ -88,3 +88,19 @@ t_node	*create_process(t_token *token_list)
 	}
 	return (start);
 }
+
+int	build_process(t_shell *shell)
+{
+	shell->process = create_process(shell->token_list);
+	if (!(shell->process))
+	{
+		free_loop(shell);
+		return (ERROR);
+	}
+	if (heredoc_handler(shell) != SUCCESS)
+	{
+		free_loop(shell);
+		return (ERROR);
+	}
+	return (SUCCESS);
+}

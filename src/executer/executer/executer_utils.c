@@ -18,8 +18,10 @@ int	count_pid(t_shell *shell)
 
 void	reset_dups(t_shell *shell)
 {
-	dup2(shell->fd[0], STDIN_FILENO);
-	dup2(shell->fd[1], STDOUT_FILENO);
+	if (shell->fd[0] != STDIN_FILENO)
+		dup2(shell->fd[0], STDIN_FILENO);
+	if (shell->fd[1] != STDOUT_FILENO)
+		dup2(shell->fd[1], STDOUT_FILENO);
 }
 
 char	*search_path(char *cmd, char **envp, int i)

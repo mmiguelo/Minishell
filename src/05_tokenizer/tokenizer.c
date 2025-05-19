@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:25 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/19 15:22:14 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:56:58 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,20 @@ void	tokenizer(t_shell **shell, char *s)
 	free(s);
 	(*shell)->token_list = token_list;
 	//print_tokens(token_list);
+}
+
+int	parse_tokenizer(t_shell *shell)
+{
+	char	*dup;
+	
+	dup	= ft_strdup(shell->input);
+	if (!dup)
+		return (ERROR);
+	tokenizer(&shell, dup);
+	if (!shell->token_list)
+	{
+		free_ref(&shell->input);
+		return (ERROR);
+	}
+	return (SUCCESS);
 }

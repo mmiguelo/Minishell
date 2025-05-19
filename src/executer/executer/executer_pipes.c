@@ -100,7 +100,8 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 			handle_execve_or_builtin(shell, node);
 		}
 		shell->pid_nbr[i++] = pid;
-		close(in_fd);
+		if (in_fd != STDIN_FILENO) 
+			close(in_fd);
 		if (node->next)
 		{
 			close(fds[1]);
