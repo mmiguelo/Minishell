@@ -129,7 +129,6 @@ typedef struct s_shell
 {
 	int		fd[2];
 	char	*input;
-	char	**args;
 	t_token	*token_list;
 	t_token	*head;
 	t_info	info;
@@ -379,6 +378,11 @@ void	exec_single_node(t_shell *shell, t_node *node);
 int		count_pid(t_shell *shell);
 void	reset_dups(t_shell *shell);
 char	*search_path(char *cmd, char **envp, int i);
+int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
+
+//redir_exec_handler.c
+int		input_redir_handle(t_shell *shell, t_redir *redir, int fd[2]);
+int		output_redir_handle(t_shell *shell, t_redir *redir, int fd[2]);
 int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
 
 //executer_pipes.c

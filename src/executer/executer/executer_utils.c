@@ -55,19 +55,3 @@ char	*search_path(char *cmd, char **envp, int i)
 	free_char_pp_ref(&full_path);
 	return (NULL);
 }
-
-int	exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2])
-{
-	int	file;
-
-	(void)file;
-	(void)shell;
-	(void)fd[2];
-	while(redir)
-	{
-		//if (infile || append)
-		//if (outfile || heredoc)
-		redir = redir->next;
-	}
-	return (SUCCESS);
-}

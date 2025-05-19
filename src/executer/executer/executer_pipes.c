@@ -37,7 +37,6 @@ static void	handle_execve_or_builtin(t_shell *shell, t_node *node)
 		ft_printf_fd(2, "command or PATH %s not found\n", node->cmd);
 		ft_kill(&shell, 127);
 	}
-	ft_printf_fd(1, "%s\n", path);
 	if (execve(path, node->args, shell->envp) == -1)
 	{
 		perror(node->cmd);
@@ -88,7 +87,7 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 		{
 			shell->is_child = TRUE;
 			if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
-				exit(1);
+				ft_kill(&shell, shell->exit_status);
 			if (in_fd != STDIN_FILENO)
 				dup2(in_fd, STDIN_FILENO);
 			if (node->next)

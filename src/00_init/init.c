@@ -79,7 +79,6 @@ t_token	*initialize_token(char *s, int type)
 void	ft_init(t_shell	*shell, char **envp)
 {
 	shell->input = NULL;
-	shell->args = NULL;
 	shell->token_list = NULL;
 	shell->head = NULL;
 	shell->process = NULL;

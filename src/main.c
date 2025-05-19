@@ -6,6 +6,7 @@ void	read_input(t_shell *shell)
 	shell->exit_status = 0;
 	set_signo(0); // reset signo
 	reset_heredoc_id(); // reset heredoc_id
+	reset_dups(shell);
 	errno = 0; // reset errno
 	shell->input = readline("minishell> ");
 	if (get_signo() == CTRL_C)
@@ -36,7 +37,7 @@ void	ft_minishell(t_shell *shell)
 			free_loop(shell);
 			continue;
 		} */
-		shell->process = create_process(shell->token_list); //TODO shell->args is giving leaks!
+		shell->process = create_process(shell->token_list);
 		if (!(shell->process))
 		{
 			free_loop(shell);
@@ -47,7 +48,6 @@ void	ft_minishell(t_shell *shell)
 			free_loop(shell);
 			continue ;
 		}
-		print_nodes(shell->process);
 		execute_process(shell);
 		free_loop(shell);
 	}

@@ -2,7 +2,6 @@
 
 void	free_loop(t_shell *shell)
 {
-	free_char_pp_ref(&shell->args);
 	free_tokens(&shell->token_list);
 	free_process(&shell->process);
 	free_ref(&shell->input);

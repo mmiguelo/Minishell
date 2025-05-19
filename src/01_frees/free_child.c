@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:25:43 by yes               #+#    #+#             */
-/*   Updated: 2025/05/16 18:51:17 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/19 16:21:12 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	free_process_child(t_node **process)
 			ft_matrix_free((void ***)(&(*process)->args));
 		if ((*process)->redir)
 			free_redir_child(&(*process)->redir);
+		free_ref(&(*process)->cmd);
 		free(*process);
 		*process = temp;
 	}

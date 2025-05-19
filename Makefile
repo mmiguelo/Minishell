@@ -25,7 +25,7 @@ ERRORS = print_error.c
 PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c
 FREE_PROCESS = free_process.c
-EXECUTER = executer.c executer_utils.c executer_pipes.c
+EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c
 HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell

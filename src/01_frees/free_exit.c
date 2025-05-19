@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:36:31 by yes               #+#    #+#             */
-/*   Updated: 2025/05/19 15:52:06 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:33:42 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	exit_init(t_shell *shell, char *reason)
 void	ft_kill(t_shell **shell, int status)
 {
 	errno = status;
+	reset_dups((*shell));
 	free_ref(&(*shell)->input);
-	if ((*shell)->args)
-		free_char_pp_ref(&(*shell)->args);
 	if ((*shell)->token_list)
 		free_tokens(&(*shell)->token_list);
 	if ((*shell)->is_child == FALSE)

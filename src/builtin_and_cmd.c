@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_and_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:35:41 by yes               #+#    #+#             */
-/*   Updated: 2025/05/12 16:27:02 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:27:23 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_command(char *arg)
+/* int	execute_command(char *arg)
 {
 	//TODO change when tree execute is done
 	if (arg[0] == '.' && arg[1] == '/')
@@ -68,4 +68,4 @@ void	builtin_and_cmd(t_shell *shell)
 			ft_printf_fd(2, "Command not found\n");
 		}
 	}
-}
+} */
