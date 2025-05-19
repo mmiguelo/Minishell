@@ -81,19 +81,18 @@
 #                                   STRUCTS                                    #
 #=============================================================================*/
 
-typedef struct s_hd
-{
-	char	*delimiter;
-	char	*hd_path;
-}	t_hd;
-
 typedef struct s_token
 {
 	char			*token;
 	int				type;	//EXEC/CMD/PIPE/REDIR
 	struct s_token	*next;
-	t_hd			*heredoc;
 }	t_token;
+
+typedef struct s_hd
+{
+	char	*delimiter;
+	char	*hd_path;
+}	t_hd;
 
 typedef struct s_redir
 {

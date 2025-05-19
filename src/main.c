@@ -8,12 +8,16 @@ void	read_input(t_shell *shell)
 	reset_heredoc_id(); // reset heredoc_id
 	reset_dups(shell); // safe reset dups
 	errno = 0; // reset errno
+	if (!isatty(STDOUT_FILENO))
+		rl_outstream = stderr;
+	ft_printf ("BEFORE MAIN READLINE \n");
 	shell->input = readline("minishell> ");
+	ft_printf ("AFTER MAIN READLINE \n");
 	if (get_signo() == CTRL_C)
 		shell->prev_exit_status = CTRL_C + 128;
 	if (!shell->input)
 	{
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_kill(&shell, shell->prev_exit_status);
 	}
 	if (only_spaces(shell->input) == FALSE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/16 19:28:56 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/19 19:13:13 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	heredoc_readline(t_hd *hd, int fd)
 	while (1)
 	{
 		line = readline("> ");
+		ft_printf("writing heredoc line: %s\n", line);
 		if (!line || get_signo() == CTRL_C)
 		{
 			if (!line)
