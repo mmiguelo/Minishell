@@ -47,7 +47,7 @@ void	ft_minishell(t_shell *shell)
 			free_loop(shell);
 			continue ;
 		}
-		//execute_process(shell);
+		execute_process(shell);
 		free_loop(shell);
 	}
 	ft_kill(&shell, 0);

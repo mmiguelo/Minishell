@@ -13,11 +13,6 @@ int	count_pid(t_shell *shell)
 		i++;
 		process = process->next;
 	}
-	if (i == 0)
-		shell->pid_nbr = NULL;
-	else
-		shell->pid_nbr = (int *)malloc(sizeof(int) * (i + 1));
-	shell->pid_nbr[i] = 0;
 	return (i);
 }
 
@@ -59,6 +54,9 @@ int	exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2])
 {
 	int	file;
 
+	(void)file;
+	(void)shell;
+	(void)fd[2];
 	while(redir)
 	{
 		//if (infile || append)

@@ -23,8 +23,9 @@ SIGNAL = signal.c signal_handler.c setget_signo.c
 FREE = free.c free_shell.c free_exit.c free_child.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
-PROCESS = process.c node.c process_helper.c print_process.c \
-			free_process.c
+PROCESS = process.c node.c process_helper.c print_process.c
+FREE_PROCESS = free_process.c
+EXECUTER = executer.c executer_utils.c executer_pipes.c
 HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell
@@ -64,7 +65,7 @@ VPATH += src/05_tokenizer/03_add_new_token
 VPATH += src/builtin
 # print
 VPATH += src/prints
-#binary_tree
+#process
 VPATH += src/executer/process
 VPATH += src/executer/free_process
 VPATH += src/executer/executer
@@ -84,7 +85,9 @@ SRC +=	$(PARSING)
 SRC +=	$(TOKENIZER)
 SRC +=	$(BUILTIN)
 SRC +=	$(PRINT)
-# binary_tree
+# process
+SRC +=	$(EXECUTER)
+SRC +=	$(FREE_PROCESS)
 SRC +=	$(PROCESS)
 SRC += $(HEREDOC)
 

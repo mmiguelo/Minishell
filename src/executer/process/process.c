@@ -78,6 +78,8 @@ t_node	*create_process(t_token *token_list)
 	while (temp)
 	{
 		temp = divide_process(temp, node);
+		if (node->args && node->args[0])
+			node->cmd = ft_strdup(node->args[0]);
 		if (temp)
 		{
 			temp = temp->next;

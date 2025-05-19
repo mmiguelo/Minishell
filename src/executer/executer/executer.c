@@ -35,8 +35,8 @@ void	execute_process(t_shell *shell)
 	node = shell->process;
 	if (count_pid(shell) == 1)
 		exec_single_node(shell, node);
-	else
-		exec_multi_node(shell, node);
+	/* else
+		exec_multi_node(shell, node); */
 }
 
 void	fork_single_node(t_shell *shell, t_node *node, char *path)
@@ -55,11 +55,11 @@ void	fork_single_node(t_shell *shell, t_node *node, char *path)
 			perror(node->cmd);
 			free_ref(&path);
 			if (errno == ENOENT)
-				ft_kill(shell, 127);
+				ft_kill(&shell, 127);
 			else if (errno == EACCES || errno == EISDIR)
-				ft_kill(shell, 126);
+				ft_kill(&shell, 126);
 			else
-				ft_kill(shell, 1);
+				ft_kill(&shell, 1);
 		}
 	}
 	waitpid(pid, &status, 0);
@@ -77,13 +77,17 @@ void	exec_single_node(t_shell *shell, t_node *node)
 	builtin = ft_isbuiltin(node->cmd, shell);
 	if (builtin)
 	{
-		return (free(shell->pid_nbr), shell->pid_nbr = NULL,
-			builtin(node->args, shell), reset_dups(shell));
+		shell->pid_nbr = NULL;
+		builtin(node->args, shell);
+		return ;
 	}
 	path = search_path(node->cmd, shell->envp);
 	if (!path)
-		return (ft_printf_fd(2, "command or PATH %s not found\n",
-				node->cmd), shell->exit_status = 127);
-	fork_single_node(shell, node, &path);
+	{
+		ft_printf_fd(2, "command or PATH %s not found\n", node->cmd);
+		shell->exit_status = 127;
+		return ;
+	}
+	fork_single_node(shell, node, path);
 	free_ref(&path);
 }

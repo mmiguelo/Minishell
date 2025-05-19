@@ -372,10 +372,14 @@ int	count_args(t_token *temp);
 
 //executer.c
 void	execute_process(t_shell *shell);
+void	fork_single_node(t_shell *shell, t_node *node, char *path);
+void	exec_single_node(t_shell *shell, t_node *node);
 
 //executer_utils.c
 int		count_pid(t_shell *shell);
 void	reset_dups(t_shell *shell);
+char	*search_path(char *cmd, char **envp);
+int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
 
 //executer_pipes.c
 int	handle_child_pipes(t_shell *shell, int *fds, t_node *cmds);

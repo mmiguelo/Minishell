@@ -68,6 +68,7 @@ void	free_process(t_node **process)
 			ft_matrix_free((void ***)(&(*process)->args));
 		if ((*process)->redir)
 			free_redir(&(*process)->redir);
+		free_ref(&(*process)->cmd);
 		free(*process);
 		*process = temp;
 	}
