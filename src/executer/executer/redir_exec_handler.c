@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:37:30 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/19 19:04:13 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:10:56 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	input_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 	if (redir->type == REDIR_IN)
 		file = open(redir->filename, O_RDONLY, 0600);
 	else if (redir->type == HEREDOC)
-	{
-		ft_printf("redirecting from heredoc: %s\n", redir->heredoc->hd_path);
 		file = open(redir->heredoc->hd_path, O_RDONLY, 0600);
-	}
 	else
 		return (SUCCESS);
 	if (file == -1)

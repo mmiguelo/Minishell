@@ -134,6 +134,8 @@ typedef struct s_shell
 	t_node	*process;
 	char	tempfile_dir[BUFFER_MAX_SIZE];
 	int		pid;
+	int		stdin_backup;
+	int		stdout_backup;
 	int		is_child;
 	int		*pid_nbr;
 	char	**envp;
@@ -367,8 +369,8 @@ t_node	*create_process(t_token *token_list);
 int		build_process(t_shell *shell);
 
 // process_helper.c
-int	redirection_type(t_token *token);
-int	count_args(t_token *temp);
+int		redirection_type(t_token *token);
+int		count_args(t_token *temp);
 
 //executer.c
 void	execute_process(t_shell *shell);
@@ -385,6 +387,10 @@ int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
 int		input_redir_handle(t_shell *shell, t_redir *redir, int fd[2]);
 int		output_redir_handle(t_shell *shell, t_redir *redir, int fd[2]);
 int		exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2]);
+
+// backup_stdio.c
+void	restore_stdio(t_shell *shell);
+int		backup_stdio(t_shell *shell);
 
 //executer_pipes.c
 void	exec_multi_node(t_shell *shell, t_node *node);

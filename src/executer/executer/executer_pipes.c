@@ -86,9 +86,7 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 		if (pid == 0)
 		{
 			shell->is_child = TRUE;
-			if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
-				ft_kill(&shell, shell->exit_status);
-			if (in_fd != STDIN_FILENO)
+			if (shell->fd[0] == STDIN_FILENO && in_fd != STDIN_FILENO)
 				dup2(in_fd, STDIN_FILENO);
 			if (node->next)
 			{
@@ -96,6 +94,8 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 				dup2(fds[1], STDOUT_FILENO);
 				close(fds[1]);
 			}
+			if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
+				ft_kill(&shell, shell->exit_status);
 			close_extra_fds(in_fd, fds);
 			handle_execve_or_builtin(shell, node);
 		}
@@ -106,6 +106,12 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 		{
 			close(fds[1]);
 			in_fd = fds[0];
+		}
+		if (ft_isbuiltin(node->cmd, shell) && node->next
+				&& !ft_isbuiltin(node->next->cmd, shell))
+		{
+			waitpid(shell->pid_nbr[i - 1], NULL, 0);
+			i--;
 		}
 		node = node->next;
 	}

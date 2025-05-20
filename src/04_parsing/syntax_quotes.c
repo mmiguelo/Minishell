@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:38:17 by yes               #+#    #+#             */
-/*   Updated: 2025/05/05 15:21:13 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/20 18:37:40 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 int	check_syntax_quotes(t_shell *shell, char *s, int *i)
 {
+	char	quote;
+
 	if (!s[*i] || !(ft_strchr(QUOTES, s[*i])))
 		return (SUCCESS);
+	quote = s[*i];
 	quote_changer(s, i, &shell->info);
 	while (s[*i])
 	{
-		if (shell->info.mode == DOUBLE_QUO && s[*i] == '\"')
+		if (s[*i] == quote)
 		{
-			quote_changer(s, i, &shell->info);
-			return (SUCCESS);
-		}
-		if (shell->info.mode == SINGLE_QUO && s[*i] == '\'')
-		{
-			quote_changer(s, i, &shell->info);
+			shell->info.mode = GENERAL;
 			return (SUCCESS);
 		}
 		(*i)++;

@@ -11,7 +11,8 @@ VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=
 
 GENERAL = main.c shell_helper.c builtin_and_cmd.c
 INIT = init.c init_helper.c
-PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c syntax_redir.c
+PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c \
+			syntax_redir.c
 TOKENIZER = tokenizer.c token_tools.c \
 			token_split_space.c type_helper.c \
 			expansion_helper.c handle_dollar_cases.c handle_expansions.c \
@@ -25,7 +26,8 @@ ERRORS = print_error.c
 PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c
 FREE_PROCESS = free_process.c
-EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c
+EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c \
+			backup_stdio.c
 HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell
