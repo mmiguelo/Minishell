@@ -256,7 +256,7 @@ int		ft_echo(char **args, t_shell *shell);
 
 //env
 int		ft_env(char **args, t_shell *shell);
-void	when_no_env(t_shell *shell);
+char	**when_no_env(void);
 
 //exit
 int		ft_exit(char **args, t_shell *shell);

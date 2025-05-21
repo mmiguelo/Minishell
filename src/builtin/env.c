@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:21:45 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:42 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/21 11:24:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	**when_no_env(char **envp)
+char	**when_no_env(void)
 {
+	char	**env;
 	char	cwd[1024];
 
-	*envp = ft_calloc(4, sizeof(char *));
-	if (!envp)
-		return ;
-	(*envp)[0] = ft_strdup_free(ft_strdup("PWD="),
+	env = ft_calloc(4, sizeof(char *));
+	if (!env)
+		return (NULL);
+	env[0] = ft_strdup_free(ft_strdup("PWD="),
 			ft_strdup(getcwd(cwd, sizeof(cwd))));
-	(*envp)[1] = ft_strdup("SHLVL=1");
-	(*envp)[2] = ft_strdup("_=/usr/bin/env");
-	(*envp)[3] = NULL;
-} */
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = NULL;
+	return (env);
+}
 
 static int	env_error(char *arg)
 {

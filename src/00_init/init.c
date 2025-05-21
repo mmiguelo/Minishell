@@ -83,9 +83,13 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->head = NULL;
 	shell->process = NULL;
 	shell->pid = getpid();
-	shell->envp = init_env(envp);
-	if (!shell->envp)
-		exit_init(shell, "malloc");
+	if (!envp || !envp[0])
+	{
+		//exit_init(shell, "malloc");
+		shell->envp = when_no_env();
+	}
+	else
+		shell->envp = init_env(envp);
 	if (update_shlvl(shell) != SUCCESS)
 		exit_init(shell, "shlvl");
 	ft_bzero(shell->tempfile_dir, BUFFER_MAX_SIZE);
