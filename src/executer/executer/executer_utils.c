@@ -2,12 +2,11 @@
 
 int	count_pid(t_shell *shell)
 {
-	int i;
+	int		i;
 	t_node	*process;
 
 	process = shell->process;
 	i = 0;
-
 	while (process)
 	{
 		i++;
@@ -24,25 +23,24 @@ void	reset_dups(t_shell *shell)
 		dup2(shell->fd[1], STDOUT_FILENO);
 }
 
-char	*search_path(char *cmd, char **envp, int i)
+static char	**get_paths_from_env(char **envp)
 {
-	char	**full_path;
-	char	*partial_path;
-	char	*temp;
+	int	i;
 
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL); // to change
-	}
+	i = 0;
 	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	if (envp[i] == NULL)
+	if (!envp[i])
 		return (NULL);
-	full_path = ft_split(envp[i] + 5, ':' );
-	if (!full_path)
-		return (ft_putstr_fd("error in splitting search_path\n", 2), NULL);
+	return (ft_split(envp[i] + 5, ':'));
+}
+
+static char	*check_path_and_return(char **full_path, char *cmd)
+{
+	int		i;
+	char	*temp;
+	char	*partial_path;
+
 	i = 0;
 	while (full_path[i])
 	{
@@ -56,4 +54,20 @@ char	*search_path(char *cmd, char **envp, int i)
 	}
 	free_char_pp_ref(&full_path);
 	return (NULL);
+}
+
+char	*search_path(char *cmd, char **envp)
+{
+	char	**full_path;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL); // to change
+	}
+	full_path = get_paths_from_env(envp);
+	if (!full_path)
+		return (ft_putstr_fd("error in splitting search_path\n", 2), NULL);
+	return (check_path_and_return(full_path, cmd));
 }

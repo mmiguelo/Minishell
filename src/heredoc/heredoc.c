@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/20 14:01:01 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/21 09:37:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	create_heredoc(t_redir *redir, char *dir)
 int	heredoc_handler(t_shell *shell)
 {
 	t_node	*node;
-	t_redir *redir;
+	t_redir	*redir;
 
 	node = shell->process;
 	while (node)

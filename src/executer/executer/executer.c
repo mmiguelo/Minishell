@@ -37,7 +37,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 	if (backup_stdio(shell) == ERROR)
 		return ;
 	if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
-		return;
+		return ;
 	builtin = ft_isbuiltin(node->cmd, shell);
 	if (builtin)
 	{
@@ -46,7 +46,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 		restore_stdio(shell);
 		return ;
 	}
-	path = search_path(node->cmd, shell->envp, 0);
+	path = search_path(node->cmd, shell->envp);
 	if (!path)
 	{
 		ft_printf_fd(2, "command or PATH %s not found\n", node->cmd);

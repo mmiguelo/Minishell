@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_exec_handler.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:37:30 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/20 15:10:56 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/21 09:36:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	input_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 {
-	int file;
+	int	file;
 
 	if (redir->type == REDIR_IN)
 		file = open(redir->filename, O_RDONLY, 0600);
@@ -25,7 +25,7 @@ int	input_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 	if (file == -1)
 	{
 		ft_printf_fd(2, "Error: failed to open file\n");
-		return ( shell->exit_status = 1, ERROR);
+		return (shell->exit_status = 1, ERROR);
 	}
 	if (dup2(file, fd[0]) == -1)
 	{
@@ -38,7 +38,7 @@ int	input_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 
 int	output_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 {
-	int file;
+	int	file;
 
 	if (redir->type == REDIR_OUT)
 		file = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -62,7 +62,7 @@ int	output_redir_handle(t_shell *shell, t_redir *redir, int fd[2])
 
 int	exec_redir_handler(t_shell *shell, t_redir *redir, int fd[2])
 {
-	while(redir)
+	while (redir)
 	{
 		if (redir->type == REDIR_IN || redir->type == HEREDOC)
 		{

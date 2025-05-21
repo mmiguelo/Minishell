@@ -25,9 +25,8 @@ FREE = free.c free_shell.c free_exit.c free_child.c
 ERRORS = print_error.c
 PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c
-FREE_PROCESS = free_process.c
 EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c \
-			backup_stdio.c
+			backup_stdio.c executer_pipes2.c
 HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
 
 NAME = minishell
@@ -69,7 +68,6 @@ VPATH += src/builtin
 VPATH += src/prints
 #process
 VPATH += src/executer/process
-VPATH += src/executer/free_process
 VPATH += src/executer/executer
 #heredoc
 VPATH += src/heredoc
@@ -89,7 +87,6 @@ SRC +=	$(BUILTIN)
 SRC +=	$(PRINT)
 # process
 SRC +=	$(EXECUTER)
-SRC +=	$(FREE_PROCESS)
 SRC +=	$(PROCESS)
 SRC += $(HEREDOC)
 

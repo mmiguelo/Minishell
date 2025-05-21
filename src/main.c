@@ -30,9 +30,9 @@ void	ft_minishell(t_shell *shell)
 		if (ft_parsing(shell, shell->input) != SUCCESS)
 			continue ;
 		if (parse_tokenizer(shell) != SUCCESS)
-			continue;
+			continue ;
 		if (build_process(shell) != SUCCESS)
-			continue;
+			continue ;
 		execute_process(shell);
 		free_loop(shell);
 	}

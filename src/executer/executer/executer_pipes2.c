@@ -1,0 +1,55 @@
+#include "minishell.h"
+
+void	init_pipe_data(t_shell *shell)
+{
+	int	count;
+
+	count = count_pid(shell);
+	shell->pid_nbr = malloc(sizeof(pid_t) * count);
+	if (!shell->pid_nbr)
+		perror("malloc failed");
+}
+
+void	close_extra_fds(int in_fd, int fd[2])
+{
+	if (in_fd != STDIN_FILENO)
+		close(in_fd);
+	if (fd)
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
+}
+
+void	wait_all(t_shell *shell, int n)
+{
+	int	status;
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		waitpid(shell->pid_nbr[i], &status, 0);
+		if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
+		i++;
+	}
+	free(shell->pid_nbr);
+	shell->pid_nbr = NULL;
+	reset_dups(shell);
+}
+
+void	execve_with_error_handling(char *path, t_node *node, t_shell *shell)
+{
+	if (execve(path, node->args, shell->envp) == -1)
+	{
+		perror(node->cmd);
+		free_ref(&path);
+		if (errno == ENOENT)
+			ft_kill(&shell, 127);
+		else if (errno == EACCES || errno == EISDIR)
+			ft_kill(&shell, 126);
+		else
+			ft_kill(&shell, 1);
+	}
+}
