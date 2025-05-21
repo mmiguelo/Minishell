@@ -42,7 +42,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 	if (builtin)
 	{
 		shell->pid_nbr = NULL;
-		builtin(node->args, shell);
+		shell->exit_status = builtin(node->args, shell);
 		restore_stdio(shell);
 		return ;
 	}
