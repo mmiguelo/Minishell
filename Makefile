@@ -119,11 +119,15 @@ $(NAME): $(OBJS) $(LIBFT)
 
 # Make and run
 r: all
-	./minishell
+	./minishell ; echo "MINISHELL exited with status $$?"
 
 # Make and run with valgrind
 rv: all
-	$(VAL) ./minishell
+	$(VAL) ./minishell ; echo "MINISHELL exited with status $$?"
+
+# Make and run with valgrind without envs
+renv: all
+	env -i $(VAL) ./minishell
 
 # Executable minishell with valgrind
 v: re

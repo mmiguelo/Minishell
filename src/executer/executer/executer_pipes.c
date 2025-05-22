@@ -37,6 +37,7 @@ static pid_t	create_pipe_and_fork(t_node *node, int *fds)
 
 static void	exec_child(t_shell *shell, t_node *node, int *fds, int in_fd)
 {
+	set_signal_mode(SIGMODE_PIPELINE);
 	shell->is_child = TRUE;
 	if (shell->fd[0] == STDIN_FILENO && in_fd != STDIN_FILENO)
 		dup2(in_fd, STDIN_FILENO);
@@ -72,6 +73,7 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 	i = 0;
 	in_fd = STDIN_FILENO;
 	init_pipe_data(shell);
+	set_signal_mode(SIGMODE_PIPELINE);
 	while (node)
 	{
 		pid = create_pipe_and_fork(node, fds);
@@ -89,4 +91,5 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 		node = node->next;
 	}
 	wait_all(shell, i);
+	set_signal_mode(SIGMODE_DEFAULT);
 }

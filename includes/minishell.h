@@ -27,7 +27,6 @@
 # define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
 # define ERROR_HD_GEN_PATH "minishell: failed to generate heredoc path\n"
 # define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
-# define CORE_DUMP_MSG "Quit (core dumped)\n"
 
 //heredoc
 # define BUFFER_MAX_SIZE 1024
@@ -172,6 +171,10 @@ void	ft_init(t_shell	*shell, char **envp);
 
 // init_helper.c
 int		update_shlvl(t_shell *shell);
+int		update_shlvl(t_shell *shell);
+int		update_lastcmd(t_shell *shell);
+void	update_envp(t_shell *shell);
+char	**when_no_env(void);
 
 /*=============================================================================#
 #                                   PARSING                                    #
@@ -256,7 +259,6 @@ int		ft_echo(char **args, t_shell *shell);
 
 //env
 int		ft_env(char **args, t_shell *shell);
-char	**when_no_env(void);
 
 //exit
 int		ft_exit(char **args, t_shell *shell);

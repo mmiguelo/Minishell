@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/18 16:59:32 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/22 17:38:46 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	print_exported_vars(char **new_export)
 	i = -1;
 	while (new_export[++i])
 	{
+		if (new_export[i][0] == '_')
+		{
+			free(new_export[i]);
+			continue;
+		}
 		j = 0;
 		while (new_export[i][j])
 		{

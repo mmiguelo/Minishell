@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:33:47 by yes               #+#    #+#             */
-/*   Updated: 2025/05/16 17:54:28 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/22 17:26:25 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,44 @@ int	update_shlvl(t_shell *shell)
 		return (free_ref(&new), INVALID);
 	free_ref(&new);
 	return (SUCCESS);
+}
+
+int	update_pwd(t_shell *shell)
+{
+	char	*pwd;
+
+	pwd = get_env_value_expansion("PWD", shell->envp);
+	if (*pwd == '\0')
+	{
+		pwd = ft_strjoin_free(ft_strdup("PWD="), getcwd(NULL, 0));
+		if (!pwd)
+			return (INVALID);
+		if (add_var_to_envp(pwd, shell) != 0)
+			return (free_ref(&pwd), INVALID);
+	}
+	return (SUCCESS);
+}
+
+int	update_lastcmd(t_shell *shell)
+{
+	char	*lastcmd;
+
+	lastcmd = get_env_value_expansion("_", shell->envp);
+	if (*lastcmd == '\0')
+	{
+		if (add_var_to_envp("_=./minishell", shell) != 0)
+			return (free_ref(&lastcmd), INVALID);
+	}
+	return (SUCCESS);
+}
+
+
+void	update_envp(t_shell *shell)
+{
+	if (update_shlvl(shell) != SUCCESS)
+		exit_init(shell, "shlvl");
+	if (update_pwd(shell) != SUCCESS)
+		exit_init(shell, "pwd");
+	if (update_lastcmd(shell) != SUCCESS)
+		exit_init(shell, "lastcmd");
 }

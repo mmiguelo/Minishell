@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:25 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/21 09:53:46 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:02:07 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	finish_tokenizer(t_shell *shell, t_token *token_list)
+{
+	t_token	*token;
+	char	*last_arg;
+	
+	last_arg = "";
+	token = token_list;
+	while (token)
+	{
+		if (token->type == CMD || token->type == ARG)
+			last_arg = token->token;
+		token = token->next;
+	}
+	update_env(shell, "_", last_arg);
+	shell->token_list = token_list;
+}
 
 //TODO DELETE printf and (*shell)->exit_status = 0;
 void	tokenizer(t_shell **shell, char *s)
@@ -28,17 +45,13 @@ void	tokenizer(t_shell **shell, char *s)
 		if (handle_expansions(*shell, &s, &i, &info) == TRUE)
 			continue ;
 		if (info.error_flag == TRUE)
-		{
-			free_tokens(&token_list);
-			return ;
-		}
+			return (free_tokens(&token_list));
 		handle_quotes(&s, &i, &info);
 		add_new_token(&token_list, s, &info);
 		info.type_flag = FALSE;
 	}
 	free(s);
-	(*shell)->token_list = token_list;
-	print_tokens(token_list);
+	finish_tokenizer(*shell, token_list);
 }
 
 int	parse_tokenizer(t_shell *shell)

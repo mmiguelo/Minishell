@@ -10,6 +10,7 @@ void	fork_single_node(t_shell *shell, t_node *node, char *path)
 		return (perror("fork failed"));
 	if (pid == 0)
 	{
+		set_signal_mode(SIGMODE_CHILD);
 		shell->is_child = TRUE;
 		if (execve(path, node->args, shell->envp) == -1)
 		{
@@ -27,6 +28,14 @@ void	fork_single_node(t_shell *shell, t_node *node, char *path)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		shell->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		shell->exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_printf_fd(2, "Quit (core dumped)\n");
+		else if (WTERMSIG(status) == SIGINT)
+			ft_printf_fd(2, "\n");
+	}
 }
 
 void	exec_single_node(t_shell *shell, t_node *node)
@@ -53,7 +62,9 @@ void	exec_single_node(t_shell *shell, t_node *node)
 		shell->exit_status = 127;
 		return ;
 	}
+	set_signal_mode(SIGMODE_PIPELINE);
 	fork_single_node(shell, node, path);
+	set_signal_mode(SIGMODE_DEFAULT);
 	restore_stdio(shell);
 	free_ref(&path);
 }

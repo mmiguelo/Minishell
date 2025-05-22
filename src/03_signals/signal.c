@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:46:22 by yes               #+#    #+#             */
-/*   Updated: 2025/05/08 17:36:47 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/22 19:13:15 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_signal_mode(int mode)
 	else if (mode == SIGMODE_CHILD)
 	{
 		// TODO might be wrong an SIGINT be SIG_DFL
-		signal(SIGINT, signal_pipe_handler);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
 	else if (mode == SIGMODE_HEREDOC)
