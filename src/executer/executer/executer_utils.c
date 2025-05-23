@@ -27,12 +27,14 @@ static char	**get_paths_from_env(char **envp)
 {
 	int	i;
 
-	i = 0;
-	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	if (!envp[i])
+	if (!envp)
 		return (NULL);
-	return (ft_split(envp[i] + 5, ':'));
+	for (i = 0; envp[i]; i++)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			return (ft_split(envp[i] + 5, ':'));
+	}
+	return (NULL);
 }
 
 static char	*check_path_and_return(char **full_path, char *cmd)
@@ -68,6 +70,6 @@ char	*search_path(char *cmd, char **envp)
 	}
 	full_path = get_paths_from_env(envp);
 	if (!full_path)
-		return (ft_putstr_fd("error in splitting search_path\n", 2), NULL);
+		return (NULL);
 	return (check_path_and_return(full_path, cmd));
 }

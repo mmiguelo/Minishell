@@ -39,7 +39,7 @@ void	ft_minishell(t_shell *shell)
 	ft_kill(&shell, 0);
 }
 
- int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
