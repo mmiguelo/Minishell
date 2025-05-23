@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd1.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 11:19:57 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:35 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/23 16:10:45 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ char	*get_env_value(const char *var, t_shell *shell)
 			break ;
 		i++;
 	}
+	if (shell->envp[i] == NULL)
+		return (ft_printf_fd(2, "minishell: cd: HOME not set\n"), NULL);
 	return (shell->envp[i] + ft_strlen(var) + 1);
 }

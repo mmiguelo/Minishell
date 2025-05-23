@@ -32,6 +32,14 @@ void	wait_all(t_shell *shell, int n)
 		waitpid(shell->pid_nbr[i], &status, 0);
 		if (WIFEXITED(status))
 			shell->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			shell->exit_status = 128 + WTERMSIG(status);
+			if (WTERMSIG(status) == SIGQUIT)
+				ft_printf_fd(2, "Quit (core dumped)\n");
+			else if (WTERMSIG(status) == SIGINT)
+				ft_printf_fd(2, "\n");
+		}
 		i++;
 	}
 	free(shell->pid_nbr);

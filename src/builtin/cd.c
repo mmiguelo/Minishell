@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:19:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:28 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/23 16:15:28 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,32 @@ int	folder_back(t_shell *shell)
 	return (0);
 }
 
+int	handle_invalid_cwd(char **args, t_shell *shell)
+{
+	char	*new_cwd;
+	int		cwd_err;
+
+	cwd_err = save_cwd(shell->pwd, sizeof(shell->pwd));
+	if (cwd_err != 0 && (!args[1] || ft_strcmp(args[1], "~") == 0))
+	{
+		new_cwd = get_env_value("HOME", shell);
+		if (!new_cwd || verify_dir(new_cwd) != 0)
+		{
+			perror("minishell: cd");
+			return (1);
+		}
+		if (save_cwd(shell->pwd, sizeof(shell->pwd)) == 0)
+			update_env(shell, "PWD", shell->pwd);
+		return (0);
+	}
+	else if (cwd_err != 0)
+	{
+		perror("minishell: cd");
+		return (1);
+	}
+	return (0);
+}
+
 /**
  * @brief Changes the current working directory.
  * 
@@ -108,14 +134,18 @@ int	ft_cd(char **args, t_shell *shell)
 {
 	char	*new_cwd;
 
-	if (save_cwd(shell->pwd, sizeof(shell->pwd)) != 0)
-		return (perror("minishell: cd"), 1);
+	if (handle_invalid_cwd(args, shell) != 0)
+		return (1);
 	if (args[1] && args[1][0] == '-' && args[1][1])
 		return (ft_printf("minishell: cd: %s: invalid option\n", args[1]), 2);
 	if (args[1] && args[2])
 		return (ft_printf("minishell: cd: too many arguments\n"), 1);
 	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+	{
 		new_cwd = get_env_value("HOME", shell);
+		if(!new_cwd)
+			return(1);
+	}
 	else if (ft_strcmp(args[1], "-") == 0)
 		return (folder_back(shell));
 	else

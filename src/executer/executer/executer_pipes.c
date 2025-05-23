@@ -37,7 +37,7 @@ static pid_t	create_pipe_and_fork(t_node *node, int *fds)
 
 static void	exec_child(t_shell *shell, t_node *node, int *fds, int in_fd)
 {
-	set_signal_mode(SIGMODE_PIPELINE);
+	set_signal_mode(SIGMODE_CHILD);
 	shell->is_child = TRUE;
 	if (shell->fd[0] == STDIN_FILENO && in_fd != STDIN_FILENO)
 		dup2(in_fd, STDIN_FILENO);
@@ -53,7 +53,7 @@ static void	exec_child(t_shell *shell, t_node *node, int *fds, int in_fd)
 	handle_execve_or_builtin(shell, node);
 }
 
-static void	handle_wait_for_builtin(t_shell *shell, t_node *node, int i)
+/* static void	handle_wait_for_builtin(t_shell *shell, t_node *node, int i)
 {
 	if (ft_isbuiltin(node->cmd, shell) && node->next
 		&& !ft_isbuiltin(node->next->cmd, shell))
@@ -61,7 +61,7 @@ static void	handle_wait_for_builtin(t_shell *shell, t_node *node, int i)
 		waitpid(shell->pid_nbr[i - 1], NULL, 0);
 		i--;
 	}
-}
+} */
 
 void	exec_multi_node(t_shell *shell, t_node *node)
 {
@@ -87,7 +87,7 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 			close(fds[1]);
 			in_fd = fds[0];
 		}
-		handle_wait_for_builtin(shell, node, i);
+		//handle_wait_for_builtin(shell, node, i);
 		node = node->next;
 	}
 	wait_all(shell, i);
