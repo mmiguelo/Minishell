@@ -5,7 +5,7 @@ void	read_input(t_shell *shell)
 	shell->prev_exit_status = shell->exit_status; // for signal exit_status
 	shell->exit_status = 0;
 	set_signo(0); // reset signo
-	reset_heredoc_id(); // reset heredoc_id
+	shell->id = 0; // reset heredoc_id
 	reset_dups(shell); // safe reset dups
 	errno = 0; // reset errno
 	if (!isatty(STDOUT_FILENO))

@@ -46,9 +46,26 @@ static char	*check_path_and_return(char **full_path, char *cmd)
 	i = 0;
 	while (full_path[i])
 	{
+		// TODO added this if but no need if search_path has if (!cmd)
+		// maybe delete this 3 ifs since we already verify outside
+		if (!full_path[i] || !cmd)
+		{
+			i++;
+			continue;
+		}
 		temp = ft_strjoin(full_path[i], "/");
+		if (!temp)
+		{
+			i++;
+			continue;
+		}
 		partial_path = ft_strjoin(temp, cmd);
 		free_ref(&temp);
+		if (!partial_path)
+		{
+			i++;
+			continue;
+		}
 		if (access(partial_path, F_OK | X_OK) == 0)
 			return (free_char_pp_ref(&full_path), partial_path);
 		free_ref(&partial_path);
@@ -62,6 +79,9 @@ char	*search_path(char *cmd, char **envp)
 {
 	char	**full_path;
 
+	// TODO added this condition in case
+	if (!cmd)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)

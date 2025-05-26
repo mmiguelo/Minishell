@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/21 09:37:53 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/26 12:17:35 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int	read_write_heredoc(t_hd *hd)
 	return (SUCCESS);
 }
 
-int	create_heredoc(t_redir *redir, char *dir)
+int	create_heredoc(t_shell *shell, t_redir *redir, char *dir)
 {
 	t_hd	*hd;
 
 	hd = init_heredoc(redir);
 	if (!hd)
 		return (ft_printf_fd(2, ERROR_HD_CREATE), ERROR);
-	hd->hd_path = generate_tempfile_path(dir);
+	hd->hd_path = generate_tempfile_path(dir, &shell->id);
 	if (!hd->hd_path)
 	{
 		clean_heredoc(&hd);
@@ -94,7 +94,7 @@ int	heredoc_handler(t_shell *shell)
 		{
 			if (redir->type == HEREDOC)
 			{
-				if (create_heredoc(redir, shell->tempfile_dir) != SUCCESS)
+				if (create_heredoc(shell, redir, shell->tempfile_dir) != SUCCESS)
 				{
 					if (get_signo() == CTRL_C)
 						shell->exit_status = CTRL_C + 128;

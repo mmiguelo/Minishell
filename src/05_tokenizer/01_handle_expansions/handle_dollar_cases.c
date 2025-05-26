@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar_cases.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:50:52 by yes               #+#    #+#             */
-/*   Updated: 2025/05/06 11:57:58 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/26 12:02:40 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,6 @@ char	*remove_dollar(char **s_ptr, int *i, t_info *info)
 	new_s = expand_var_in_str(s, "", *i, info);
 	*s_ptr = new_s;
 	*i = info->env_start;
-	return (new_s);
-}
-
-char	*handle_double_dollar(t_shell *shell, char *s, int *i, t_info *info)
-{
-	char	*new_s;
-	char	*s_pid;
-	int		pid_len;
-
-	s_pid = ft_itoa(shell->pid);
-	if (!s_pid)
-		return (s);
-	pid_len = ft_strlen(s_pid);
-	info->env_end = (*i) + 1;
-	new_s = expand_var_in_str(s, s_pid, info->env_end, info);
-	*i = info->env_start + pid_len;
-	free(s_pid);
 	return (new_s);
 }
 

@@ -132,7 +132,7 @@ typedef struct s_shell
 	t_info	info;
 	t_node	*process;
 	char	tempfile_dir[BUFFER_MAX_SIZE];
-	int		pid;
+	int		id;
 	int		stdin_backup;
 	int		stdout_backup;
 	int		is_child;
@@ -213,7 +213,6 @@ int		handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info);
 
 //  handle_dollar_cases.c
 char	*remove_dollar(char **s_ptr, int *i, t_info *info);
-char	*handle_double_dollar(t_shell *shell, char *s, int *i, t_info *info);
 char	*handle_question_mark(t_shell *shell, char *s, int *i, t_info *info);
 
 //  expansion_helper.c
@@ -412,18 +411,13 @@ void	print_nodes(t_node *node);
 #=============================================================================*/
 
 // heredoc.c
-int		create_heredoc(t_redir *redir, char *dir);
+int		create_heredoc(t_shell *shell, t_redir *redir, char *dir);
 int		heredoc_handler(t_shell *shell);
 
 // init_heredoc.c
 t_hd	*init_heredoc(t_redir *redir);
 
 // generate_tempfile_path
-char	*generate_tempfile_path(char *dir);
-
-// setget_heredoc_id.c
-int		set_heredoc_id(void);
-int		get_heredoc_id(void);
-void	reset_heredoc_id(void);
+char	*generate_tempfile_path(char *dir, int *id);
 
 #endif

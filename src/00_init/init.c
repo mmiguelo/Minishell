@@ -82,13 +82,13 @@ void	ft_init(t_shell	*shell, char **envp)
 	shell->token_list = NULL;
 	shell->head = NULL;
 	shell->process = NULL;
-	shell->pid = getpid();
 	shell->envp = init_env(envp);
 	if (!shell->envp)
 		exit_init(shell, "malloc");
 	update_envp(shell);
 	ft_bzero(shell->tempfile_dir, BUFFER_MAX_SIZE);
 	ft_strlcat(shell->tempfile_dir, TEMPFILE_DIR, BUFFER_MAX_SIZE);
+	shell->id = 0;
 	shell->is_child = FALSE;
 	shell->cmd = NULL;
 	shell->old_pwd = NULL;

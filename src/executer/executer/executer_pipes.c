@@ -49,6 +49,11 @@ static void	exec_child(t_shell *shell, t_node *node, int *fds, int in_fd)
 	}
 	if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
 		ft_kill(&shell, shell->exit_status);
+	if (!node->cmd)
+	{
+		restore_stdio(shell);
+		ft_kill(&shell, 0);
+	}
 	close_extra_fds(in_fd, fds);
 	handle_execve_or_builtin(shell, node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expansions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:19:21 by yes               #+#    #+#             */
-/*   Updated: 2025/05/06 12:06:38 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/26 12:02:35 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	expand_env(t_shell *shell, char **s_ptr, int *i, t_info *info)
 		return (FALSE);
 	else if (ft_strchr(QUOTES, s[*i]) && info->mode == GENERAL)
 		new_s = remove_dollar(&s, i, info);
-	else if (s[*i] == '$')
-		new_s = handle_double_dollar(shell, s, i, info);
 	else if (s[*i] == '?')
 		new_s = handle_question_mark(shell, s, i, info);
 	else

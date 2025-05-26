@@ -47,6 +47,11 @@ void	exec_single_node(t_shell *shell, t_node *node)
 		return ;
 	if (exec_redir_handler(shell, node->redir, shell->fd) == ERROR)
 		return ;
+	if (!node->cmd)
+	{
+		shell->exit_status = 0;
+		return (restore_stdio(shell));
+	}
 	builtin = ft_isbuiltin(node->cmd, shell);
 	if (builtin)
 	{
