@@ -27,7 +27,7 @@ PRINT = print_tokens.c
 PROCESS = process.c node.c process_helper.c print_process.c
 EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c \
 			backup_stdio.c executer_pipes2.c
-HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c setget_heredoc_id.c
+HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c
 
 NAME = minishell
 
@@ -62,15 +62,16 @@ VPATH += src/05_tokenizer/00_handle_spaces
 VPATH += src/05_tokenizer/01_handle_expansions
 VPATH += src/05_tokenizer/02_handle_quote
 VPATH += src/05_tokenizer/03_add_new_token
+# process build
+VPATH += src/06_process
+# heredoc
+VPATH += src/07_heredoc
+# executer
+VPATH += src/08_executer
 # builtin
-VPATH += src/builtin
+VPATH += src/09_builtin
 # print
 VPATH += src/prints
-#process
-VPATH += src/executer/process
-VPATH += src/executer/executer
-#heredoc
-VPATH += src/heredoc
 
 #==============================================================================#
 #                                    FILES                                     #
@@ -83,12 +84,12 @@ SRC +=	$(ERRORS)
 SRC +=	$(SIGNAL)
 SRC +=	$(PARSING)
 SRC +=	$(TOKENIZER)
+SRC +=	$(PROCESS)
+SRC +=	$(HEREDOC)
+SRC +=	$(EXECUTER)
 SRC +=	$(BUILTIN)
 SRC +=	$(PRINT)
-# process
-SRC +=	$(EXECUTER)
-SRC +=	$(PROCESS)
-SRC += $(HEREDOC)
+
 
 # Library Paths
 LIBFT_DIR = libft
