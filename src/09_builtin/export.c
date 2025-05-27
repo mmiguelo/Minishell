@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 11:16:59 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:45:58 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	print_exported_vars(char **new_export)
 		if (new_export[i][0] == '_')
 		{
 			free(new_export[i]);
-			continue;
+			continue ;
 		}
 		j = 0;
 		while (new_export[i][j])

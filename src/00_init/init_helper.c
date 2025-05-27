@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:33:47 by yes               #+#    #+#             */
-/*   Updated: 2025/05/22 17:26:25 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:47:25 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int	update_lastcmd(t_shell *shell)
 	}
 	return (SUCCESS);
 }
-
 
 void	update_envp(t_shell *shell)
 {

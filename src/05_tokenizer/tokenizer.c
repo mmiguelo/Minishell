@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:12:25 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/22 18:02:07 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:53:03 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	finish_tokenizer(t_shell *shell, t_token *token_list)
 {
 	t_token	*token;
 	char	*last_arg;
-	
+
 	last_arg = "";
 	token = token_list;
 	while (token)
@@ -29,7 +29,6 @@ static void	finish_tokenizer(t_shell *shell, t_token *token_list)
 	shell->token_list = token_list;
 }
 
-//TODO DELETE printf and (*shell)->exit_status = 0;
 void	tokenizer(t_shell **shell, char *s)
 {
 	t_token	*token_list;

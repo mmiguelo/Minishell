@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 13:25:44 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/05/27 13:38:07 by mmiguelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	count_pid(t_shell *shell)
@@ -15,60 +27,55 @@ int	count_pid(t_shell *shell)
 	return (i);
 }
 
-void	reset_dups(t_shell *shell)
-{
-	if (shell->fd[0] != STDIN_FILENO)
-		dup2(shell->fd[0], STDIN_FILENO);
-	if (shell->fd[1] != STDOUT_FILENO)
-		dup2(shell->fd[1], STDOUT_FILENO);
-}
-
 static char	**get_paths_from_env(char **envp)
 {
 	int	i;
 
+	i = 0;
 	if (!envp)
 		return (NULL);
-	for (i = 0; envp[i]; i++)
+	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 			return (ft_split(envp[i] + 5, ':'));
+		i++;
 	}
+	return (NULL);
+}
+
+static char	*build_and_check(char *dir, char *cmd)
+{
+	char	*temp;
+	char	*path;
+
+	if (!dir || !cmd)
+		return (NULL);
+	temp = ft_strjoin(dir, "/");
+	if (!temp)
+		return (NULL);
+	path = ft_strjoin(temp, cmd);
+	free_ref(&temp);
+	if (!path)
+		return (NULL);
+	if (access(path, F_OK | X_OK) == 0)
+		return (path);
+	free_ref(&path);
 	return (NULL);
 }
 
 static char	*check_path_and_return(char **full_path, char *cmd)
 {
 	int		i;
-	char	*temp;
 	char	*partial_path;
 
+	if (!full_path || !cmd)
+		return (free_char_pp_ref(&full_path), NULL);
 	i = 0;
 	while (full_path[i])
 	{
-		// TODO added this if but no need if search_path has if (!cmd)
-		// maybe delete this 3 ifs since we already verify outside
-		if (!full_path[i] || !cmd)
-		{
-			i++;
-			continue;
-		}
-		temp = ft_strjoin(full_path[i], "/");
-		if (!temp)
-		{
-			i++;
-			continue;
-		}
-		partial_path = ft_strjoin(temp, cmd);
-		free_ref(&temp);
-		if (!partial_path)
-		{
-			i++;
-			continue;
-		}
-		if (access(partial_path, F_OK | X_OK) == 0)
+		partial_path = build_and_check(full_path[i], cmd);
+		if (partial_path)
 			return (free_char_pp_ref(&full_path), partial_path);
-		free_ref(&partial_path);
 		i++;
 	}
 	free_char_pp_ref(&full_path);
@@ -79,14 +86,13 @@ char	*search_path(char *cmd, char **envp)
 {
 	char	**full_path;
 
-	// TODO added this condition in case
 	if (!cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
 			return (ft_strdup(cmd));
-		return (NULL); // to change
+		return (NULL);
 	}
 	full_path = get_paths_from_env(envp);
 	if (!full_path)

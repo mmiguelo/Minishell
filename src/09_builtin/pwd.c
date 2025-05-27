@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:13 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/07 18:48:01 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/27 13:04:59 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,8 @@
 static int	parse_pwd(char *arg)
 {
 	if (arg[0] == '-' && arg[1])
-		return (ft_printf("minishell: pwd: -%c: invalid option\n", arg[1]), 2);
-	else if (ft_strcmp(arg, ">") == 0 || ft_strcmp (arg, ">>") == 0
-		|| ft_strcmp(arg, "|") == 0)
-	{
-		//TODO: alterar esta condicao
-		ft_printf("pipe or redirect\n");
-		return (1);
-	}
+		return (ft_printf_fd(2, "minishell: pwd: -%c: invalid option\n",
+				arg[1]), 2);
 	return (0);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer_pipes2.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 13:24:02 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/05/27 13:24:02 by mmiguelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	init_pipe_data(t_shell *shell)
@@ -60,4 +72,12 @@ void	execve_with_error_handling(char *path, t_node *node, t_shell *shell)
 		else
 			ft_kill(&shell, 1);
 	}
+}
+
+void	reset_dups(t_shell *shell)
+{
+	if (shell->fd[0] != STDIN_FILENO)
+		dup2(shell->fd[0], STDIN_FILENO);
+	if (shell->fd[1] != STDOUT_FILENO)
+		dup2(shell->fd[1], STDOUT_FILENO);
 }

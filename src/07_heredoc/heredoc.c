@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/26 12:17:35 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:55:00 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int	heredoc_handler(t_shell *shell)
 		{
 			if (redir->type == HEREDOC)
 			{
-				if (create_heredoc(shell, redir, shell->tempfile_dir) != SUCCESS)
+				if (create_heredoc(shell, redir, shell->tempfile_dir)
+					!= SUCCESS)
 				{
 					if (get_signo() == CTRL_C)
 						shell->exit_status = CTRL_C + 128;

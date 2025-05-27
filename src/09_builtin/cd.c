@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:19:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 11:29:20 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:09:47 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,6 @@ void	update_env(t_shell *shell, const char *var, char *path)
 		shell->envp[i] = ft_strjoin(shell->envp[i], path);
 		free(temp);
 	}
-}
-
-int	save_cwd(char *cwd, size_t size)
-{
-	if (getcwd(cwd, size) == NULL)
-		return (errno);
-	return (0);
-}
-
-int	verify_dir(const char *dir)
-{
-	if (!dir || !dir[0] || access(dir, F_OK) != 0)
-		return (perror(dir), 1);
-	if (chdir(dir) != 0)
-		return (perror("cd"), 1);
-	return (0);
 }
 
 int	folder_back(t_shell *shell)
@@ -137,14 +121,15 @@ int	ft_cd(char **args, t_shell *shell)
 	if (handle_invalid_cwd(args, shell) != 0)
 		return (1);
 	if (args[1] && args[1][0] == '-' && args[1][1])
-		return (ft_printf_fd(2, "minishell: cd: %s: invalid option\n", args[1]), 2);
+		return (ft_printf_fd(2, "minishell: cd: %s: invalid option\n",
+				args[1]), 2);
 	if (args[1] && args[2])
 		return (ft_printf_fd(2, "minishell: cd: too many arguments\n"), 1);
 	if (!args[1] || ft_strcmp(args[1], "~") == 0)
 	{
 		new_cwd = get_env_value("HOME", shell);
-		if(!new_cwd)
-			return(1);
+		if (!new_cwd)
+			return (1);
 	}
 	else if (ft_strcmp(args[1], "-") == 0)
 		return (folder_back(shell));

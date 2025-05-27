@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executer_pipes.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 13:23:11 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/05/27 13:39:47 by mmiguelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	handle_execve_or_builtin(t_shell *shell, t_node *node)
@@ -58,22 +70,11 @@ static void	exec_child(t_shell *shell, t_node *node, int *fds, int in_fd)
 	handle_execve_or_builtin(shell, node);
 }
 
-/* static void	handle_wait_for_builtin(t_shell *shell, t_node *node, int i)
-{
-	if (ft_isbuiltin(node->cmd, shell) && node->next
-		&& !ft_isbuiltin(node->next->cmd, shell))
-	{
-		waitpid(shell->pid_nbr[i - 1], NULL, 0);
-		i--;
-	}
-} */
-
-void	exec_multi_node(t_shell *shell, t_node *node)
+void	exec_multi_node(t_shell *shell, t_node *node, int i)
 {
 	int		fds[2];
 	int		in_fd;
 	pid_t	pid;
-	int		i;
 
 	i = 0;
 	in_fd = STDIN_FILENO;
@@ -92,9 +93,19 @@ void	exec_multi_node(t_shell *shell, t_node *node)
 			close(fds[1]);
 			in_fd = fds[0];
 		}
-		//handle_wait_for_builtin(shell, node, i);
 		node = node->next;
 	}
 	wait_all(shell, i);
 	set_signal_mode(SIGMODE_DEFAULT);
+}
+
+void	execute_process(t_shell *shell)
+{
+	t_node	*node;
+
+	node = shell->process;
+	if (count_pid(shell) == 1)
+		exec_single_node(shell, node);
+	else
+		exec_multi_node(shell, node, 0);
 }

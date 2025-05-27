@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 12:43:48 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/05/27 12:46:47 by mmiguelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	read_input(t_shell *shell)
 {
-	shell->prev_exit_status = shell->exit_status; // for signal exit_status
+	shell->prev_exit_status = shell->exit_status;
 	shell->exit_status = 0;
-	set_signo(0); // reset signo
-	shell->id = 0; // reset heredoc_id
-	reset_dups(shell); // safe reset dups
-	errno = 0; // reset errno
+	set_signo(0);
+	shell->id = 0;
+	reset_dups(shell);
+	errno = 0;
 	if (!isatty(STDOUT_FILENO))
 		rl_outstream = stderr;
 	shell->input = readline("minishell> ");

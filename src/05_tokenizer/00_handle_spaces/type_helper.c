@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   type_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 18:37:38 by yes               #+#    #+#             */
-/*   Updated: 2025/03/30 19:40:19 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/27 12:52:41 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// TODO change header ^
 
 #include "minishell.h"
 

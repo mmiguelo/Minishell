@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 12:42:48 by mmiguelo          #+#    #+#             */
+/*   Updated: 2025/05/27 13:34:54 by mmiguelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -153,8 +165,6 @@ typedef int	(*t_bt)(char **, t_shell *);
 #=============================================================================*/
 
 void	ft_minishell(t_shell *shell);
-
-// TODO temp... change when tree/process is done
 int		execute_command(char *arg);
 void	execute_external_cmd(t_shell *shell);
 void	builtin_and_cmd(t_shell *shell);
@@ -347,13 +357,7 @@ int		free_matriz(char **shell, int i);
 #=============================================================================*/
 
 // print_error.c
-int		print_msg_error(char *error);
 int		print_invalid_var(char *var);
-
-// print_token.c
-void	print_type(t_info *info);
-void	print_tokens(t_token *token);
-void	print_tokens_simple(t_token *token);
 
 /*=============================================================================#
 #                      	         EXECUTER                                       #
@@ -394,17 +398,13 @@ void	restore_stdio(t_shell *shell);
 int		backup_stdio(t_shell *shell);
 
 //executer_pipes.c
-void	exec_multi_node(t_shell *shell, t_node *node);
+void	exec_multi_node(t_shell *shell, t_node *node, int i);
 
 //executer_pipes2.c
 void	init_pipe_data(t_shell *shell);
 void	close_extra_fds(int in_fd, int fd[2]);
 void	wait_all(t_shell *shell, int n);
 void	execve_with_error_handling(char *path, t_node *node, t_shell *shell);
-
-// DELETE WHEN NOT NEEDED
-// print_process.c
-void	print_nodes(t_node *node);
 
 /*=============================================================================#
 #                                   HEREDOC                                    #
