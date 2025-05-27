@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:25:44 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 13:38:07 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:58:38 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ char	*search_path(char *cmd, char **envp)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
+		if (errno == EACCES || errno == EISDIR)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}

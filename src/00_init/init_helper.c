@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:33:47 by yes               #+#    #+#             */
-/*   Updated: 2025/05/27 12:47:25 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:39:04 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	update_shlvl(t_shell *shell)
 int	update_pwd(t_shell *shell)
 {
 	char	*pwd;
+	char	*old_pwd;
 
 	pwd = get_env_value_expansion("PWD", shell->envp);
 	if (*pwd == '\0')
@@ -81,6 +82,17 @@ int	update_pwd(t_shell *shell)
 			return (INVALID);
 		if (add_var_to_envp(pwd, shell) != 0)
 			return (free_ref(&pwd), INVALID);
+		free_ref(&pwd);
+	}
+	old_pwd = get_env_value_expansion("OLDPWD", shell->envp);
+	if (*old_pwd == '\0')
+	{
+		old_pwd = ft_strjoin_free(ft_strdup("OLDPWD="), getcwd(NULL, 0));
+		if (!pwd)
+			return (INVALID);
+		if (add_var_to_envp(old_pwd, shell) != 0)
+			return (free_ref(&old_pwd), INVALID);
+		free_ref(&old_pwd);
 	}
 	return (SUCCESS);
 }
