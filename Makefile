@@ -24,8 +24,8 @@ SIGNAL = signal.c signal_handler.c setget_signo.c
 FREE = free.c free_shell.c free_exit.c free_child.c
 ERRORS = print_error.c
 PROCESS = process.c node.c process_helper.c
-EXECUTER = executer.c executer_utils.c executer_pipes.c redir_exec_handler.c \
-			backup_stdio.c executer_pipes2.c
+EXECUTER = executer.c executer_single.c executer_utils.c executer_pipes.c \
+		 redir_exec_handler.c backup_stdio.c executer_pipes2.c
 HEREDOC = heredoc.c init_heredoc.c generate_tempfile_path.c
 
 NAME = minishell

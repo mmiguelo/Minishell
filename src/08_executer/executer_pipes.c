@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:23:11 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 13:39:47 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:49:00 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,4 @@ void	exec_multi_node(t_shell *shell, t_node *node, int i)
 	}
 	wait_all(shell, i);
 	set_signal_mode(SIGMODE_DEFAULT);
-}
-
-void	execute_process(t_shell *shell)
-{
-	t_node	*node;
-
-	node = shell->process;
-	if (count_pid(shell) == 1)
-		exec_single_node(shell, node);
-	else
-		exec_multi_node(shell, node, 0);
 }
