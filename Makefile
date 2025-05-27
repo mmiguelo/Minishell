@@ -9,7 +9,7 @@ RM = rm -rf
 
 VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
-GENERAL = main.c shell_helper.c builtin_and_cmd.c
+GENERAL = main.c shell_helper.c
 INIT = init.c init_helper.c
 PARSING = parsing.c syntax_error_helper.c syntax_pipes.c syntax_quotes.c \
 			syntax_redir.c
