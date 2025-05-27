@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:19:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 14:09:59 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:42:46 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	folder_back(t_shell *shell)
 	}
 	ft_printf_fd(1, "%s\n", oldpwd);
 	if (verify_dir(oldpwd) != 0)
-		return (1);
+		return (update_env(shell, "OLDPWD", shell->pwd), 1);
 	return (0);
 }
 

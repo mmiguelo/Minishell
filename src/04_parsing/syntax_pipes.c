@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:35:32 by yes               #+#    #+#             */
-/*   Updated: 2025/05/08 18:25:08 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/27 15:14:25 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_syntax_first_pipe(t_shell *shell, char *s, int *i)
 {
-	while (s[*i] && ft_strchr(WHITE_SPACES, s[*i]))
+	while (s && s[*i] && ft_strchr(WHITE_SPACES, s[*i]))
 		i++;
-	if (s[*i] && s[*i] == '|')
+	if (s && s[*i] && s[*i] == '|')
 	{
 		shell->exit_status = SYNTAX_ERROR;
 		ft_printf_fd(2, "minishell: "ERROR_UNCLOSED_PIPE);
