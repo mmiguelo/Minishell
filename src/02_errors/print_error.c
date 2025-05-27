@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:14:30 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/09 16:53:28 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/27 10:51:52 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	export_error(char *arg)
 	if (arg[0] == '-')
 	{
 		if (arg[1])
-			return (ft_printf("minishell: export -%c: invalid option\n",
+			return (ft_printf_fd(2, "minishell: export -%c: invalid option\n",
 					arg[1]), 2);
-		return (ft_printf("minishell: export: `%s': not a valid identifier\n",
+		return (ft_printf_fd(2, "minishell: export: `%s': not a valid identifier\n",
 				arg), 1);
 	}
 	return (0);
@@ -77,6 +77,6 @@ int	export_error(char *arg)
  */
 int	print_invalid_var(char *var)
 {
-	return (ft_printf("minishell: export: `%s': not a valid identifier\n", var),
+	return (ft_printf_fd(2, "minishell: export: `%s': not a valid identifier\n", var),
 		1);
 }

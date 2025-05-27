@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:19:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/26 12:24:58 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:29:20 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	folder_back(t_shell *shell)
 	oldpwd = get_env_value("OLDPWD", shell);
 	if (oldpwd == NULL)
 	{
-		ft_printf("minishell: cd: OLDPWD not set\n");
+		ft_printf_fd(2, "minishell: cd: OLDPWD not set\n");
 		return (1);
 	}
-	ft_printf("%s\n", oldpwd);
+	ft_printf_fd(1, "%s\n", oldpwd);
 	if (verify_dir(oldpwd) != 0)
 		return (1);
 	return (0);
@@ -137,9 +137,9 @@ int	ft_cd(char **args, t_shell *shell)
 	if (handle_invalid_cwd(args, shell) != 0)
 		return (1);
 	if (args[1] && args[1][0] == '-' && args[1][1])
-		return (ft_printf("minishell: cd: %s: invalid option\n", args[1]), 2);
+		return (ft_printf_fd(2, "minishell: cd: %s: invalid option\n", args[1]), 2);
 	if (args[1] && args[2])
-		return (ft_printf("minishell: cd: too many arguments\n"), 1);
+		return (ft_printf_fd(2, "minishell: cd: too many arguments\n"), 1);
 	if (!args[1] || ft_strcmp(args[1], "~") == 0)
 	{
 		new_cwd = get_env_value("HOME", shell);

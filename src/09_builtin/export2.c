@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yes <yes@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:14:55 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/04/09 14:21:55 by yes              ###   ########.fr       */
+/*   Updated: 2025/05/27 11:15:52 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ int	check_export_var(char **args, t_shell *shell)
 	int		i;
 	char	*var;
 	char	*value;
+	int		error;
 
 	i = 0;
+	error = 0;
 	while (args[++i])
 	{
 		var = get_export_var(args[i]);
@@ -43,13 +45,13 @@ int	check_export_var(char **args, t_shell *shell)
 		if (validate_var(var))
 			handle_export_var(&args[i], shell, var, value);
 		else
-			print_invalid_var(var);
+			error = print_invalid_var(var);
 		if (var)
 			free(var);
 		if (value)
 			free(value);
 	}
-	return (0);
+	return (error);
 }
 
 char	*add_double_quotes(char *str, int j)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/22 17:38:46 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:16:59 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,11 @@ int	ft_export(char **args, t_shell *shell)
 	i = 1;
 	if (!args[i])
 		return (ft_print_export(shell));
-	while (args[i++])
+	while (args[i])
 	{
-		if (args[i] && export_error(args[i]))
+		if (export_error(args[i]))
 			return (1);
+		i++;
 	}
 	return (check_export_var(args, shell));
 }
