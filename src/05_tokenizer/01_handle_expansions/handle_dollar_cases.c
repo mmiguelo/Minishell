@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:50:52 by yes               #+#    #+#             */
-/*   Updated: 2025/05/26 12:02:40 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:46:57 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ char	*remove_dollar(char **s_ptr, int *i, t_info *info)
 
 	s = *s_ptr;
 	new_s = expand_var_in_str(s, "", *i, info);
+	*s_ptr = new_s;
+	*i = info->env_start;
+	return (new_s);
+}
+
+char	*remove_number(char **s_ptr, int *i, t_info *info)
+{
+	char	*new_s;
+	char	*s;
+
+	s = *s_ptr;
+	(*i)++;
+	info->env_end = (*i);
+	new_s = expand_var_in_str(s, "", info->env_end, info);
 	*s_ptr = new_s;
 	*i = info->env_start;
 	return (new_s);

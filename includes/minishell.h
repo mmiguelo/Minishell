@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:42:48 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 13:34:54 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:27:53 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define TEMPFILE_DIR "/tmp/"
 
 // all special cases
+# define NUMBERS "0123456789"
 # define SPECIAL " \t\r\n\v\f\"\'<>|"
 # define WHITE_SPACES " \t\r\n\v\f"
 # define OPERATOR "<>|"
@@ -223,6 +224,7 @@ int		handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info);
 
 //  handle_dollar_cases.c
 char	*remove_dollar(char **s_ptr, int *i, t_info *info);
+char	*remove_number(char **s_ptr, int *i, t_info *info);
 char	*handle_question_mark(t_shell *shell, char *s, int *i, t_info *info);
 
 //  expansion_helper.c

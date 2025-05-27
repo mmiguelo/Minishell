@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:50:48 by yes               #+#    #+#             */
-/*   Updated: 2025/05/27 12:55:00 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:48:47 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	heredoc_readline(t_hd *hd, int fd)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || get_signo() == CTRL_C)
+		if (get_signo() == CTRL_C)
+			return (free_ref(&line), ERROR);
+		if (!line)
 		{
-			if (!line)
-				ft_printf_fd(2, "minishell: " ERROR_HD_EOF, hd->delimiter);
-			free_ref(&line);
-			return (ERROR);
+			ft_printf_fd(2, "minishell: " ERROR_HD_EOF, hd->delimiter);
+			return (free_ref(&line), SUCCESS);
 		}
 		if (ft_strcmp(line, hd->delimiter) == 0)
 		{
