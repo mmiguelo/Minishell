@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:01 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 11:03:06 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:41:00 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_size_of_exit_code(char *arg)
 	char		*code;
 	int			size;
 	int			i;
-	
+
 	i = 0;
 	size = ft_strlen(arg);
 	if (arg[i] == '+')
@@ -69,12 +69,7 @@ int	ft_exit(char **args, t_shell *shell)
 	}
 	if (ft_arrlen(args) == 2)
 	{
-		if (!ft_isnum(args[1]))
-		{
-			ft_printf_fd(2, NO_NUMERIC, args[1]);
-			ft_kill(&shell, 2);
-		}
-		if (check_size_of_exit_code(args[1]) == 1)
+		if (!ft_isnum(args[1]) || check_size_of_exit_code(args[1]) == 1)
 		{
 			ft_printf_fd(2, NO_NUMERIC, args[1]);
 			ft_kill(&shell, 2);

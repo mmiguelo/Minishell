@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:35:32 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/28 13:47:30 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:45:16 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	check_syntax_pipes(t_shell *shell, char *s, int *i)
 	if (!s[*i])
 	{
 		shell->exit_status = SYNTAX_ERROR;
-		return (ft_printf_fd(2, ERROR_UNCLOSED_PIPE), SYNTAX_ERROR);
+		return (ft_printf_fd(2, "minishell: "ERROR_UNCLOSED_PIPE),
+			SYNTAX_ERROR);
 	}
 	if (ft_strchr(QUOTES, s[*i]))
 	{
