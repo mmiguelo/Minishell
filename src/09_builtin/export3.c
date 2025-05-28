@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:57:36 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:57:38 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:53:23 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*get_value(char *var)
 	if (!value)
 		return (ft_strdup(""));
 	return (value);
-	printf("value: %s\n", value);
 }
 
 void	concatenate_value(char **var, char *new_var, t_shell *shell, int i)
