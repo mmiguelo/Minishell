@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:33:47 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:54:11 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:35:56 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	update_pwd(t_shell *shell)
 	if (*old_pwd == '\0')
 	{
 		old_pwd = ft_strjoin_free(ft_strdup("OLDPWD="), getcwd(NULL, 0));
-		if (!pwd)
+		if (!old_pwd)
 			return (INVALID);
 		if (add_var_to_envp(old_pwd, shell) != 0)
 			return (free_ref(&old_pwd), INVALID);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:14:55 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 11:15:52 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:06:03 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_export_var(char **args, t_shell *shell)
 		if (validate_var(var))
 			handle_export_var(&args[i], shell, var, value);
 		else
-			error = print_invalid_var(var);
+			error = print_invalid_var(args[i]);
 		if (var)
 			free(var);
 		if (value)

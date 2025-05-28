@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:01 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 15:41:00 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:39:48 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static int	check_size_of_exit_code(char *arg)
 	exit_code = ft_atoll(arg);
 	code = ft_itol(exit_code);
 	if (size > 20 || (size_t)size != ft_strlen(code))
-		return (1);
+		return (free_ref(&code), 1);
 	else
 	{
 		if (exit_code < LLONG_MIN || exit_code > LLONG_MAX)
-			return (1);
+			return (free_ref(&code), 1);
 		else
-			return (0);
+			return (free_ref(&code), 0);
 	}
 }
 
