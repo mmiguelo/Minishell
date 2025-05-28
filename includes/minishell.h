@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:42:48 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 16:27:53 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:02:01 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ERROR_HD_CREATE "minishell: failed to create heredoc file\n"
 # define ERROR_HD_GEN_PATH "minishell: failed to generate heredoc path\n"
 # define ERROR_HD_EOF "warning: heredoc delimited by EOF (wanted `%s`)\n"
+# define TOO_MANY_ARGS "minishell: exit: too many arguments\n"
 
 //heredoc
 # define BUFFER_MAX_SIZE 1024

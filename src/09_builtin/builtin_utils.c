@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:57:31 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:57:34 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:25:58 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_bt	ft_isbuiltin(char *cmd, t_shell *shell)
 		return (NULL);
 	while (builtins[++i])
 	{
-		if (strncmp(builtins[i], cmd, ft_strlen(builtins[i]) + 1) == 0)
+		if (ft_strncmp(builtins[i], cmd, ft_strlen(builtins[i]) + 1) == 0)
 			return (builtin_ft[i]);
 	}
 	return (NULL);

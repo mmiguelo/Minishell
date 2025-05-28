@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:56:35 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:38 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:25:47 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	remove_quotes(char *s, int i, t_info *info)
 {
 	int	len;
 
-	len = strlen(s);
+	len = ft_strlen(s);
 	if (i < 0 || i >= len)
 		return ;
 	ft_memmove(&s[i], &s[i + 1], len - i);
