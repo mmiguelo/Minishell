@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_has_white_spaces.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:51:09 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:51:17 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:48:48 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-// TODO change header ^
 
 /**
  * @brief Checks if a string contains any whitespace characters.

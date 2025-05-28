@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   quote_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:56:58 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:57:01 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:48:42 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// TODO: change header
 
 #include "minishell.h"
 
