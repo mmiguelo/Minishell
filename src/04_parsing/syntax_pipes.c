@@ -6,7 +6,7 @@
 /*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:35:32 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:00 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:47:30 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_syntax_first_pipe(t_shell *shell, char *s, int *i)
 {
 	while (s && s[*i] && ft_strchr(WHITE_SPACES, s[*i]))
-		i++;
+		(*i)++;
 	if (s && s[*i] && s[*i] == '|')
 	{
 		shell->exit_status = SYNTAX_ERROR;

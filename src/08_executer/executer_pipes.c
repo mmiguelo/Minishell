@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:23:11 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 14:02:46 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:11:37 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	handle_execve_or_builtin(t_shell *shell, t_node *node)
 	path = search_path(node->cmd, shell->envp);
 	if (!path)
 	{
-		ft_printf_fd(2, "command or PATH %s not found\n", node->cmd);
+		ft_printf_fd(2, "command or PATH '%s' not found\n", node->cmd);
 		ft_kill(&shell, 127);
 	}
 	execve_with_error_handling(path, node, shell);

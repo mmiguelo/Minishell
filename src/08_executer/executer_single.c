@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_single.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:22:46 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/27 13:54:16 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:27:17 by frbranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_single_node(t_shell *shell, t_node *node)
 		return ;
 	path = search_path(node->cmd, shell->envp);
 	if (!path)
-		return (ft_printf_fd(2, "command or PATH %s not found\n", node->cmd),
+		return (ft_printf_fd(2, "command or PATH '%s' not found\n", node->cmd),
 			(void)(shell->exit_status = 127));
 	set_signal_mode(SIGMODE_PIPELINE);
 	fork_single_node(shell, node, path);
