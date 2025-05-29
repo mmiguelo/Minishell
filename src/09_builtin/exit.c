@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:01 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 17:39:48 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:35:07 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ static int	check_size_of_exit_code(char *arg)
 int	ft_exit(char **args, t_shell *shell)
 {
 	ft_printf("exit\n");
+	if (ft_arrlen(args) == 1 || (ft_arrlen(args) == 2
+			&& ft_strncmp(args[1], "--", 2) == 0))
+		ft_kill(&shell, 0);
 	if (ft_arrlen(args) > 2)
 	{
 		if (!ft_isnum(args[1]))
@@ -77,7 +80,5 @@ int	ft_exit(char **args, t_shell *shell)
 		else
 			ft_kill(&shell, ft_atoi(args[1]));
 	}
-	if (ft_arrlen(args) == 1)
-		ft_kill(&shell, 0);
 	return (0);
 }
