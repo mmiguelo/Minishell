@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:19:50 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/19 16:46:12 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:51:27 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	ft_is_n(char *arg)
 	i = -1;
 	if (arg[++i] != '-')
 		return (0);
-	if (!arg[++i])
+	i++;
+	if (!arg[i])
 		return (0);
 	while (arg[++i])
 	{
@@ -64,8 +65,10 @@ int	ft_echo(char **args, t_shell *shell)
 	(void)shell;
 	i = 1;
 	n_flag = 0;
-	while (args[i] && ft_is_n(args[i]))
+	while (args[i])
 	{
+		if (!ft_is_n(args[i]))
+			break ;
 		n_flag = 1;
 		i++;
 	}

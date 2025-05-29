@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:25:44 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 15:28:11 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:09:05 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ char	*search_path(char *cmd, char **envp)
 	}
 	full_path = get_paths_from_env(envp);
 	if (!full_path)
-		return (NULL);
+		return (ft_strdup(cmd));
 	return (check_path_and_return(full_path, cmd));
 }

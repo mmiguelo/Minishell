@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_single.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:22:46 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 15:27:17 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:27:28 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
