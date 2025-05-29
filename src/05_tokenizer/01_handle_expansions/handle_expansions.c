@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expansions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:19:21 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:32 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:24:24 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ int	expand_env(t_shell *shell, char **s_ptr, int *i, t_info *info)
 	return (TRUE);
 }
 
-int	handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info)
+static int	expand_loop(t_shell *shell, char **s_ptr, int *i, t_info *info)
 {
 	char	*s;
 
 	s = *s_ptr;
-	info->mode = GENERAL;
-	*i = info->start;
 	while (s[*i] && *i < info->end)
 	{
 		if (s[*i] && ft_strchr(QUOTES, s[*i]))
@@ -83,15 +81,24 @@ int	handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info)
 		{
 			if (expand_env(shell, s_ptr, i, info) == TRUE)
 			{
-				free (s);
+				free(s);
 				if (info->error_flag == TRUE)
 					return (FALSE);
 				*i = info->start;
 				return (TRUE);
 			}
 		}
+		else if (s[*i] == '\\' && info->mode != SINGLE_QUO && s[*i + 1])
+			*i += 2;
 		else
 			(*i)++;
 	}
 	return (FALSE);
+}
+
+int	handle_expansions(t_shell *shell, char **s_ptr, int *i, t_info *info)
+{
+	info->mode = GENERAL;
+	*i = info->start;
+	return (expand_loop(shell, s_ptr, i, info));
 }

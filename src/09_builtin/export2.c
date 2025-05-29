@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:14:55 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 18:06:03 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:57:12 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*add_double_quotes(char *str, int j)
 		new_str[k++] = str[i++];
 	}
 	new_str[k++] = '\"';
+	if (new_str[k - 1] == '\"' && new_str[k - 2] == '=')
+		new_str[k++] = '\"';
 	new_str[k] = '\0';
 	free(str);
 	return (new_str);

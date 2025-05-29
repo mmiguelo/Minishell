@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:42:48 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/28 11:02:01 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:14:06 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 
 //heredoc
 # define BUFFER_MAX_SIZE 1024
+# define EXP_STACK_MAX 25
 # define TEMPFILE_DIR "/tmp/"
 
 // all special cases

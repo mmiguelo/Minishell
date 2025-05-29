@@ -7,7 +7,7 @@ FLAGS = -g -Wall -Wextra -Werror
 INC = -I./includes
 RM = rm -rf
 
-VAL = valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
+VAL = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --errors-for-leak-kinds=definite
 
 GENERAL = main.c shell_helper.c
 INIT = init.c init_helper.c
@@ -132,6 +132,10 @@ renv: all
 # Executable minishell with valgrind
 v: re
 	$(VAL) ./minishell
+
+valgrind: re
+	@echo "{\n   leak readline\n   Memcheck:Leak\n...\n   fun:readline\n}\n{\n   leak add_history\n   Memcheck:Leak\n...\n   fun:add_history\n}" > readline.supp
+	@valgrind --suppressions=readline.supp --leak-check=full -s --show-leak-kinds=all ./$(NAME)
 
 clean:
 	$(RM) $(OBJS)

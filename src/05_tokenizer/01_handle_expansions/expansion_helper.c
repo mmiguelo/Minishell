@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frbranda <frbranda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:56:20 by frbranda          #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:23 by frbranda         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:48:04 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,31 @@ int	check_if_var_is_alone(char *s, int i, t_info *info)
 	return (FALSE);
 }
 
+static char	*add_backslash(char	**ptr_s)
+{
+	char	*temp;
+	char	*s;
+	int		i;
+	int		j;
+
+	s = *ptr_s;
+	temp = (char *)ft_calloc(((ft_strlen(s) * 2) + 1), sizeof(char));
+	if (!temp)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		temp[j] = '\\';
+		j++;
+		temp[j] = s[i];
+		i++;
+		j++;
+	}
+	temp[j] = '\0';
+	return (temp);
+}
+
 char	*expand_var_in_str(char *s, char *var_value, int i, t_info *info)
 {
 	char	*new_s;
@@ -76,7 +101,11 @@ char	*expand_var_in_str(char *s, char *var_value, int i, t_info *info)
 
 	s_len = ft_strlen(s);
 	var_len = i - info->env_start;
-	value_len = ft_strlen(var_value);
+	var_value = add_backslash(&var_value);
+	if (var_value)
+		value_len = ft_strlen(var_value);
+	else
+		value_len = 0;
 	new_len = s_len - var_len + value_len;
 	new_s = (char *)ft_calloc((new_len + 1), sizeof(char));
 	if (!new_s)
@@ -85,5 +114,6 @@ char	*expand_var_in_str(char *s, char *var_value, int i, t_info *info)
 	ft_strlcpy(new_s + info->env_start, var_value, (value_len + 1));
 	ft_strlcpy(new_s + info->env_start + value_len, s + i, (s_len - i + 1));
 	new_s[new_len] = '\0';
+	free_ref(&var_value);
 	return (new_s);
 }

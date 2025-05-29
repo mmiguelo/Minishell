@@ -6,7 +6,7 @@
 /*   By: mmiguelo <mmiguelo@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:20:37 by mmiguelo          #+#    #+#             */
-/*   Updated: 2025/05/29 13:42:50 by mmiguelo         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:16:42 by mmiguelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,5 @@ int	ft_export(char **args, t_shell *shell)
 	i = 1;
 	if (!args[i])
 		return (ft_print_export(shell));
-/* 	while (args[i])
-	{
-		export_error(args[i]);
-		i++;
-	} */
 	return (check_export_var(args, shell));
 }
