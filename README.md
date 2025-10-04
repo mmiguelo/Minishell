@@ -12,6 +12,7 @@ This project is a custom implementation of a command-line interpreter, similar t
     *   `>>` (Append output redirection)
     *   `<<` (Heredoc)
 *   **Environment Variables:** Expands environment variables (e.g., `$USER`, `$PWD`) and the special exit status variable (`$?`).
+*   **Re-tokenization:** After the first expansion, the shell scans the resulting tokens again to detect and expand any newly introduced variables or special symbols (e.g., a variable that expands into another variable or command). This ensures full recursive expansion and correct token structure before execution. - 
 *   **Quoting:** Correctly handles single (`'`) and double (`"`) quotes to manage string literals and expansions.
 *   **Signal Handling:** Intercepts and manages `Ctrl-C` (SIGINT) and `Ctrl-\` (SIGQUIT) to mimic `bash` behavior, providing a stable user experience.
 *   **Built-in Commands:**
