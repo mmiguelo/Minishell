@@ -346,7 +346,8 @@ Minishell/
 
 **mmiguelo** — 42 Student
 
-[![GitHub](https://img.shields.io/badge/GitHub-mmiguelo-181717?style=for-the-badge&logo=github)](https://github.com/mmiguelo)
+[![mmiguelo](https://img.shields.io/badge/GitHub-mmiguelo-181717?style=for-the-badge&logo=github)](https://github.com/mmiguelo)
+[![frbranda](https://img.shields.io/badge/frbranda-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/KrispyFbacon)
 
 ---
 
